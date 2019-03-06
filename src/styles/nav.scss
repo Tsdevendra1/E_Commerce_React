@@ -1,0 +1,135 @@
+@import 'themeColors';
+
+$searchBarBorderColor: #757575;
+$desktopButtonBackgroundColor: #525050;
+
+%position-vertical-center {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.center-vertical {
+  @extend %position-vertical-center;
+}
+
+.nav-content {
+  padding: 1rem 5%;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid $desktopButtonBackgroundColor;
+  vertical-align: middle;
+}
+
+.nav-left-content {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.nav-bar {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+  top: 0;
+  background: white;
+}
+
+.mobile-link-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mobile-nav-links {
+  //display: none;
+  height: 0;
+  overflow: hidden;
+  background: $navBackground;
+  transition: 0.3s;
+}
+
+.mobile-nav-bar-item {
+  @extend %position-vertical-center;
+  color: white !important;
+  transition: color 0.5s;
+}
+
+.mobile-nav-row {
+  margin: 0;
+  background: grey;
+  //border-bottom: 1px solid black;
+}
+
+.font-weight-bold {
+  font-weight: bold;
+}
+
+.desktop-show {
+  display: none;
+}
+
+.desktop-nav-button-group {
+  margin-left: 2rem;
+}
+
+.desktop-nav-button {
+  color: black !important;
+  border-right: 1px solid $desktopButtonBackgroundColor;
+  border-left: 1px solid $desktopButtonBackgroundColor;
+  font-weight: bold;
+  background: white;
+  padding-left: 1.7rem;
+  padding-right: 1.7rem;
+  padding-top: 1.2rem !important;
+  padding-bottom: 1.2rem !important;
+}
+
+.desktop-nav-button:hover, .desktop-nav-button-active {
+  background: $desktopButtonBackgroundColor;
+  color: white !important;
+}
+
+%search-bar-height {
+
+  height: 2rem;
+}
+
+.search-bar-button {
+  @extend %search-bar-height;
+  margin-right: 16px;
+  background: white;
+  border: 1px solid $searchBarBorderColor;
+  border-left: 0px transparent;
+  font-size: 17px;
+  padding-left: 10px;
+  padding-right: 10px;
+  cursor: pointer;
+
+}
+
+.search-bar {
+  @extend %search-bar-height;
+  border: 1px solid $searchBarBorderColor;
+  border-right: 0px transparent;
+  padding-left: 10px;
+  width: 300px;
+}
+
+.search-bar:focus {
+  outline-width: 0;
+}
+
+@media screen and (min-width: 426px) {
+  .mobile-show {
+    display: none !important;
+  }
+
+  .desktop-show {
+    display: block;
+  }
+
+  .nav-content {
+    padding: 0 5%;
+  }
+
+}
