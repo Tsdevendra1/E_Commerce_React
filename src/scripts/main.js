@@ -2,6 +2,7 @@ import './../styles/appStyles.scss';
 import React from "react";
 import ReactDOM from "react-dom";
 import HomePage from './Homepage/HomePage'
+import GenericPage from './GenericPage'
 
 
 // Function checks for the page type to run page specific js.
@@ -13,7 +14,7 @@ function checkPageType(pageName) {
 // FOR: HOMEPAGE
 if (checkPageType('homepage')) {
     ReactDOM.render(
-        <HomePage/>,
+        <GenericPage><HomePage/></GenericPage>,
         document.getElementById('root')
     );
 } else {

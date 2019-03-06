@@ -1,1 +1,107 @@
+@import url(https://fonts.googleapis.com/css?family=Poppins);
+.center-vertical, .mobile-nav-bar-item {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%); }
+
+.nav-content {
+  padding: 1rem 5%;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #525050;
+  vertical-align: middle; }
+
+.nav-left-content {
+  display: flex;
+  justify-content: space-evenly; }
+
+.nav-bar {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+  top: 0;
+  background: white; }
+
+.mobile-link-flex {
+  display: flex;
+  justify-content: space-between; }
+
+.mobile-nav-links {
+  height: 0;
+  overflow: hidden;
+  background: #e0ebe8;
+  transition: 0.3s; }
+
+.mobile-nav-bar-item {
+  color: white !important;
+  transition: color 0.5s; }
+
+.mobile-nav-row {
+  margin: 0;
+  background: grey; }
+
+.font-weight-bold {
+  font-weight: bold; }
+
+.desktop-show {
+  display: none; }
+
+.desktop-nav-button-group {
+  margin-left: 2rem; }
+
+.desktop-nav-button {
+  color: black !important;
+  border-right: 1px solid #525050;
+  border-left: 1px solid #525050;
+  font-weight: bold;
+  background: white;
+  padding-left: 1.7rem;
+  padding-right: 1.7rem;
+  padding-top: 1.2rem !important;
+  padding-bottom: 1.2rem !important; }
+
+.desktop-nav-button:hover, .desktop-nav-button-active {
+  background: #525050;
+  color: white !important; }
+
+.search-bar-button, .search-bar {
+  height: 2rem; }
+
+.search-bar-button {
+  margin-right: 16px;
+  background: white;
+  border: 1px solid #757575;
+  border-left: 0px transparent;
+  font-size: 17px;
+  padding-left: 10px;
+  padding-right: 10px;
+  cursor: pointer; }
+
+.search-bar {
+  border: 1px solid #757575;
+  border-right: 0px transparent;
+  padding-left: 10px;
+  width: 300px; }
+
+.search-bar:focus {
+  outline-width: 0; }
+
+@media screen and (min-width: 426px) {
+  .mobile-show {
+    display: none !important; }
+  .desktop-show {
+    display: block; }
+  .nav-content {
+    padding: 0 5%; } }
+
+body {
+  font-family: 'Poppins', sans-serif; }
+
+a, a:hover, a:focus {
+  text-decoration: none !important;
+  color: inherit !important; }
+
+.top-margin-for-nav {
+  padding-top: 6.55rem; }
 

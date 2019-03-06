@@ -1,0 +1,16 @@
+@import 'nav';
+@import 'footer';
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+a, a:hover, a:focus {
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+.top-margin-for-nav {
+  padding-top: 6.55rem;
+}
