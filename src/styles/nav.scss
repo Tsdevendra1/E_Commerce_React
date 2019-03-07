@@ -103,7 +103,6 @@ $desktopButtonBackgroundColor: #525050;
 }
 
 %search-bar-height {
-
   height: 2rem;
 }
 
@@ -113,11 +112,22 @@ $desktopButtonBackgroundColor: #525050;
   background: white;
   border: 1px solid $searchBarBorderColor;
   border-left: 0px transparent;
-  font-size: 17px;
+  font-size: 16px !important;
   padding-left: 10px;
   padding-right: 10px;
   cursor: pointer;
+}
 
+.search-bar {
+  @extend %search-bar-height;
+  border: 1px solid $searchBarBorderColor;
+  border-right: 0px transparent;
+  padding-left: 10px;
+  width: 300px;
+}
+
+.search-bar:focus {
+  outline-width: 0;
 }
 
 .desktop-nav-links{
@@ -142,19 +152,8 @@ $desktopButtonBackgroundColor: #525050;
   @extend %desktop-default-style;
 }
 
-.search-bar {
-  @extend %search-bar-height;
-  border: 1px solid $searchBarBorderColor;
-  border-right: 0px transparent;
-  padding-left: 10px;
-  width: 300px;
-}
 
-.search-bar:focus {
-  outline-width: 0;
-}
-
-@media screen and (min-width: 426px) {
+@media screen and (min-width: 724px) {
   .mobile-show {
     display: none !important;
   }

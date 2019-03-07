@@ -37,5 +37,8 @@
     "webpack": "^4.29.6",
     "webpack-bundle-tracker": "^0.4.2-beta",
     "webpack-cli": "^3.2.3"
+  },
+  "dependencies": {
+    "y18n": "^4.0.0"
   }
 }

@@ -79,10 +79,19 @@
   background: white;
   border: 1px solid #757575;
   border-left: 0px transparent;
-  font-size: 17px;
+  font-size: 16px !important;
   padding-left: 10px;
   padding-right: 10px;
   cursor: pointer; }
+
+.search-bar {
+  border: 1px solid #757575;
+  border-right: 0px transparent;
+  padding-left: 10px;
+  width: 300px; }
+
+.search-bar:focus {
+  outline-width: 0; }
 
 .desktop-nav-links {
   background: #525050; }
@@ -98,22 +107,71 @@
   padding-right: 1rem;
   padding-left: 1rem; }
 
-.search-bar {
-  border: 1px solid #757575;
-  border-right: 0px transparent;
-  padding-left: 10px;
-  width: 300px; }
-
-.search-bar:focus {
-  outline-width: 0; }
-
-@media screen and (min-width: 426px) {
+@media screen and (min-width: 724px) {
   .mobile-show {
     display: none !important; }
   .desktop-show {
     display: block; }
   .nav-content {
     padding: 0 5%; } }
+
+.above-footer {
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid black; }
+
+.social-icon {
+  font-size: 1.5rem; }
+
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0; }
+
+.social-icon {
+  margin: 1rem; }
+
+.mobile-footer-content {
+  display: flex;
+  justify-content: space-between;
+  background: #dddddd;
+  padding: 1rem 5%; }
+
+.mobile-footer {
+  font-size: 0.7rem !important; }
+
+.mobile-right-footer-link-first {
+  padding-right: 0.4rem;
+  border-right: 1px solid black; }
+
+.mobile-right-footer-link-second {
+  padding-left: 0.4rem; }
+
+.desktop-footer {
+  height: 242px;
+  background: #dddddd; }
+
+.desktop-footer-content {
+  padding-top: 3%;
+  color: #666666;
+  padding-left: 5%;
+  padding-right: 5%;
+  display: flex;
+  justify-content: space-between; }
+
+.desktop-col-header {
+  font-weight: bold;
+  font-size: 1.1rem !important;
+  text-transform: uppercase; }
+
+.desktop-footer-row {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.85rem !important; }
+
+.desktop-footer-row:hover {
+  color: #0770cf !important; }
 
 body {
   font-family: 'Poppins', sans-serif; }
