@@ -17,8 +17,11 @@ $desktopButtonBackgroundColor: #525050;
   padding: 1rem 5%;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid $desktopButtonBackgroundColor;
   vertical-align: middle;
+}
+
+.nav-border-bottom {
+  border-bottom: 1px solid $desktopButtonBackgroundColor;
 }
 
 .nav-left-content {
@@ -45,19 +48,19 @@ $desktopButtonBackgroundColor: #525050;
   height: 0;
   overflow: hidden;
   background: $navBackground;
-  transition: 0.3s;
+  transition: 0.2s;
 }
 
 .mobile-nav-bar-item {
   @extend %position-vertical-center;
-  color: white !important;
+  color: black !important;
   transition: color 0.5s;
 }
 
 .mobile-nav-row {
   margin: 0;
-  background: grey;
-  //border-bottom: 1px solid black;
+  background: white;
+  border-bottom: 1px solid $desktopButtonBackgroundColor;
 }
 
 .font-weight-bold {
@@ -72,21 +75,31 @@ $desktopButtonBackgroundColor: #525050;
   margin-left: 2rem;
 }
 
-.desktop-nav-button {
+%desktop-default-style {
   color: black !important;
+  background: white;
+}
+
+%desktop-hover-style {
+  background: $desktopButtonBackgroundColor;
+  color: white !important;
+
+}
+
+.desktop-nav-button {
+  @extend %desktop-default-style;
   border-right: 1px solid $desktopButtonBackgroundColor;
   border-left: 1px solid $desktopButtonBackgroundColor;
   font-weight: bold;
-  background: white;
   padding-left: 1.7rem;
   padding-right: 1.7rem;
   padding-top: 1.2rem !important;
   padding-bottom: 1.2rem !important;
+  cursor: pointer;
 }
 
 .desktop-nav-button:hover, .desktop-nav-button-active {
-  background: $desktopButtonBackgroundColor;
-  color: white !important;
+  @extend %desktop-hover-style
 }
 
 %search-bar-height {
@@ -105,6 +118,28 @@ $desktopButtonBackgroundColor: #525050;
   padding-right: 10px;
   cursor: pointer;
 
+}
+
+.desktop-nav-links{
+  background: $desktopButtonBackgroundColor;
+}
+
+.desktop-navs-container {
+  margin-left: 5% !important;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.desktop-nav-item {
+  @extend %desktop-hover-style;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-right: 0.7rem;
+  padding-left: 0.7rem;
+}
+
+.desktop-nav-item:hover {
+  @extend %desktop-default-style;
 }
 
 .search-bar {

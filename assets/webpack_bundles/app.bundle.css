@@ -8,8 +8,10 @@
   padding: 1rem 5%;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #525050;
   vertical-align: middle; }
+
+.nav-border-bottom {
+  border-bottom: 1px solid #525050; }
 
 .nav-left-content {
   display: flex;
@@ -31,15 +33,16 @@
   height: 0;
   overflow: hidden;
   background: #e0ebe8;
-  transition: 0.3s; }
+  transition: 0.2s; }
 
 .mobile-nav-bar-item {
-  color: white !important;
+  color: black !important;
   transition: color 0.5s; }
 
 .mobile-nav-row {
   margin: 0;
-  background: grey; }
+  background: white;
+  border-bottom: 1px solid #525050; }
 
 .font-weight-bold {
   font-weight: bold; }
@@ -50,20 +53,23 @@
 .desktop-nav-button-group {
   margin-left: 2rem; }
 
-.desktop-nav-button {
+.desktop-nav-button, .desktop-nav-item:hover {
   color: black !important;
+  background: white; }
+
+.desktop-nav-button:hover, .desktop-nav-button-active, .desktop-nav-item {
+  background: #525050;
+  color: white !important; }
+
+.desktop-nav-button {
   border-right: 1px solid #525050;
   border-left: 1px solid #525050;
   font-weight: bold;
-  background: white;
   padding-left: 1.7rem;
   padding-right: 1.7rem;
   padding-top: 1.2rem !important;
-  padding-bottom: 1.2rem !important; }
-
-.desktop-nav-button:hover, .desktop-nav-button-active {
-  background: #525050;
-  color: white !important; }
+  padding-bottom: 1.2rem !important;
+  cursor: pointer; }
 
 .search-bar-button, .search-bar {
   height: 2rem; }
@@ -77,6 +83,20 @@
   padding-left: 10px;
   padding-right: 10px;
   cursor: pointer; }
+
+.desktop-nav-links {
+  background: #525050; }
+
+.desktop-navs-container {
+  margin-left: 5% !important;
+  display: flex;
+  justify-content: flex-start; }
+
+.desktop-nav-item {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-right: 0.7rem;
+  padding-left: 0.7rem; }
 
 .search-bar {
   border: 1px solid #757575;

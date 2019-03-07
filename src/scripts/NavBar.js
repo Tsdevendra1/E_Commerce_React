@@ -5,11 +5,14 @@ export default class NavBar extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
+        this.showDesktopLinks = this.showDesktopLinks.bind(this);
     }
 
     handleClick(e) {
         // Add active class when pressed
         e.target.classList.toggle('show-mobile-active');
+        e.target.classList.toggle('fa-times');
+        e.target.classList.toggle('fa-bars');
 
         // Function which expands and contracts the mobile nav
         let mobileNavLinks = document.getElementsByClassName('mobile-nav-links')[0];
@@ -19,6 +22,18 @@ export default class NavBar extends React.Component {
         } else {
             mobileNavLinks.style.height = `0px`;
         }
+    }
+
+    showDesktopLinks(e) {
+        let navContentElement = document.getElementsByClassName('nav-content')[0];
+        navContentElement.classList.toggle('nav-border-bottom');
+        let desktopNavLinks = document.getElementsByClassName('desktop-nav-links')[0];
+        if (desktopNavLinks.style.display === 'none') {
+            desktopNavLinks.style.display = 'block';
+        } else {
+            desktopNavLinks.style.display = 'none';
+        }
+
     }
 
     render() {
@@ -39,12 +54,12 @@ export default class NavBar extends React.Component {
 
         return (
             <div className="nav-bar">
-                <div className="nav-content">
+                <div className="nav-content nav-border-bottom">
                     <div className="nav-left-content">
                         <Logo/>
                         <div className="desktop-nav-button-group">
 
-                            <a className="desktop-show desktop-nav-button">HOME</a>
+                            <a onClick={this.showDesktopLinks} className="desktop-show desktop-nav-button">HOME</a>
                         </div>
                     </div>
                     <div className="nav-right-content">
@@ -64,8 +79,11 @@ export default class NavBar extends React.Component {
                         })}
                     </div>
                 </div>
-                <div className="desktop-nav-links desktop-show">
-                    placeholder
+                <div className="desktop-nav-links desktop-show" style={{'display': 'none'}}>
+                    <div className="desktop-navs-container">
+                        <div className="desktop-nav-item"><a href="#">Placeholder</a></div>
+                        <div className="desktop-nav-item"><a href="#">Placeholder</a></div>
+                    </div>
                 </div>
             </div>
         )
