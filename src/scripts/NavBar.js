@@ -25,6 +25,7 @@ export default class NavBar extends React.Component {
     }
 
     showDesktopLinks(e) {
+        e.target.classList.toggle('desktop-nav-button-active');
         let navContentElement = document.getElementsByClassName('nav-content')[0];
         navContentElement.classList.toggle('nav-border-bottom');
         let desktopNavLinks = document.getElementsByClassName('desktop-nav-links')[0];
@@ -49,6 +50,12 @@ export default class NavBar extends React.Component {
                         </div>
                     </div>
                 </div>
+            )
+        };
+
+        let createDesktopNavItem = function (navItem) {
+            return (
+                    <div key={navItem.type} className="desktop-nav-item"><a href={navItem.url}>{navItem.type}</a></div>
             )
         };
 
@@ -81,8 +88,7 @@ export default class NavBar extends React.Component {
                 </div>
                 <div className="desktop-nav-links desktop-show" style={{'display': 'none'}}>
                     <div className="desktop-navs-container">
-                        <div className="desktop-nav-item"><a href="#">Placeholder</a></div>
-                        <div className="desktop-nav-item"><a href="#">Placeholder</a></div>
+                        {this.props.navs.map(createDesktopNavItem)}
                     </div>
                 </div>
             </div>
