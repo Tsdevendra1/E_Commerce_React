@@ -3,11 +3,17 @@ import React from "react";
 import ReactDOM from "react-dom";
 import HomePage from './Homepage/HomePage'
 import GenericPage from './GenericPage'
+import ProductPage from "./Productpage/ProductPage";
 
 
 // Function checks for the page type to run page specific js.
 function checkPageType(pageName) {
-    return document.getElementsByTagName('body')[0].getAttribute('data-page').includes(pageName);
+    let body = document.getElementsByTagName('body')[0];
+    let pageType = body.getAttribute('data-page');
+    // console.log(pageName);
+    // console.log(body);
+    // console.log(pageType);
+    return pageType.includes(pageName);
 }
 
 
@@ -17,9 +23,13 @@ if (checkPageType('homepage')) {
         <GenericPage><HomePage/></GenericPage>,
         document.getElementById('root')
     );
+} else if (checkPageType('productpage')) {
+    ReactDOM.render(
+        <GenericPage><ProductPage/></GenericPage>,
+        document.getElementById('root')
+    );
 } else {
     alert('not found');
 }
-
 
 

@@ -1,6 +1,7 @@
 @import 'nav';
 @import 'footer';
 @import url('https://fonts.googleapis.com/css?family=Poppins');
+@import './ProductPage/productPage';
 
 body {
   font-family: 'Poppins', sans-serif;
@@ -12,5 +13,5 @@ a, a:hover, a:focus {
 }
 
 .top-margin-for-nav {
-  padding-top: 6.55rem;
+  padding-top: 3.9rem;
 }
