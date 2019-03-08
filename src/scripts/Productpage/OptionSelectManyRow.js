@@ -4,7 +4,6 @@ import OptionSelectRow from "./OptionSelectRow";
 export default class OptionSelectManyRow extends React.Component {
     constructor(props) {
         super(props);
-        this.circleRef = React.createRef();
     }
 
 

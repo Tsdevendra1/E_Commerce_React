@@ -10,9 +10,9 @@ export default class ProductPage extends React.Component {
         return (
             <React.Fragment>
                 <div className="product-page-header">
-                    <h3 style={{'margin':'0'}}>New Items</h3>
+                    <h3 style={{'margin': '0'}}>New Items</h3>
                 </div>
-                <ProductSelectorBar/>
+                    <ProductSelectorBar/>
             </React.Fragment>
         )
     }

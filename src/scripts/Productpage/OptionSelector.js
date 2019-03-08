@@ -13,27 +13,18 @@ export default class OptionSelector extends React.Component {
     renderOptionsBox() {
         // Renders default option box if no children given
         if (this.props.children) {
-            return this.props.children
+            // return this.props.children
+            return React.cloneElement(this.props.children, {selectorOptions: this.props.selectorOptions});
         } else {
-            return (
-                <React.Fragment>
-                    <div className="selector-options-header">
-                        PLACEHOLDER
-                    </div>
-                    <div className="selector-options-content">
-                        <div className="option-box">Option 1</div>
-                        <div className="option-box">Option 2</div>
-                    </div>
-                </React.Fragment>
-            )
+            throw 'Child must be specific (Custom Component)';
         }
     }
 
-    checkCurrentActive(){
+    checkCurrentActive() {
         let optionBoxArrow = this.optionBoxArrowRef.current;
         let optionBox = this.optionBoxRef.current;
         let selectorStyle = this.selectorStyleRef.current;
-        if (this.props.currentActiveComponentId === this.props.componentId){
+        if (this.props.currentActiveComponentId === this.props.componentId) {
             optionBoxArrow.classList.remove('fa-chevron-down');
             optionBoxArrow.classList.add('fa-chevron-up');
             selectorStyle.classList.add('selected-option-active');
@@ -48,7 +39,7 @@ export default class OptionSelector extends React.Component {
 
     showOptionsBox() {
         // This set's which box is currently active
-        if (this.props.currentActiveComponentId !== this.props.componentId){
+        if (this.props.currentActiveComponentId !== this.props.componentId) {
             // Set the current one to active
             this.props.handleClick(this.props.componentId);
         } else {
@@ -59,7 +50,7 @@ export default class OptionSelector extends React.Component {
         this.checkCurrentActive();
     }
 
-    componentDidUpdate (){
+    componentDidUpdate() {
         this.checkCurrentActive();
     }
 
