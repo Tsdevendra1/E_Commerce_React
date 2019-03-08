@@ -5,8 +5,7 @@ $optionBoxMargin: 1rem;
 .product-selector {
   background: #eeeeee;
   display: flex;
-  justify-content: flex-start;
-  height: 4.65rem;
+  justify-content: center;
 }
 
 .selector-group {
@@ -32,13 +31,14 @@ $optionBoxMargin: 1rem;
   position: absolute;
   background: #eeeeee;
   top: 2.75rem;
+  left: -20%;
   z-index: 999;
-  width: 356px;
+  width: 280px;
 }
 
 .product-selector-content {
   display: flex;
-  //flex-direction: column;
+  flex-direction: column;
   justify-content: flex-start;
   padding-right: 5%;
   padding-left: 5%;
@@ -92,4 +92,18 @@ $optionBoxMargin: 1rem;
   background: $themeBlue;
   color: white;
   font-weight: bold;
+}
+
+@media screen and (min-width: 768px) {
+  .product-selector {
+    height: 4.65rem;
+    justify-content: flex-start;
+  }
+  .selector-options {
+    width: 356px;
+    left: 0;
+  }
+  .product-selector-content {
+    flex-direction: row;
+  }
 }
