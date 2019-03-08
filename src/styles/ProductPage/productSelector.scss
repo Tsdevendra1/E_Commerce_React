@@ -1,0 +1,94 @@
+@import '../themeColors';
+
+$optionBoxMargin: 1rem;
+
+.product-selector {
+  background: #eeeeee;
+  display: flex;
+  justify-content: flex-start;
+  height: 4.65rem;
+}
+
+.selector-group {
+  margin-right: 5%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.selector-style {
+  display: flex;
+  justify-content: space-evenly;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  color: #666666;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+}
+
+.selector-options {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.8);
+  display: none;
+  position: absolute;
+  background: #eeeeee;
+  top: 2.75rem;
+  z-index: 999;
+  width: 356px;
+}
+
+.product-selector-content {
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 5%;
+  padding-left: 5%;
+}
+
+.selector-type-text {
+  margin-right: 5rem;
+}
+
+.selector-options-content {
+  margin: $optionBoxMargin;
+}
+
+.selector-options-header {
+  padding: $optionBoxMargin;
+  background: white;
+}
+
+.option-box {
+  margin-top: 0.7rem;
+  margin-bottom: 0.7rem;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  background: white;
+}
+
+.option-box:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.selected-option-active {
+  //box-shadow: 0 -5px 5px -5px #333;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  background: white !important;
+  border-left: 2px solid $themeBlue;
+  border-right: 2px solid $themeBlue;
+  border-top: 4px solid $themeBlue;
+}
+
+.option-box-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.option-box-active {
+  background: $themeBlue;
+  color: white;
+  font-weight: bold;
+}
