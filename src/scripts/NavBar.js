@@ -1,11 +1,15 @@
 import React from 'react';
 import Logo from "./Logo";
+import {Link} from 'react-router-dom';
+import routes from './routers';
 
 export default class NavBar extends React.Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
         this.showDesktopLinks = this.showDesktopLinks.bind(this);
+        this.closeMainTab = this.closeMainTab.bind(this);
+        this.createDesktopNavItem = this.createDesktopNavItem.bind(this);
     }
 
     handleClick(e) {
@@ -37,6 +41,20 @@ export default class NavBar extends React.Component {
 
     }
 
+    closeMainTab(e) {
+        let parentNav = document.getElementById(e.currentTarget.getAttribute('data-main-nav'));
+        parentNav.click();
+    }
+
+
+    createDesktopNavItem(navItem, parentNavId) {
+        return (
+            <div key={navItem.name} className="desktop-nav-item"><Link data-main-nav={parentNavId}
+                                                                       onClick={this.closeMainTab}
+                                                                       to={navItem.path}>{navItem.name}</Link></div>
+        )
+    };
+
     render() {
         let createMobileNavItem = function (navItem) {
             let className = 'mobile-nav-bar-item';
@@ -53,11 +71,13 @@ export default class NavBar extends React.Component {
             )
         };
 
-        let createDesktopNavItem = function (navItem) {
-            return (
-                    <div key={navItem.type} className="desktop-nav-item"><a href={navItem.url}>{navItem.type}</a></div>
-            )
-        };
+        // KEEP INCASE YOU WANT DJANGO ROUTING
+        // let createDesktopNavItemDjango = function (navItem) {
+        //     return (
+        //             <div key={navItem.type} className="desktop-nav-item"><a href={navItem.url}>{navItem.type}</a></div>
+        //     )
+        // };
+
 
         return (
             <div className="nav-bar">
@@ -65,8 +85,8 @@ export default class NavBar extends React.Component {
                     <div className="nav-left-content">
                         <Logo/>
                         <div className="desktop-nav-button-group">
-
-                            <a onClick={this.showDesktopLinks} className="desktop-show desktop-nav-button">HOME</a>
+                            <a id="home-main-nav" onClick={this.showDesktopLinks}
+                               className="desktop-show desktop-nav-button">HOME</a>
                         </div>
                     </div>
                     <div className="nav-right-content">
@@ -88,7 +108,10 @@ export default class NavBar extends React.Component {
                 </div>
                 <div className="desktop-nav-links desktop-show" style={{'display': 'none'}}>
                     <div className="desktop-navs-container">
-                        {this.props.navs.map(createDesktopNavItem)}
+                        {/*{this.props.navs.map(createDesktopNavItemDjango)}*/}
+                        {routes.routes.map(navItem => {
+                            return this.createDesktopNavItem(navItem, 'home-main-nav')
+                        })}
                     </div>
                 </div>
             </div>

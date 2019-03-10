@@ -10,7 +10,7 @@ class GenericPage extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <NavBar navs={navInfo} profileImgPath={profileImagePath}/>
+                <NavBar navs={navInfo}/>
                 <div className="top-margin-for-nav">
                     {this.props.children}
                 </div>
