@@ -1,7 +1,10 @@
+//// For 16:9
+//padding-top = calc(9/16) * 100%;
 .aspect-ratio-box {
   height: 0;
   overflow: hidden;
-  padding-top: 9/16 * 100%;
+  padding-top: 310/242 *100%;
+  //padding-top: 9/16 * 100%;
   background: white;
   position: relative;
 }

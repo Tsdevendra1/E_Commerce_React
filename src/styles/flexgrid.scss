@@ -20,11 +20,17 @@ $colGutter: 5px;
   width: 100%;
 }
 
-@media(max-width: 700px) {
+@media(max-width: 750px) {
   .grid-col {
     flex-basis: 50%;
   }
 }
+@media screen and(min-width: 500px) {
+  .grid-row {
+    margin: 30px;
+  }
+}
+
 
 // EXAMPLE
 //<div className="grid-wrapper">

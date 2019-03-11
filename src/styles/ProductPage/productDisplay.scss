@@ -5,10 +5,13 @@
 }
 
 .product-img {
+  height: 100%;
   width: 100%;
+  overflow: hidden;
   background: red;
-  min-height: 181px;
-  height: auto;
+  //min-height: 181px;
+  //width: 100%;
+  //height: auto;
 }
 
 .product-description-wrapper {

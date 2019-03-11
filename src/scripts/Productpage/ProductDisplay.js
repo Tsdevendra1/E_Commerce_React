@@ -41,7 +41,11 @@ export default class ProductDisplay extends React.Component {
         return (
             <div className="product">
                 <a href="">
-                    <img className="product-img" src="/static/main/images/frown.png"/>
+                    <div className="aspect-ratio-box">
+                        <div className="aspect-ratio-box-inside">
+                            <img className="product-img" src="/static/main/images/frown.png"/>
+                        </div>
+                    </div>
                 </a>
                 <div className="product-description-wrapper">
                     <p ref={this.descriptionRef}>ASOS DESIGN regular fit underwater sequin printed shirt with revere
