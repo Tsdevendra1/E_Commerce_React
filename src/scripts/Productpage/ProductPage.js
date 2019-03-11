@@ -38,8 +38,6 @@ export default class ProductPage extends React.Component {
                                 <ProductDisplay/>
                             </div>
                         </div>
-                    </div>
-                    <div className="grid-row">
                         <div className="grid-col">
                             <div className="grid-col-content">
                                 <ProductDisplay/>

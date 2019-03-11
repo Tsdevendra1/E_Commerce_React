@@ -71,14 +71,6 @@ export default class NavBar extends React.Component {
             )
         };
 
-        // KEEP INCASE YOU WANT DJANGO ROUTING
-        // let createDesktopNavItemDjango = function (navItem) {
-        //     return (
-        //             <div key={navItem.type} className="desktop-nav-item"><a href={navItem.url}>{navItem.type}</a></div>
-        //     )
-        // };
-
-
         return (
             <div className="nav-bar">
                 <div className="nav-content nav-border-bottom">
@@ -108,7 +100,6 @@ export default class NavBar extends React.Component {
                 </div>
                 <div className="desktop-nav-links desktop-show" style={{'display': 'none'}}>
                     <div className="desktop-navs-container">
-                        {/*{this.props.navs.map(createDesktopNavItemDjango)}*/}
                         {routes.routes.map(navItem => {
                             return this.createDesktopNavItem(navItem, 'home-main-nav')
                         })}

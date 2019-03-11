@@ -4,13 +4,12 @@ $colGutter: 5px;
 .grid-row {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin: $rowGutter;
 }
 
 .grid-col {
-  flex-basis: 25%;
-  -ms-flex: auto;
+  flex-basis: 50%;
   padding: $colGutter;
   position: relative;
   box-sizing: border-box;
@@ -20,19 +19,23 @@ $colGutter: 5px;
   width: 100%;
 }
 
-@media(max-width: 750px) {
+@media(min-width: 820px) {
   .grid-col {
-    flex-basis: 50%;
+    flex-basis: 25% !important;
   }
 }
-@media screen and(min-width: 500px) {
+
+@media screen and (min-width: 500px) {
+  .grid-col {
+    flex-basis: 33.33%;
+  }
   .grid-row {
     margin: 30px;
   }
 }
 
 
-// EXAMPLE
+// EXAMPLE: USE ONLY ONE ROW
 //<div className="grid-wrapper">
 //<div className="grid-row">
 //<div className="grid-col">
@@ -55,4 +58,26 @@ $colGutter: 5px;
 //<ProductDisplay/>
 //</div>
 //</div>
+//<div className="grid-col">
+//<div className="grid-col-content">
+//<ProductDisplay/>
 //</div>
+//</div>
+//<div className="grid-col">
+//<div className="grid-col-content">
+//<ProductDisplay/>
+//</div>
+//</div>
+//<div className="grid-col">
+//<div className="grid-col-content">
+//<ProductDisplay/>
+//</div>
+//</div>
+//<div className="grid-col">
+//<div className="grid-col-content">
+//<ProductDisplay/>
+//</div>
+//</div>
+//</div>
+//</div>
+

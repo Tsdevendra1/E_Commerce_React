@@ -118,12 +118,11 @@
 .grid-row {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin: 5px; }
 
 .grid-col {
-  flex-basis: 25%;
-  -ms-flex: auto;
+  flex-basis: 50%;
   padding: 5px;
   position: relative;
   box-sizing: border-box; }
@@ -131,11 +130,13 @@
 .grid-col-content {
   width: 100%; }
 
-@media (max-width: 750px) {
+@media (min-width: 820px) {
   .grid-col {
-    flex-basis: 50%; } }
+    flex-basis: 25% !important; } }
 
 @media screen and (min-width: 500px) {
+  .grid-col {
+    flex-basis: 33.33%; }
   .grid-row {
     margin: 30px; } }
 
