@@ -14,7 +14,7 @@ class GenericPage extends React.Component {
                 <div className="top-margin-for-nav">
                     {this.props.children}
                 </div>
-                <Footer/>
+                {/*<Footer/>*/}
             </React.Fragment>
         )
     }

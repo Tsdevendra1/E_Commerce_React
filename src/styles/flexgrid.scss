@@ -1,0 +1,52 @@
+$rowGutter: 5px;
+$colGutter: 5px;
+
+.grid-row {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  margin: $rowGutter;
+}
+
+.grid-col {
+  flex-basis: 25%;
+  -ms-flex: auto;
+  padding: $colGutter;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.grid-col-content {
+  width: 100%;
+}
+
+@media(max-width: 700px) {
+  .grid-col {
+    flex-basis: 50%;
+  }
+}
+
+// EXAMPLE
+//<div className="grid-wrapper">
+//<div className="grid-row">
+//<div className="grid-col">
+//<div className="grid-col-content">
+//<ProductDisplay/>
+//</div>
+//</div>
+//<div className="grid-col">
+//<div className="grid-col-content">
+//<ProductDisplay/>
+//</div>
+//</div>
+//<div className="grid-col">
+//<div className="grid-col-content">
+//<ProductDisplay/>
+//</div>
+//</div>
+//<div className="grid-col">
+//<div className="grid-col-content">
+//<ProductDisplay/>
+//</div>
+//</div>
+//</div>

@@ -1,0 +1,38 @@
+.aspect-ratio-box {
+  height: 0;
+  overflow: hidden;
+  padding-top: 9/16 * 100%;
+  background: white;
+  position: relative;
+}
+
+.aspect-ratio-box-inside {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.flexbox-centering {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: red;
+}
+
+.viewport-sizing {
+  font-size: 5vw;
+}
+
+//Example
+//<h1 className="aspect-ratio-box">
+//<div className="aspect-ratio-box-inside">
+//<div className="flexbox-centering">
+//<div className="viewport-sizing">
+//                                Happy Birthday
+//</div>
+//</div>
+//</div>
+//</h1>

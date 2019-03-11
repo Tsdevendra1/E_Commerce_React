@@ -50,8 +50,10 @@ export default class OptionSelector extends React.Component {
         this.checkCurrentActive();
     }
 
-    componentDidUpdate() {
-        this.checkCurrentActive();
+    componentDidUpdate(prevProps) {
+        if (this.props.currentActiveComponentId !== prevProps.currentActiveComponentId) {
+            this.checkCurrentActive();
+        }
     }
 
     render() {

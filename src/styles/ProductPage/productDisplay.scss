@@ -1,0 +1,52 @@
+
+.product {
+  background: white;
+  margin-bottom: 1rem;
+}
+
+.product-img {
+  width: 100%;
+  background: red;
+  min-height: 181px;
+  height: auto;
+}
+
+.product-description-wrapper {
+  max-height: 42px;
+  word-wrap: break-word;
+  //white-space: nowrap;
+  overflow: hidden;
+  font-size: 0.8rem;
+  margin-top: 1rem;
+  margin-bottom: 0.1rem;
+  position: relative;
+  /* "transparent" only works here because == rgba(0,0,0,0) */
+}
+
+.fade-text {
+  background-image: linear-gradient(to bottom, transparent, white);
+  display: none;
+  height: 40px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 9;
+}
+
+//.product-description:after {
+//  content: "";
+//  //float: right;
+//  //position: relative;
+//  //top: -40px;
+//  //left: 100%;
+//  //width: 4em;
+//  //height: 22px;
+//  position: relative;
+//  top:-73px;
+//  z-index: 9999;
+//  left: 90%;
+//  width: 4em;
+//  height: 10px;
+//  background: linear-gradient(90deg, hsla(0, 0%, 100%, 0), white);
+//}
+
