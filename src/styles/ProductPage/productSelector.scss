@@ -9,7 +9,6 @@ $optionBoxMargin: 1rem;
 }
 
 .selector-group {
-  margin-right: 5%;
   margin-top: 1rem;
   margin-bottom: 1rem;
   position: relative;
@@ -95,6 +94,9 @@ $optionBoxMargin: 1rem;
 }
 
 @media screen and (min-width: 768px) {
+  .selector-group {
+    margin-right: 2.5rem;
+  }
   .product-selector {
     height: 4.65rem;
     justify-content: flex-start;

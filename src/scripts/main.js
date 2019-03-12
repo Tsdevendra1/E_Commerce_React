@@ -16,10 +16,10 @@ import {Switch, Route, BrowserRouter} from 'react-router-dom'
 
 // REDUX
 import {Provider} from 'react-redux';
-import {createStore} from 'redux';
-import rootReducer from './Redux/reducers';
+import configureStore from './Redux/configureStore';
 
-const store = createStore(rootReducer);
+
+const store = configureStore();
 
 
 function createRoutes(routeInfo) {

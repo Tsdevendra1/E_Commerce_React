@@ -228,7 +228,6 @@
   justify-content: center; }
 
 .selector-group {
-  margin-right: 5%;
   margin-top: 1rem;
   margin-bottom: 1rem;
   position: relative; }
@@ -301,6 +300,8 @@
   font-weight: bold; }
 
 @media screen and (min-width: 768px) {
+  .selector-group {
+    margin-right: 2.5rem; }
   .product-selector {
     height: 4.65rem;
     justify-content: flex-start; }

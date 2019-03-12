@@ -93,9 +93,9 @@ export default class NavBar extends React.Component {
                 </div>
                 <div className="mobile-nav-links mobile-show">
                     <div id="mobile-height-marker">
-                        {this.props.navs.map((navItem) => {
-                            return createMobileNavItem(navItem)
-                        })}
+                        {/*{this.props.navs.map((navItem) => {*/}
+                            {/*return createMobileNavItem(navItem)*/}
+                        {/*})}*/}
                     </div>
                 </div>
                 <div className="desktop-nav-links desktop-show" style={{'display': 'none'}}>

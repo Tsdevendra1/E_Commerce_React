@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types'
 
 export default class ProductDisplay extends React.Component {
     constructor(props) {
@@ -48,15 +49,19 @@ export default class ProductDisplay extends React.Component {
                     </div>
                 </a>
                 <div className="product-description-wrapper">
-                    <p ref={this.descriptionRef}>ASOS DESIGN regular fit underwater sequin printed shirt with revere
-                        collar</p>
+                    <p ref={this.descriptionRef}>{this.props.productDescription}</p>
                     <div ref={this.fadeTextRef} className="fade-text">
                     </div>
                 </div>
                 <div className="product-price">
-                    £432
+                    £{this.props.productPrice}
                 </div>
             </div>
         )
     }
 }
+ProductDisplay.propTypes = {
+    productDescription: PropTypes.string,
+    productPrice: PropTypes.number,
+    productImgPath: PropTypes.string,
+};
