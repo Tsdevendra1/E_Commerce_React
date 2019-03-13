@@ -6,46 +6,17 @@ import ReactDOM from "react-dom";
 import './../styles/appStyles.scss';
 
 // COMPONENTS
-import HomePage from './Homepage/HomePage'
-import GenericPage from './GenericPage'
-import ProductPage from "./Productpage/ProductPage";
+import App from './App';
 
-// ROUTES
-import routes from './routers';
-import {Switch, Route, BrowserRouter} from 'react-router-dom'
-
-// REDUX
-import {Provider} from 'react-redux';
-import {createStore} from 'redux';
-import rootReducer from './Redux/reducers';
-
-const store = createStore(rootReducer);
-
-
-function createRoutes(routeInfo) {
-
-    return (
-        <Route key={routeInfo.name} exact={routeInfo.exact} path={routeInfo.path} component={routeInfo.component}/>
-    )
-}
-
-function createRouter() {
-    return (
-        <Provider store={store}>
-            <BrowserRouter>
-                <GenericPage>
-                    <Switch>
-                        {routes.routes.map(createRoutes)}
-                    </Switch>
-                </GenericPage>
-            </BrowserRouter>
-        </Provider>
-    )
-}
-
+// if (module.hot) {
+//     module.hot.accept('', function () {
+//         // Do something with the updated library module...
+//         console.log('hi');
+//     });
+// }
 
 ReactDOM.render(
-    createRouter(),
+    <App/>,
     document.getElementById('root')
 );
 

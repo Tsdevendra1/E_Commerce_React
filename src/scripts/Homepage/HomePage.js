@@ -1,6 +1,5 @@
 import React from 'react';
 import ProductService from './../ProductService'
-import getCookie from './../get-cookies-function'
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -12,7 +11,7 @@ class HomePage extends React.Component {
 
     render() {
         return (
-            <h1>This is the homepage</h1>
+            <h1>This is the omh this lellww homepage</h1>
         )
     }
 }
