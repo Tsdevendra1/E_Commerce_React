@@ -1,4 +1,5 @@
 import ProductService from '../ProductService';
+
 export const REQUEST_PRODUCTS = 'REQUEST_PRODUCTS';
 export const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
 
@@ -20,7 +21,7 @@ function receiveProducts(products) {
 function fetchProducts() {
     return dispatch => {
         dispatch(requestProducts());
-        return ProductService.getProducts().then(data=>{
+        return ProductService.getProducts().then(data => {
             dispatch(receiveProducts(data))
         });
     }

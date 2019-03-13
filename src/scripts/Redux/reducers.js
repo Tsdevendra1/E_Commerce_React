@@ -1,18 +1,37 @@
 import {combineReducers} from 'redux';
 import {
     REQUEST_PRODUCTS,
-    RECEIVE_PRODUCTS
+    RECEIVE_PRODUCTS,
 } from './actions'
+import {RECIEVE_TOKEN, REQUEST_TOKEN} from "./tokenActions";
 
-let initialState = {
+
+function jwtToken(state = {isFetching: false, accessToken: null, refreshToken: null}, action) {
+    switch (action.type) {
+        case REQUEST_TOKEN:
+            return Object.assign({}, state, {
+                isFetching: true,
+            });
+        case RECIEVE_TOKEN:
+            return Object.assign({}, state, {
+                isFetching: false,
+                accessToken: action.accessToken,
+                refreshToken: action.refreshToken
+            });
+        default:
+            return state
+    }
+}
+
+
+let initialProductState = {
     isFetching: false,
     products: [],
     lastUpdated: null,
 };
 
-
 function products(
-    state = initialState,
+    state = initialProductState,
     action
 ) {
     switch (action.type) {
@@ -33,7 +52,8 @@ function products(
 
 
 const rootReducer = combineReducers({
-    productList: products
+    productList: products,
+    jwtToken,
 });
 
 export default rootReducer

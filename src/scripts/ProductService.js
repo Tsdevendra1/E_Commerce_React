@@ -1,13 +1,12 @@
 import axios from 'axios';
 
-const API_URL = 'http://127.0.0.1:8000';
+export const API_URL = 'http://127.0.0.1:8000';
 import getCookie from './getCookiesFunction'
 
-let headers = {
+export const headers = {
     "X-CSRFToken": getCookie("csrftoken"),
     "Accept": "application/json",
     "Content-Type": "application/json",
-    'Authorization': ' Token ' + 'd3e474c7794ad9b460021d396cda40811c5864b7'
 };
 
 

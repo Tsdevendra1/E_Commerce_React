@@ -1,0 +1,14 @@
+.base-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.form-item {
+  margin: 10px 0;
+}
