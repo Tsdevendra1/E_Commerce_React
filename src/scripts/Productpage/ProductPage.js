@@ -4,7 +4,7 @@ import ProductDisplay from "./ProductDisplay";
 import PropTypes from 'prop-types'
 import {
     fetchProductsIfNeeded,
-} from '../Redux/actions'
+} from '../Redux/actions/productActions'
 import {connect} from 'react-redux';
 
 class ProductPage extends React.Component {

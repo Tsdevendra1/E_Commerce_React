@@ -6,10 +6,10 @@ class AddProductForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            product_name:'',
-            product_type:'',
-            price:'',
-            description:'',
+            product_name: '',
+            product_type: '',
+            price: '',
+            description: '',
             thumbnail: '',
 
         };
@@ -30,14 +30,17 @@ class AddProductForm extends React.Component {
     render() {
         return (
             <form action="/api/product/" method="post" className="custom-form">
-                <BaseInputField type="text" label="Product Name" name="product_name" inputValue={this.state.product_name}
+                <BaseInputField type="text" label="Product Name" name="product_name"
+                                inputValue={this.state.product_name}
                                 onChangeFunction={this.handleInputChange}/>
                 <BaseInputField type="number" label="Product Price (£)" name="price" inputValue={this.state.price}
                                 onChangeFunction={this.handleInputChange}/>
-                <BaseInputField type="text" label="Product Description" name="description" inputValue={this.state.description}
+                <BaseInputField type="text" label="Product Description" name="description"
+                                inputValue={this.state.description}
                                 onChangeFunction={this.handleInputChange}/>
-                <BaseSelectField options={['Top', 'Bottom']} label="Product Type" name="product_type" inputValue={this.state.product_type}
-                                        onChangeFunction={this.handleInputChange}/>
+                <BaseSelectField options={['Top', 'Bottom']} label="Product Type" name="product_type"
+                                 inputValue={this.state.product_type}
+                                 onChangeFunction={this.handleInputChange}/>
                 <button type="submit" className="form-item btn btn-primary">Submit</button>
             </form>
         )
@@ -46,3 +49,4 @@ class AddProductForm extends React.Component {
 
 
 export default AddProductForm;
+

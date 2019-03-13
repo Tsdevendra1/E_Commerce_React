@@ -2,7 +2,7 @@ import React from 'react';
 import BaseInputField from "../Forms/BaseInputField";
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types'
-import fetchToken from '../Redux/tokenActions';
+import {fetchToken} from '../Redux/actions/tokenActions';
 import {Redirect} from 'react-router-dom';
 import {redirectFunction, routes} from '../routers';
 
@@ -12,7 +12,6 @@ class LoginForm extends React.Component {
         this.state = {
             username: '',
             password: '',
-            isEmpty: '',
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -36,8 +35,10 @@ class LoginForm extends React.Component {
 
     render() {
         const isEnabled = this.state.username.length > 0 & this.state.password.length > 0;
-        const {isFetching, accessToken, refreshToken} = this.props;
-        if (accessToken) {
+        const {isFetching, refreshToken} = this.props;
+
+        // refreshToken is considered as user being 'logged in'
+        if (refreshToken) {
             return redirectFunction('Product');
         }
         return (
@@ -59,17 +60,18 @@ class LoginForm extends React.Component {
 
 
 LoginForm.propTypes = {
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    isFetching: PropTypes.bool.isRequired,
+    accessToken: PropTypes.string,
 };
 
 
 function mapStateToProps(state) {
     const {jwtToken} = state;
-    const {isFetching, accessToken, refreshToken} = jwtToken;
+    const {isFetching, accessToken} = jwtToken;
     return {
         isFetching,
         accessToken,
-        refreshToken
     }
 }
 

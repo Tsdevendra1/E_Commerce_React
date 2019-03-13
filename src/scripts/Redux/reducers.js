@@ -2,12 +2,30 @@ import {combineReducers} from 'redux';
 import {
     REQUEST_PRODUCTS,
     RECEIVE_PRODUCTS,
-} from './actions'
-import {RECIEVE_TOKEN, REQUEST_TOKEN} from "./tokenActions";
+} from './actions/productActions'
+import {
+    RECIEVE_TOKEN,
+    REQUEST_TOKEN,
+    RECIEVE_ACCESS_TOKEN,
+    SET_REFRESH_TOKEN,
+    RESET_REFRESH_TOKEN
+} from "./actions/tokenActions";
 
 
 function jwtToken(state = {isFetching: false, accessToken: null, refreshToken: null}, action) {
     switch (action.type) {
+        case RESET_REFRESH_TOKEN:
+            return Object.assign({}, state, {
+                refreshToken: null,
+            });
+        case SET_REFRESH_TOKEN:
+            return Object.assign({}, state, {
+                refreshToken: action.refreshToken,
+            });
+        case RECIEVE_ACCESS_TOKEN:
+            return Object.assign({}, state, {
+                accessToken: action.accessToken,
+            });
         case REQUEST_TOKEN:
             return Object.assign({}, state, {
                 isFetching: true,
