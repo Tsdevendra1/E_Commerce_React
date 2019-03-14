@@ -19,6 +19,7 @@ class GenericPage extends React.Component {
         return (
             <React.Fragment>
                 <NavBar/>
+                <div id="overlay"></div>
                 <div className="top-margin-for-nav">
                     {this.props.children}
                 </div>

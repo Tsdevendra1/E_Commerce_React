@@ -40,7 +40,8 @@ export default class ProductsService {
         });
     }
 
-    static createProduct(productData) {
+    static createProduct(productData, accessToken) {
+        headers['Authorization'] = 'Bearer ' + accessToken;
         const url = `${API_URL}/api/product/`;
         return axios({
             method: 'post', //you can set what request you want to be

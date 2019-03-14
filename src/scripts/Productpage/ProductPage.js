@@ -34,7 +34,7 @@ class ProductPage extends React.Component {
             return <h1>FETCHING DATA...</h1>
         } else {
             return (
-                <React.Fragment>
+                <div>
                     <div className="product-page-header">
                         <h3 style={{'margin': '0'}}>New Items</h3>
                     </div>
@@ -44,7 +44,7 @@ class ProductPage extends React.Component {
                             {products.map(this.createGrid)}
                         </div>
                     </div>
-                </React.Fragment>
+                </div>
             )
         }
     }

@@ -2,6 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 export default class BaseSelectField extends React.Component {
+    componentDidMount(){
+        if (this.props.inputValue === ''){
+            throw 'BaseSelectField needs a default value';
+        }
+    }
     render() {
         let renderOptions = function (option) {
             return <option key={option} value={option}>{option}</option>

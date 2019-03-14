@@ -10,6 +10,7 @@ export default class NavBar extends React.Component {
         this.showDesktopLinks = this.showDesktopLinks.bind(this);
         this.closeMainTab = this.closeMainTab.bind(this);
         this.createDesktopNavItem = this.createDesktopNavItem.bind(this);
+        this.createMobileNavItem = this.createMobileNavItem.bind(this);
     }
 
     handleClick(e) {
@@ -17,6 +18,9 @@ export default class NavBar extends React.Component {
         e.target.classList.toggle('show-mobile-active');
         e.target.classList.toggle('fa-times');
         e.target.classList.toggle('fa-bars');
+
+        let overlayElement = document.getElementById('overlay');
+        overlayElement.style.display = (overlayElement.style.display === 'none' || overlayElement.style.display === '') ? 'block' : 'none';
 
         // Function which expands and contracts the mobile nav
         let mobileNavLinks = document.getElementsByClassName('mobile-nav-links')[0];
@@ -55,21 +59,26 @@ export default class NavBar extends React.Component {
         )
     };
 
-    render() {
-        let createMobileNavItem = function (navItem) {
-            let className = 'mobile-nav-bar-item';
-            return (
-                <div key={`${navItem.type}-mobile`} className="row mobile-nav-row"
-                     style={{margin: 0, paddingBottom: '1rem', paddingTop: '1rem'}}>
-                    <div className="col mobile-link-flex">
-                        <a className={className} href={navItem.url}>{navItem.type}</a>
-                        <div className="mobile-nav-bar-item">
-                            <i className="fas fa-chevron-right"></i>
-                        </div>
+    closeMobileTab() {
+        document.getElementById('show-mobile-button').click();
+    }
+
+    createMobileNavItem(navItem) {
+        let className = 'mobile-nav-bar-item';
+        return (
+            <div key={`${navItem.name}-mobile`} className="row mobile-nav-row"
+                 style={{margin: 0, paddingBottom: '1rem', paddingTop: '1rem'}}>
+                <div className="col mobile-link-flex">
+                    <Link onClick={this.closeMobileTab} className={className} to={navItem.path}>{navItem.name}</Link>
+                    <div className="mobile-nav-bar-item">
+                        <i className="fas fa-chevron-right"></i>
                     </div>
                 </div>
-            )
-        };
+            </div>
+        )
+    }
+
+    render() {
 
         return (
             <div className="nav-bar">
@@ -93,9 +102,7 @@ export default class NavBar extends React.Component {
                 </div>
                 <div className="mobile-nav-links mobile-show">
                     <div id="mobile-height-marker">
-                        {/*{this.props.navs.map((navItem) => {*/}
-                            {/*return createMobileNavItem(navItem)*/}
-                        {/*})}*/}
+                        {routes.routes.map(this.createMobileNavItem)}
                     </div>
                 </div>
                 <div className="desktop-nav-links desktop-show" style={{'display': 'none'}}>
