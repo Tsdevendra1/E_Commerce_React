@@ -1,31 +1,49 @@
-import React from 'react';
-import BaseInputField from "../Forms/BaseInputField";
+import * as React from 'react';
 import BaseSelectField from "../Forms/BaseSelectField";
-import PropTypes from 'prop-types'
+import BaseInputField from "../Forms/BaseInputField";
 import {connect} from 'react-redux';
 import ProductsService from "../ProductService";
 import BaseUploadField from "../Forms/BaseUploadField";
 import * as ReactDOM from "react-dom";
+import {redirectFunction} from "../routers";
 
-class AddProductForm extends React.Component {
+interface IaddProductFormProps {
+    accessToken: string;
+}
+
+interface IaddProductFormState {
+    product_name: string;
+    product_type: string;
+    price: string;
+    description: string;
+    thumbnail: any;
+    isSending: boolean;
+}
+
+
+class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFormState> {
+
+    public product_type_default: 'Top';
+    public imageUploadRef: React.RefObject<HTMLInputElement>;
+
+
     constructor(props) {
         super(props);
-        this.product_type_default = 'Top';
-        this.state = {
-            product_name: '',
-            product_type: this.product_type_default, // Select field needs default value
-            price: '',
-            description: '',
-            thumbnail: '',
-            isSending: false,
-        };
         this.imageUploadRef = React.createRef();
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
-
     }
 
-    handleInputChange(event) {
+    readonly state: IaddProductFormState = {
+        product_name: '',
+        product_type: this.product_type_default,
+        price: '',
+        description: '',
+        thumbnail: '',
+        isSending: false,
+    };
+
+    public handleInputChange(event) {
         const target = event.target;
         let value;
         if (target.type === 'checkbox') {
@@ -35,13 +53,12 @@ class AddProductForm extends React.Component {
         } else {
             value = target.value;
         }
-        const name = target.name;
-        this.setState({
-            [name]: value
-        });
+        let name = target.name;
+        this.setState({[name]: value} as any);
     }
 
-    resetForm() {
+    public resetForm() {
+        // Set all fields to default value
         for (let field in this.state) {
             if (field === 'product_type') {
                 this.setState({
@@ -50,10 +67,11 @@ class AddProductForm extends React.Component {
             } else if (field !== 'isSending') {
                 this.setState({
                     [field]: ''
-                })
+                } as any)
             }
         }
-        let inputFields = ReactDOM.findDOMNode(this).getElementsByTagName('input');
+        let inputFields = (ReactDOM.findDOMNode(this) as Element).getElementsByTagName('input');
+        // Reset all input file fields
         for (let field of inputFields) {
             if (field.type === 'file') {
                 field.value = null;
@@ -61,8 +79,8 @@ class AddProductForm extends React.Component {
         }
     }
 
-    handleFormSubmit() {
-        let fieldValues = Object.assign({}, this.state);
+    public handleFormSubmit() {
+        let fieldValues: IaddProductFormState = Object.assign({}, this.state);
         // We only need field values
         delete fieldValues.isSending;
 
@@ -88,12 +106,13 @@ class AddProductForm extends React.Component {
                 isSending: false,
             });
         });
-
     }
 
-
     render() {
-        const isEnabled = (this.state.product_name.length > 0 && this.state.description.length > 0 && this.state.price.length > 0 && this.state.thumbnail !== '');
+        const isEnabled: boolean = (this.state.product_name.length > 0 && this.state.description.length > 0 && this.state.price.length > 0 && this.state.thumbnail !== '');
+        if (!this.props.accessToken){
+            return redirectFunction('Login');
+        }
         return (
             <form method="post" className="custom-form">
                 <BaseInputField type="text" label="Product Name" name="product_name"
@@ -120,10 +139,6 @@ class AddProductForm extends React.Component {
     }
 }
 
-AddProductForm.propTypes = {
-    accessToken: PropTypes.string.isRequired,
-}
-;
 
 function mapStateToProps(state) {
     const {jwtToken} = state;
@@ -133,4 +148,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(AddProductForm)
+export default connect(mapStateToProps)(AddProductForm);

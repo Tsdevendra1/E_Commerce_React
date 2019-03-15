@@ -22,12 +22,12 @@ export function resetRefreshToken() {
     }
 }
 
-export function getAccessToken(refreshToken) {
+export function getAccessToken(refreshToken: string) {
     let data = {
         refresh: `${refreshToken}`,
     };
     return dispatch => {
-        return axios.post(`${API_URL}/api/token/refresh/`, data, headers).then(function (response) {
+        return axios.post(`${API_URL}/api/token/refresh/`, data, {headers}).then(function (response) {
             // If successful save the refresh token
             dispatch(setRefreshToken(refreshToken));
             dispatch(receieveAccessToken(response.data));
@@ -38,20 +38,20 @@ export function getAccessToken(refreshToken) {
     }
 }
 
-function receieveAccessToken(data) {
+function receieveAccessToken(data: any): object {
     return {
         type: RECIEVE_ACCESS_TOKEN,
         accessToken: data.access,
     }
 }
 
-function requestToken() {
+function requestToken(): object {
     return {
         type: REQUEST_TOKEN,
     }
 }
 
-function receieveToken(data) {
+function receieveToken(data: any): object {
     // Save refresh token in localStorage
     localStorage.setItem("refreshToken", data.refresh);
     return {
@@ -62,11 +62,11 @@ function receieveToken(data) {
     }
 }
 
-export function fetchToken(username, password) {
+export function fetchToken(username: string, password: string): (dispatch: any)=> Promise<void> {
     return dispatch => {
         dispatch(requestToken());
         let data = {username: username, password: password};
-        return axios.post(`${API_URL}/api/token/`, data, headers).then(function (response) {
+        return axios.post(`${API_URL}/api/token/`, data, {headers}).then(function (response) {
             dispatch(receieveToken(response.data))
         }).catch(function (e) {
             console.log(e.response.data)
