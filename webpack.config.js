@@ -17,7 +17,7 @@ module.exports = {
         publicPath: 'http://localhost:3000/assets/bundles/', // Tell django to use this URL to load packages and not use STATIC_URL + bundle_name
     },
     resolve: {
-        extensions: [".js", ".ts", ".css", ".scss"],
+        extensions: [".js", ".ts", ".css", ".scss", ".tsx"],
     },
     watch: true,
     devServer: {
@@ -25,6 +25,7 @@ module.exports = {
     },
     module: {
         rules: [
+            {test: /\.tsx?$/, loader: "awesome-typescript-loader"},
             {
                 test: /\.(s*)css$/,
                 use: [{

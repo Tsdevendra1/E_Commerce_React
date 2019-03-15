@@ -10,7 +10,7 @@ function requestProducts() {
     }
 }
 
-function receiveProducts(products) {
+function receiveProducts(products: object) {
     return {
         type: RECEIVE_PRODUCTS,
         products,
@@ -18,29 +18,24 @@ function receiveProducts(products) {
     }
 }
 
-function fetchProducts() {
+function fetchProducts(searchParams:string): (dispatch: any) => any {
     return dispatch => {
         dispatch(requestProducts());
-        return ProductService.getProducts().then(data => {
+        return ProductService.getProducts(searchParams).then(data => {
             dispatch(receiveProducts(data))
         });
     }
 }
 
 function shouldFetchProducts(state) {
-    const products = state.productList.products;
-    if (products.length === 0) {
-        return true;
-    } else if (products.isFetching) {
-        return false;
-    }
-    return false;
+    const products: Array<any> = state.productList.products;
+    return products.length === 0;
 }
 
-export function fetchProductsIfNeeded() {
+export function fetchProductsIfNeeded(searchParams:string) {
     return (dispatch, getState) => {
         if (shouldFetchProducts(getState())) {
-            return dispatch(fetchProducts())
+            return dispatch(fetchProducts(searchParams))
         }
     }
 }

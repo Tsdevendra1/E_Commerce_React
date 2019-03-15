@@ -1,5 +1,5 @@
 import React from 'react';
-import AddProductForm from "./AddProductForm";
+import AddProductForm from "./AddProductForm.tsx";
 
 class AddProductPage extends React.Component {
     constructor(props) {

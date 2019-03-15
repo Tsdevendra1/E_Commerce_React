@@ -1,22 +1,35 @@
-import React from 'react';
+import * as React from 'react';
 import BaseInputField from "../Forms/BaseInputField";
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types'
 import {fetchToken} from '../Redux/actions/tokenActions';
-import {Redirect} from 'react-router-dom';
 import {redirectFunction, routes} from '../routers';
 
-class LoginForm extends React.Component {
+interface IloginFormProps {
+    dispatch: any;
+    isFetching: boolean;
+    accessToken: string;
+}
+
+interface IloginFormState {
+    username: string;
+    password: string;
+}
+
+
+class LoginForm extends React.Component<IloginFormProps, IloginFormState> {
     constructor(props) {
         super(props);
-        this.state = {
-            username: '',
-            password: '',
-        };
-
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
+    }
 
+    readonly state: IloginFormState = {
+        username: '',
+        password: ''
+    };
+
+    componentDidMount() {
+        console.log('Inside the tsx file');
     }
 
     handleInputChange(event) {
@@ -25,7 +38,7 @@ class LoginForm extends React.Component {
         const name = target.name;
         this.setState({
             [name]: value
-        });
+        } as any);
     }
 
     handleClick() {
@@ -34,11 +47,11 @@ class LoginForm extends React.Component {
     }
 
     render() {
-        const isEnabled = this.state.username.length > 0 & this.state.password.length > 0;
-        const {isFetching, refreshToken} = this.props;
+        const isEnabled = this.state.username.length > 0 && this.state.password.length > 0;
+        const {isFetching, accessToken} = this.props;
 
-        // refreshToken is considered as user being 'logged in'
-        if (refreshToken) {
+        // accessToken is considered as user being 'logged in'
+        if (accessToken) {
             return redirectFunction('Product');
         }
         return (
@@ -57,13 +70,6 @@ class LoginForm extends React.Component {
         )
     }
 }
-
-
-LoginForm.propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    isFetching: PropTypes.bool.isRequired,
-    accessToken: PropTypes.string,
-};
 
 
 function mapStateToProps(state) {

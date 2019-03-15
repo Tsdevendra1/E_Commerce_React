@@ -1,23 +1,29 @@
-import React from 'react';
+import * as React from 'react';
 import ProductSelectorBar from './ProductSelector/ProductSelectorBar';
 import ProductDisplay from "./ProductDisplay";
-import PropTypes from 'prop-types'
 import {
     fetchProductsIfNeeded,
 } from '../Redux/actions/productActions'
 import {connect} from 'react-redux';
 
-class ProductPage extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
+interface Props {
+    products: Array<object>;
+    isFetching: boolean;
+    dispatch: any;
+}
+
+class ProductPage extends React.Component<Props, null> {
     componentDidMount() {
         const {dispatch} = this.props;
-        dispatch(fetchProductsIfNeeded());
+        let currentUrl = new URL(window.location.href);
+        let searchParams = new URLSearchParams(currentUrl.search);
+        searchParams.append('product_type', 'Bottom');
+        dispatch(fetchProductsIfNeeded(searchParams.toString()));
+        // dispatch(fetchProductsIfNeeded(null));
     }
 
-    createGrid(productItem) {
+    public createGrid(productItem) {
         return (
             <div key={productItem.product_name} className="grid-col">
                 <div className="grid-col-content">
@@ -50,24 +56,12 @@ class ProductPage extends React.Component {
     }
 }
 
-ProductPage.propTypes = {
-    products: PropTypes.array.isRequired,
-    isFetching: PropTypes.bool.isRequired,
-    lastUpdated: PropTypes.number,
-    dispatch: PropTypes.func.isRequired
-};
-
-
 function mapStateToProps(state) {
     const {productList} = state;
-    const {isFetching, lastUpdated, products} = (productList.products.length === 0) ? {
-        isFetching: true,
-        products: []
-    } : productList;
+    const {isFetching, products} = productList;
     return {
         products,
         isFetching,
-        lastUpdated
     }
 }
 

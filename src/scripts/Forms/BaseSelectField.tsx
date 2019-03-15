@@ -1,7 +1,13 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import * as React from 'react';
 
-export default class BaseSelectField extends React.Component {
+interface IbaseSelectFieldProps {
+    name: string;
+    onChangeFunction: (event: any) => void;
+    inputValue: string;
+    label: string;
+    options: Array<string>;
+}
+export default class BaseSelectField extends React.Component<IbaseSelectFieldProps> {
     componentDidMount(){
         if (this.props.inputValue === ''){
             throw 'BaseSelectField needs a default value';
@@ -22,10 +28,3 @@ export default class BaseSelectField extends React.Component {
     }
 }
 
-BaseSelectField.propTypes = {
-    name: PropTypes.string.isRequired,
-    onChangeFunction: PropTypes.func.isRequired,
-    inputValue: PropTypes.string.isRequired,
-    options: PropTypes.array.isRequired,
-    label: PropTypes.string.isRequired,
-};

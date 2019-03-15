@@ -16,8 +16,11 @@ export default class ProductsService {
     }
 
 
-    static getProducts() {
-        const url = `${API_URL}/api/product/`;
+    static getProducts(searchParams: string) {
+        let url: string = `${API_URL}/api/product/`;
+        if (searchParams) {
+            url += ('?' + searchParams);
+        }
         return axios.get(url).then(response => response.data);
     }
 
@@ -61,7 +64,7 @@ export default class ProductsService {
         });
     }
 
-    static replaceProduct(productData, pk){
+    static replaceProduct(productData, pk) {
         const url = `${API_URL}/api/product/${pk}/`;
         return axios({
             method: 'put', //you can set what request you want to be
