@@ -23,8 +23,8 @@ interface IaddProductFormState {
 
 class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFormState> {
 
-    public product_type_default: 'Top';
-    public imageUploadRef: React.RefObject<HTMLInputElement>;
+    product_type_default: 'Top';
+    imageUploadRef: React.RefObject<HTMLInputElement>;
 
 
     constructor(props) {
@@ -57,7 +57,7 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
         this.setState({[name]: value} as any);
     }
 
-    public resetForm() {
+    resetForm() {
         // Set all fields to default value
         for (let field in this.state) {
             if (field === 'product_type') {
@@ -74,7 +74,7 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
         // Reset all input file fields
         for (let field of inputFields) {
             if (field.type === 'file') {
-                field.value = null;
+                field.value = '';
             }
         }
     }

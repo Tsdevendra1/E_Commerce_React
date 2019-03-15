@@ -34,7 +34,7 @@ function jwtToken(state = {isFetching: false, accessToken: null, refreshToken: n
             return Object.assign({}, state, {
                 isFetching: false,
                 accessToken: action.accessToken,
-                refreshToken: action.refreshToken
+                refreshToken: action.refreshToken,
             });
         default:
             return state
@@ -46,6 +46,7 @@ let initialProductState = {
     isFetching: false,
     products: [],
     lastUpdated: null,
+    currentParams: '',
 };
 
 function products(
@@ -61,7 +62,8 @@ function products(
             return Object.assign({}, state, {
                 isFetching: false,
                 products: action.products,
-                lastUpdated: action.receivedAt
+                lastUpdated: action.receivedAt,
+                currentParams: action.searchParams,
             });
         default:
             return state

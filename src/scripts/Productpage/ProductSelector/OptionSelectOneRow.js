@@ -1,7 +1,9 @@
 import React from 'react';
 import OptionSelectRow from "./OptionSelectRow";
+import {connect} from 'react-redux';
+import {fetchProductsIfNeeded} from "../../Redux/actions/productActions";
 
-export default class OptionSelectOneRow extends React.Component {
+class OptionSelectOneRow extends React.Component {
     constructor(props) {
         super(props);
         this.circleRef = React.createRef();
@@ -16,10 +18,20 @@ export default class OptionSelectOneRow extends React.Component {
 
     render() {
         return (
-            <OptionSelectRow handleClick={this.handleClick} optionName={this.props.optionName}>
+            <OptionSelectRow handleClick={this.handleClick} {...this.props}>
                 <div style={{'verticalAlign': 'middle'}}><i ref={this.circleRef} className="far fa-circle"></i></div>
             </OptionSelectRow>
         )
     }
 }
 
+function mapStateToProps(state) {
+    const {productList} = state;
+    const {currentParams} = productList;
+    return {
+        currentParams
+    }
+}
+
+
+export default connect(mapStateToProps)(OptionSelectOneRow)

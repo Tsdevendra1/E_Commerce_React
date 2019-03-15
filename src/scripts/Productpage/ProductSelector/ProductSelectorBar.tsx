@@ -1,32 +1,52 @@
-import React from 'react';
+import * as React from 'react';
 import OptionSelector from "./OptionSelector";
 import SelectOneOptionBox from "./SelectOneOptionBox";
 import SelectManyOptionBox from "./SelectManyOptionBox";
 
-export default class ProductSelectorBar extends React.Component {
+interface State {
+    activeID: boolean | null;
+}
+
+interface selectOptions {
+    id: number;
+    optionName: string;
+    paramType: string;
+    paramValue: string;
+    optionAmount?:number;
+}
+
+interface componentInfo {
+    id: number;
+    type: string;
+    selectorOptions: Array<selectOptions>;
+    customComponent: React.ReactElement<any>;
+}
+
+
+export default class ProductSelectorBar extends React.Component<{}, State> {
+    readonly components: Array<componentInfo> = [
+        {
+            id: 1, type: 'Sort', selectorOptions: [
+                {id: 1, optionName: 'High to low', paramType: 'ordering', paramValue:'price'},
+                {id: 2, optionName: 'Low to high', paramType: 'ordering' ,paramValue:'-price'},
+            ], customComponent: <SelectOneOptionBox/>,
+        },
+        {
+            id: 2, type: 'Category', selectorOptions: [
+                {id: 1, optionName: 'Tops', optionAmount: 10, paramType: 'product_type', paramValue:'Top'},
+                {id: 2, optionName: 'Bottom', optionAmount: 99, paramType: 'product_type', paramValue:'Bottom'},
+            ], customComponent: <SelectManyOptionBox/>
+        },
+    ];
+
     constructor(props) {
         super(props);
         this.state = {
-            components: [
-                {
-                    id: 1, type: 'Sort', selectorOptions: [
-                        {id: 1, optionName: 'Option 1'},
-                        {id: 2, optionName: 'Option 2'},
-                    ], customComponent: <SelectOneOptionBox/>
-                },
-                {
-                    id: 2, type: 'Category', selectorOptions: [
-                        {id: 1, optionName: 'Option 1', optionAmount: 10},
-                        {id: 2, optionName: 'Option 2', optionAmount: 99},
-                    ], customComponent: <SelectManyOptionBox/>
-                },
-            ],
             activeID: null
         };
         this.handleClick = this.handleClick.bind(this);
         this.createOptionSelect = this.createOptionSelect.bind(this);
     }
-
 
 
     handleClick(id) {
@@ -57,7 +77,7 @@ export default class ProductSelectorBar extends React.Component {
         return (
             <div className="product-selector">
                 <div className="product-selector-content">
-                    {this.state.components.map(this.createOptionSelect)}
+                    {this.components.map(this.createOptionSelect)}
                 </div>
             </div>
         )

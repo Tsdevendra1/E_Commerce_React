@@ -9,7 +9,7 @@ export default class OptionSelectManyRow extends React.Component {
 
     render() {
         return (
-            <OptionSelectRow>
+            <OptionSelectRow {...this.props}>
                 <div>{this.props.optionName}<span style={{'marginLeft':'0.75rem'}} >({this.props.optionAmount})</span></div>
             </OptionSelectRow>
         )

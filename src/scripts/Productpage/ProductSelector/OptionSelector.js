@@ -13,7 +13,7 @@ export default class OptionSelector extends React.Component {
     renderOptionsBox() {
         // Renders default option box if no children given
         if (this.props.children) {
-            // return this.props.children
+            // return this.props.children with props passed
             return React.cloneElement(this.props.children, {selectorOptions: this.props.selectorOptions});
         } else {
             throw 'Child must be specific (Custom Component)';

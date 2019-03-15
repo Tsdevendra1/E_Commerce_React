@@ -1,16 +1,31 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {fetchProductsIfNeeded} from "../../Redux/actions/productActions";
 
-export default class OptionSelectRow extends React.Component {
+class OptionSelectRow extends React.Component {
     constructor(props) {
         super(props);
         this.rowRef = React.createRef();
         this.handleClick = this.handleClick.bind(this);
     }
 
+    setParamAndDispatch() {
+        const {paramType, paramValue, dispatch, currentParams} = this.props;
+        let currentUrlParams = new URLSearchParams(currentParams);
+
+        if (currentUrlParams.has(paramType)) {
+            currentUrlParams.set(paramType, paramValue);
+        } else {
+            currentUrlParams.append(paramType, paramValue);
+        }
+        dispatch(fetchProductsIfNeeded((currentUrlParams.toString())));
+    }
+
     handleClick() {
         if (this.props.handleClick){
             this.props.handleClick();
         }
+        this.setParamAndDispatch();
         let row = this.rowRef.current;
         row.classList.toggle('option-box-active');
     }
@@ -21,3 +36,13 @@ export default class OptionSelectRow extends React.Component {
         )
     }
 }
+function mapStateToProps(state) {
+    const {productList} = state;
+    const {currentParams} = productList;
+    return {
+        currentParams
+    }
+}
+
+
+export default connect(mapStateToProps)(OptionSelectRow)

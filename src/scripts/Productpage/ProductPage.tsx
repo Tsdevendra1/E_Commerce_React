@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ProductSelectorBar from './ProductSelector/ProductSelectorBar';
 import ProductDisplay from "./ProductDisplay";
+import ProductDisplayGrid from "./ProductDisplayGrid";
 import {
     fetchProductsIfNeeded,
 } from '../Redux/actions/productActions'
@@ -13,57 +14,18 @@ interface Props {
     dispatch: any;
 }
 
-class ProductPage extends React.Component<Props, null> {
-    componentDidMount() {
-        const {dispatch} = this.props;
-        let currentUrl = new URL(window.location.href);
-        let searchParams = new URLSearchParams(currentUrl.search);
-        searchParams.append('product_type', 'Bottom');
-        dispatch(fetchProductsIfNeeded(searchParams.toString()));
-        // dispatch(fetchProductsIfNeeded(null));
-    }
+export default class ProductPage extends React.Component<Props, {}> {
 
-    public createGrid(productItem) {
+    render() {
         return (
-            <div key={productItem.product_name} className="grid-col">
-                <div className="grid-col-content">
-                    <ProductDisplay productDescription={productItem.description} productPrice={productItem.price}/>
+            <div>
+                <div className="product-page-header">
+                    <h3 style={{'margin': '0'}}>New Items</h3>
                 </div>
+                <ProductSelectorBar/>
+                <ProductDisplayGrid/>
             </div>
         )
     }
-
-
-    render() {
-        let {products, isFetching} = this.props;
-        if (isFetching) {
-            return <h1>FETCHING DATA...</h1>
-        } else {
-            return (
-                <div>
-                    <div className="product-page-header">
-                        <h3 style={{'margin': '0'}}>New Items</h3>
-                    </div>
-                    <ProductSelectorBar/>
-                    <div className="grid-wrapper">
-                        <div className="grid-row">
-                            {products.map(this.createGrid)}
-                        </div>
-                    </div>
-                </div>
-            )
-        }
-    }
 }
-
-function mapStateToProps(state) {
-    const {productList} = state;
-    const {isFetching, products} = productList;
-    return {
-        products,
-        isFetching,
-    }
-}
-
-export default connect(mapStateToProps)(ProductPage)
 

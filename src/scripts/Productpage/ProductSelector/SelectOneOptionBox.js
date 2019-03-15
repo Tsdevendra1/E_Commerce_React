@@ -41,7 +41,7 @@ export default class SelectOneOptionBox extends React.Component {
     createOptionRow(rowInfo) {
         return (
             <div data-id={rowInfo.id} key={rowInfo.id} onClick={this.handleClick.bind(this, rowInfo.id)}>
-                <OptionSelectOneRow optionName={rowInfo.optionName}/>
+                <OptionSelectOneRow paramType={rowInfo.paramType} paramValue={rowInfo.paramValue} optionName={rowInfo.optionName}/>
             </div>
         )
     }
