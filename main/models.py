@@ -4,14 +4,14 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django_common.auth_backends import User
 
+PRODUCT_TYPES = (
+    ('Top', 'Top'),
+    ('Bottom', 'Bottom'),
+)
 
 class Product(models.Model):
     product_owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     product_name = models.CharField(blank=False, null=False, max_length=75)
-    PRODUCT_TYPES = (
-        ('Top', 'Top'),
-        ('Bottom', 'Bottom'),
-    )
     product_type = models.CharField(choices=PRODUCT_TYPES, max_length=256, blank=False, null=False)
     price = models.PositiveIntegerField(verbose_name='Price (£) ')
     description = models.CharField(blank=False, null=False, max_length=256)

@@ -15,6 +15,10 @@ export default class ProductsService {
     constructor() {
     }
 
+    static getProductCategoryCount() {
+        let url: string = `${API_URL}/api/product/product_type_count`;
+        return axios.get(url).then(response => response.data);
+    }
 
     static getProducts(searchParams: string) {
         let url: string = `${API_URL}/api/product/`;

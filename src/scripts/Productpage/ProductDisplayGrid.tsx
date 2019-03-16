@@ -20,7 +20,7 @@ class ProductDisplayGrid extends React.Component<Props, {}> {
 
     createGrid(productItem) {
         return (
-            <div key={productItem.product_name} className="grid-col">
+            <div key={productItem.description + productItem.product_name + productItem.price + productItem.thumbnail} className="grid-col">
                 <div className="grid-col-content">
                     <ProductDisplay productDescription={productItem.description} productPrice={productItem.price}/>
                 </div>

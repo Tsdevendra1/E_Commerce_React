@@ -14,15 +14,34 @@ class OptionSelectRow extends React.Component {
         let currentUrlParams = new URLSearchParams(currentParams);
 
         if (currentUrlParams.has(paramType)) {
-            currentUrlParams.set(paramType, paramValue);
+            let currentParamTypeValues = new Set(currentUrlParams.getAll(paramType));
+            // Check if the exact param value has already been set, in this case we consider it a 'toggle' and delete the parameter
+            if (currentParamTypeValues.has(paramValue)) {
+                currentParamTypeValues.delete(paramValue);
+
+                // Delete all of the param type values, so than we can re-add the ones that haven't
+                currentUrlParams.delete(paramType);
+                // Re add all the other parameters to the url
+                for (let value of currentParamTypeValues) {
+                    currentUrlParams.append(paramType, value);
+                }
+            } else if (this.props.selectType === "one") {
+                // Delete all instances of current paramtype
+                currentUrlParams.delete(paramType);
+                // Append the latest value, as it can only be set to one value
+                currentUrlParams.append(paramType, paramValue)
+            } else {
+                currentUrlParams.append(paramType, paramValue);
+            }
         } else {
             currentUrlParams.append(paramType, paramValue);
         }
+        console.log(currentUrlParams.toString());
         dispatch(fetchProductsIfNeeded((currentUrlParams.toString())));
     }
 
     handleClick() {
-        if (this.props.handleClick){
+        if (this.props.handleClick) {
             this.props.handleClick();
         }
         this.setParamAndDispatch();
@@ -32,10 +51,15 @@ class OptionSelectRow extends React.Component {
 
     render() {
         return (
-            <div ref={this.rowRef} onClick={this.handleClick} className="option-box option-box-flex">{this.props.optionName}{this.props.children}</div>
+            <div ref={this.rowRef} onClick={this.handleClick}
+                 className="option-box option-box-flex">
+                {this.props.selectType === 'one' && this.props.optionName}
+                {this.props.children}
+                </div>
         )
     }
 }
+
 function mapStateToProps(state) {
     const {productList} = state;
     const {currentParams} = productList;

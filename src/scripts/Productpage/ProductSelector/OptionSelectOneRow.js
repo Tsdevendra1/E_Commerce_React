@@ -18,7 +18,7 @@ class OptionSelectOneRow extends React.Component {
 
     render() {
         return (
-            <OptionSelectRow handleClick={this.handleClick} {...this.props}>
+            <OptionSelectRow handleClick={this.handleClick} {...this.props} selectType="one">
                 <div style={{'verticalAlign': 'middle'}}><i ref={this.circleRef} className="far fa-circle"></i></div>
             </OptionSelectRow>
         )

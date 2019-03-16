@@ -4,12 +4,13 @@
     "sourceMap": true,
     "noImplicitAny": false,
     "module": "commonjs",
-    "target": "es6",
+    "target": "ESNext",
     "strictNullChecks": true,
     "downlevelIteration": true,
     "jsx": "react"
   },
   "include": [
     "./src/**/*"
-  ]
+  ],
+  "lib": ["esnext"]
 }

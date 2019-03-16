@@ -28,17 +28,8 @@ function fetchProducts(searchParams: string): (dispatch: any) => any {
     }
 }
 
-function shouldFetchProducts(state) {
-    // TODO CHANGE TO CHECK CURRENT PARAM SET
-    // const products: Array<any> = state.productList.products;
-    // return products.length === 0;
-    return true;
-}
-
 export function fetchProductsIfNeeded(searchParams: string) {
-    return (dispatch, getState) => {
-        if (shouldFetchProducts(getState())) {
-            return dispatch(fetchProducts(searchParams))
-        }
+    return dispatch => {
+        return dispatch(fetchProducts(searchParams))
     }
 }
