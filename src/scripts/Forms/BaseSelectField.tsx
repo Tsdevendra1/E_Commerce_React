@@ -18,7 +18,7 @@ export default class BaseSelectField extends React.Component<IbaseSelectFieldPro
             return <option key={option} value={option}>{option}</option>
         };
         return (
-            <label className="form-item base-field">
+            <label className="form-item base-field label-class">
                 {this.props.label}:
                 <select name={this.props.name} value={this.props.inputValue} onChange={this.props.onChangeFunction}>
                     {this.props.options.map(renderOptions)}

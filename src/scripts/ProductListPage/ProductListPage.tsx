@@ -4,11 +4,11 @@ import ProductDisplayGrid from "./ProductDisplayGrid";
 
 
 
-export default class ProductPage extends React.Component<{}, {}> {
+export default class ProductListPage extends React.Component<{}, {}> {
     render() {
         return (
             <div>
-                <div className="product-page-header">
+                <div className="product-list-header">
                     <h3 style={{'margin': '0'}}>New Items</h3>
                 </div>
                 <ProductSelectorBar/>

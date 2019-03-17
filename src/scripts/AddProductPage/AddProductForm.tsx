@@ -11,19 +11,31 @@ interface IaddProductFormProps {
     accessToken: string;
 }
 
-interface IaddProductFormState {
+interface showCaseImages {
+    showcaseImage1: any;
+    showcaseImage2?: any;
+    showcaseImage3?: any;
+    showcaseImage4?: any;
+}
+
+interface productFormFields {
     product_name: string;
     product_type: string;
     price: string;
     description: string;
     thumbnail: any;
+}
+
+
+interface IaddProductFormState extends productFormFields, showCaseImages {
     isSending: boolean;
+    numExtraImages: number;
 }
 
 
 class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFormState> {
 
-    product_type_default: 'Top';
+    product_type_default = 'Top';
     imageUploadRef: React.RefObject<HTMLInputElement>;
 
 
@@ -32,6 +44,8 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
         this.imageUploadRef = React.createRef();
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
+        this.addImageInput = this.addImageInput.bind(this);
+        this.addNewShowcaseImageInput = this.addNewShowcaseImageInput.bind(this);
     }
 
     readonly state: IaddProductFormState = {
@@ -41,9 +55,11 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
         description: '',
         thumbnail: '',
         isSending: false,
+        showcaseImage1: '',
+        numExtraImages: 0,
     };
 
-    public handleInputChange(event) {
+    handleInputChange(event) {
         const target = event.target;
         let value;
         if (target.type === 'checkbox') {
@@ -79,14 +95,21 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
         }
     }
 
-    public handleFormSubmit() {
-        let fieldValues: IaddProductFormState = Object.assign({}, this.state);
-        // We only need field values
-        delete fieldValues.isSending;
+    handleFormSubmit() {
+        const {product_name, description, thumbnail, price, product_type, showcaseImage1, showcaseImage2, showcaseImage3, showcaseImage4} = this.state;
 
-        let data = new FormData();
-        for (let field in fieldValues) {
-            data.append(field, fieldValues[field]);
+        let productFieldValues = {
+            product_name,
+            description,
+            thumbnail,
+            price,
+            product_type,
+            showcaseImage1, showcaseImage2, showcaseImage3, showcaseImage4
+        };
+
+        const data = new FormData();
+        for (let field in productFieldValues) {
+            data.append(field, productFieldValues[field]);
         }
 
         // We are about to send the data
@@ -95,6 +118,38 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
         });
         ProductsService.createProduct(data, this.props.accessToken).then(response => {
             console.log(response.data);
+
+            //     const productId = response.data.id;
+            //
+            //     const {showcaseImage1, showcaseImage2, showcaseImage3, showcaseImage4} = this.state;
+            //
+            //     const imageData = {
+            //         showcaseImage1,
+            //         showcaseImage2,
+            //         showcaseImage3,
+            //         showcaseImage4,
+            //     };
+            //
+            //     let createImageForm = function (productId, image) {
+            //         const data = new FormData();
+            //         data.append('picture', image);
+            //         data.append('product', productId);
+            //         return data
+            //     };
+            //
+            //
+            //     let imagePromises: any = [];
+            //     for (let image in imageData) {
+            //         if (image) {
+            //             let imageForm = createImageForm(productId, image);
+            //             imagePromises.push(ProductsService.createProductImages(imageForm, this.props.accessToken));
+            //         }
+            //     }
+            //
+            //
+            //     return Promise.all(imagePromises);
+            // }).then(response => {
+            //     console.log(response);
             this.resetForm();
         }).catch(e => {
             if (e.response) {
@@ -108,10 +163,45 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
         });
     }
 
+    validateDataFilled() {
+        let atLeastOneShowImageCompleted = false;
+
+        for (let input of (document.getElementsByClassName('showimage') as HTMLCollectionOf<HTMLInputElement>)) {
+            if (input.files && input.files[0]) {
+                atLeastOneShowImageCompleted = true;
+                break
+            }
+        }
+        return (this.state.product_name.length > 0 &&
+            this.state.description.length > 0 &&
+            this.state.price.length > 0 &&
+            this.state.thumbnail !== '' && atLeastOneShowImageCompleted);
+    }
+
+    addImageInput() {
+        // Only allow max of 3 extra images
+        if (this.state.numExtraImages < 3) {
+            this.setState({numExtraImages: (this.state.numExtraImages + 1)});
+        }
+    }
+
+    addNewShowcaseImageInput(numberForm) {
+        return (
+            <input onChange={this.handleInputChange} key={numberForm} className="showimage thumbnail-image-field my-1"
+                   type="file"
+                   name={`showcaseImage${numberForm}`}/>
+        )
+    };
+
     render() {
-        const isEnabled: boolean = (this.state.product_name.length > 0 && this.state.description.length > 0 && this.state.price.length > 0 && this.state.thumbnail !== '');
-        if (!this.props.accessToken){
+        if (!this.props.accessToken) {
             return redirectFunction('Login');
+        }
+        const inputIds: Array<number> = [];
+        let beginningId = 2;
+        for (let i = 0; i < this.state.numExtraImages; i++) {
+            inputIds.push(beginningId);
+            beginningId++;
         }
         return (
             <form method="post" className="custom-form">
@@ -128,7 +218,18 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
                 <BaseSelectField options={['Top', 'Bottom']} label="Product Type" name="product_type"
                                  inputValue={this.state.product_type}
                                  onChangeFunction={this.handleInputChange}/>
-                <button disabled={!isEnabled} onClick={this.handleFormSubmit} type="button"
+                <label className="thumbnails label-class">
+                    Images to Showcase:
+                    <input onChange={this.handleInputChange} className="showimage thumbnail-image-field mb-1"
+                           type="file" name="showcaseImage1"/>
+                    {
+                        inputIds.map(this.addNewShowcaseImageInput)
+                    }
+                    <button disabled={this.state.numExtraImages === 3} type="button" onClick={this.addImageInput}>Add
+                        Image
+                    </button>
+                </label>
+                <button disabled={!this.validateDataFilled()} onClick={this.handleFormSubmit} type="button"
                         className="form-item btn btn-primary">
                     {this.state.isSending ?
                         <i id="spinner" className="fas fa-spinner fa-spin"></i> : <span>Submit</span>

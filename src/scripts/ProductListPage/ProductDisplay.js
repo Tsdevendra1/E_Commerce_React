@@ -41,15 +41,15 @@ export default class ProductDisplay extends React.Component {
 
         return (
             <div className="product">
-                <a href="">
+                <div>
                     <div className="aspect-ratio-box">
                         <div className="aspect-ratio-box-inside">
-                            <img className="product-img" src="/static/main/images/frown.png"/>
+                            <img className="product-img" src={this.props.thumbnail}/>
                         </div>
                     </div>
-                </a>
+                </div>
                 <div className="product-description-wrapper">
-                    <p ref={this.descriptionRef}>{this.props.productDescription}</p>
+                    <p ref={this.descriptionRef}>{this.props.productName}</p>
                     <div ref={this.fadeTextRef} className="fade-text">
                     </div>
                 </div>
@@ -61,7 +61,7 @@ export default class ProductDisplay extends React.Component {
     }
 }
 ProductDisplay.propTypes = {
-    productDescription: PropTypes.string,
-    productPrice: PropTypes.number,
-    productImgPath: PropTypes.string,
+    productName: PropTypes.string.isRequired,
+    productPrice: PropTypes.number.isRequired,
+    thumbnail: PropTypes.string.isRequired,
 };

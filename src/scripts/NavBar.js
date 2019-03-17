@@ -6,14 +6,40 @@ import {routes} from './routers';
 export default class NavBar extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            mobileActive: false,
+            desktopActive: false,
+        };
         this.handleClick = this.handleClick.bind(this);
         this.showDesktopLinks = this.showDesktopLinks.bind(this);
         this.closeMainTab = this.closeMainTab.bind(this);
         this.createDesktopNavItem = this.createDesktopNavItem.bind(this);
         this.createMobileNavItem = this.createMobileNavItem.bind(this);
+        this.toggleNavMenuWithClick = this.toggleNavMenuWithClick.bind(this);
+    }
+
+    toggleNavMenuWithClick() {
+        let width = document.body.clientWidth;
+        if (width >= 724 && this.state.mobileActive) {
+            this.closeMobileTab();
+        } else if (width < 724 && this.state.desktopActive) {
+            document.getElementById('home-main-nav').click();
+        }
+    }
+
+    componentDidMount() {
+        window.addEventListener('resize', this.toggleNavMenuWithClick)
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.toggleNavMenuWithClick)
     }
 
     handleClick(e) {
+
+        // Toggle mobileActive
+        this.setState({mobileActive: ((!this.state.mobileActive))});
+
         // Add active class when pressed
         e.target.classList.toggle('show-mobile-active');
         e.target.classList.toggle('fa-times');
@@ -33,6 +59,9 @@ export default class NavBar extends React.Component {
     }
 
     showDesktopLinks(e) {
+        // Toggle mobileActive
+        this.setState({desktopActive: ((!this.state.desktopActive))});
+
         e.target.classList.toggle('desktop-nav-button-active');
         let navContentElement = document.getElementsByClassName('nav-content')[0];
         navContentElement.classList.toggle('nav-border-bottom');
@@ -52,6 +81,9 @@ export default class NavBar extends React.Component {
 
 
     createDesktopNavItem(navItem, parentNavId) {
+        if (!navItem.show) {
+            return;
+        }
         return (
             <div key={navItem.name} className="desktop-nav-item"><Link data-main-nav={parentNavId}
                                                                        onClick={this.closeMainTab}
@@ -64,6 +96,9 @@ export default class NavBar extends React.Component {
     }
 
     createMobileNavItem(navItem) {
+        if (!navItem.show) {
+            return;
+        }
         let className = 'mobile-nav-bar-item';
         return (
             <div key={`${navItem.name}-mobile`} className="row mobile-nav-row"
@@ -79,15 +114,14 @@ export default class NavBar extends React.Component {
     }
 
     render() {
-
         return (
             <div className="nav-bar">
                 <div className="nav-content nav-border-bottom">
                     <div className="nav-left-content">
                         <Logo/>
                         <div className="desktop-nav-button-group">
-                            <a id="home-main-nav" onClick={this.showDesktopLinks}
-                               className="desktop-show desktop-nav-button">HOME</a>
+                            <span id="home-main-nav" onClick={this.showDesktopLinks}
+                               className="desktop-show desktop-nav-button">HOME</span>
                         </div>
                     </div>
                     <div className="nav-right-content">

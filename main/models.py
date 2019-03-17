@@ -9,6 +9,7 @@ PRODUCT_TYPES = (
     ('Bottom', 'Bottom'),
 )
 
+
 class Product(models.Model):
     product_owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     product_name = models.CharField(blank=False, null=False, max_length=75)
@@ -25,8 +26,6 @@ def get_image_filename(instance, filename):
 
 
 class Image(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
     picture = models.ImageField(upload_to=get_image_filename,
                                 verbose_name='Picture', help_text='This will be displayed on the product page')
-
-

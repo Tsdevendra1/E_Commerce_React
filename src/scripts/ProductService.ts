@@ -15,6 +15,17 @@ export default class ProductsService {
     constructor() {
     }
 
+    static createProductImages(imageData: object, accessToken: string){
+        headers['Authorization'] = 'Bearer ' + accessToken;
+        const url = `${API_URL}/api/image/`;
+        return axios({
+            method: 'post', //you can set what request you want to be
+            url: url,
+            data: imageData,
+            headers: headers,
+        });
+    }
+
     static getProductCategoryCount() {
         let url: string = `${API_URL}/api/product/product_type_count`;
         return axios.get(url).then(response => response.data);
@@ -33,12 +44,12 @@ export default class ProductsService {
         return axios.get(url).then(response => response.data);
     }
 
-    static getProduct(pk) {
+    static getProduct(pk: number) {
         const url = `${API_URL}/api/product/${pk}/`;
         return axios.get(url).then(response => response.data);
     }
 
-    static deleteProduct(pk) {
+    static deleteProduct(pk: number) {
         const url = `${API_URL}/api/product/${pk}/`;
         return axios({
             method: 'delete', //you can set what request you want to be
@@ -47,7 +58,7 @@ export default class ProductsService {
         });
     }
 
-    static createProduct(productData, accessToken) {
+    static createProduct(productData: object, accessToken: string) {
         headers['Authorization'] = 'Bearer ' + accessToken;
         const url = `${API_URL}/api/product/`;
         return axios({
@@ -58,7 +69,7 @@ export default class ProductsService {
         });
     }
 
-    static updateProduct(productData, pk) {
+    static updateProduct(productData: object, pk: number) {
         const url = `${API_URL}/api/product/${pk}/`;
         return axios({
             method: 'patch', //you can set what request you want to be
@@ -68,7 +79,7 @@ export default class ProductsService {
         });
     }
 
-    static replaceProduct(productData, pk) {
+    static replaceProduct(productData:object, pk:number) {
         const url = `${API_URL}/api/product/${pk}/`;
         return axios({
             method: 'put', //you can set what request you want to be

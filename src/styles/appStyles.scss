@@ -5,7 +5,9 @@
 @import './AddProductPage/addProductPage';
 @import 'forms';
 @import url('https://fonts.googleapis.com/css?family=Poppins');
-@import './ProductPage/productPage';
+@import 'ProductListPage/productListPage';
+@import 'ProductPage/productPage';
+
 body {
   font-family: 'Poppins', sans-serif;
 }
@@ -27,18 +29,21 @@ a, a:hover, a:focus {
 }
 
 .top-margin-for-nav {
-  padding-top: 3.9rem;
-  height:auto;
-  //display: flex;
-  //flex-direction: column;
-  //justify-content: center;
+  padding-top: 3.55rem;
+  height: auto;
 }
 
+@media screen and (min-width: 724px) {
+  .top-margin-for-nav {
+    padding-top: 3.9rem;
+    height: auto;
+  }
+}
 
 #overlay {
   position: fixed; /* Sit on top of the page content */
   display: none; /* Hidden by default */
-  width: 100vh; /* Full width (cover the whole page) */
+  width: 1000vh; /* Full width (cover the whole page) */
   height: 100vh; /* Full height (cover the whole page) */
   top: 0;
   left: 0;
