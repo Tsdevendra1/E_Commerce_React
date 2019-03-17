@@ -23,7 +23,7 @@ interface IaddProductFormState {
 
 class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFormState> {
 
-    product_type_default: 'Top';
+    product_type_default = 'Top';
     imageUploadRef: React.RefObject<HTMLInputElement>;
 
 
@@ -110,7 +110,7 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
 
     render() {
         const isEnabled: boolean = (this.state.product_name.length > 0 && this.state.description.length > 0 && this.state.price.length > 0 && this.state.thumbnail !== '');
-        if (!this.props.accessToken){
+        if (!this.props.accessToken) {
             return redirectFunction('Login');
         }
         return (

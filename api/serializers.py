@@ -7,10 +7,10 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['product_name', 'product_type', 'price', 'description', 'thumbnail', 'product_owner']
+        fields = ['id', 'product_name', 'product_type', 'price', 'description', 'thumbnail', 'product_owner']
 
-    def to_representation(self, instance):
-        """Remove the product_owner as they may not want to be shown with a product"""
-        ret = super().to_representation(instance)
-        del ret['product_owner']
-        return ret
+    # def to_representation(self, instance):
+    #     """Remove the product_owner as they may not want to be shown with a product"""
+    #     ret = super().to_representation(instance)
+    #     del ret['product_owner']
+    #     return ret

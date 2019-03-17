@@ -1,9 +1,11 @@
 import * as React from 'react';
 import ProductDisplay from "./ProductDisplay";
+import {Link} from 'react-router-dom';
 import {
     fetchProductsIfNeeded,
 } from '../Redux/actions/productActions'
 import {connect} from 'react-redux';
+import {routes} from '../routers';
 
 
 interface Props {
@@ -20,9 +22,13 @@ class ProductDisplayGrid extends React.Component<Props, {}> {
 
     createGrid(productItem) {
         return (
-            <div key={productItem.description + productItem.product_name + productItem.price + productItem.thumbnail} className="grid-col">
+            <div key={productItem.description + productItem.product_name + productItem.price + productItem.thumbnail}
+                 className="grid-col">
                 <div className="grid-col-content">
-                    <ProductDisplay productDescription={productItem.description} productPrice={productItem.price}/>
+
+                    <Link to={`/products/${productItem.id}`}>
+                        <ProductDisplay productName={productItem.product_name} productPrice={productItem.price}/>
+                    </Link>
                 </div>
             </div>
         )

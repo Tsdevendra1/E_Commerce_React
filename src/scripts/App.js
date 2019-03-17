@@ -12,7 +12,6 @@ import configureStore from './Redux/configureStore';
 const store = configureStore();
 
 function createRoutes(routeInfo) {
-
     return (
         <Route key={routeInfo.name} exact={routeInfo.exact} path={routeInfo.path} component={routeInfo.component}/>
     )
