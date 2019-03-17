@@ -12,6 +12,7 @@ schema_view = get_schema_view(title='Pastebin API')
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
 router.register(r'product', m_views.ProductViewSet)
+router.register(r'image', m_views.ImageViewSet)
 
 urlpatterns = [
     path('schema/', schema_view),

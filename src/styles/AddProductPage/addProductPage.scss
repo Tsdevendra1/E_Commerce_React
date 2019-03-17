@@ -1,3 +1,18 @@
+.thumbnails {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.thumbnail-image-field{
+  //max-width: 150px;
+  //margin: 10px 0;
+}
+
+.label-class{
+  font-weight: bold;
+}
+
 .add-form-container {
   width: 80%;
   display: flex;

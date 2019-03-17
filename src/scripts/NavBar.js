@@ -20,7 +20,6 @@ export default class NavBar extends React.Component {
 
     toggleNavMenuWithClick() {
         let width = document.body.clientWidth;
-        console.log(width);
         if (width >= 724 && this.state.mobileActive) {
             this.closeMobileTab();
         } else if (width < 724 && this.state.desktopActive) {
@@ -121,8 +120,8 @@ export default class NavBar extends React.Component {
                     <div className="nav-left-content">
                         <Logo/>
                         <div className="desktop-nav-button-group">
-                            <a id="home-main-nav" onClick={this.showDesktopLinks}
-                               className="desktop-show desktop-nav-button">HOME</a>
+                            <span id="home-main-nav" onClick={this.showDesktopLinks}
+                               className="desktop-show desktop-nav-button">HOME</span>
                         </div>
                     </div>
                     <div className="nav-right-content">

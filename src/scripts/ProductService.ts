@@ -15,6 +15,17 @@ export default class ProductsService {
     constructor() {
     }
 
+    static createProductImages(imageData: object, accessToken: string){
+        headers['Authorization'] = 'Bearer ' + accessToken;
+        const url = `${API_URL}/api/image/`;
+        return axios({
+            method: 'post', //you can set what request you want to be
+            url: url,
+            data: imageData,
+            headers: headers,
+        });
+    }
+
     static getProductCategoryCount() {
         let url: string = `${API_URL}/api/product/product_type_count`;
         return axios.get(url).then(response => response.data);

@@ -44,7 +44,7 @@ export default class ProductDisplay extends React.Component {
                 <div>
                     <div className="aspect-ratio-box">
                         <div className="aspect-ratio-box-inside">
-                            <img className="product-img" src="/static/main/images/frown.png"/>
+                            <img className="product-img" src={this.props.thumbnail}/>
                         </div>
                     </div>
                 </div>
@@ -61,7 +61,7 @@ export default class ProductDisplay extends React.Component {
     }
 }
 ProductDisplay.propTypes = {
-    productName: PropTypes.string,
-    productPrice: PropTypes.number,
-    productImgPath: PropTypes.string,
+    productName: PropTypes.string.isRequired,
+    productPrice: PropTypes.number.isRequired,
+    thumbnail: PropTypes.string.isRequired,
 };

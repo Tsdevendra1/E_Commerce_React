@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ProductService from '../ProductService';
-import ProductPageMobile from '../ProductPage/ProductPageMobile';
-import ProductPageDesktop from "./ProductPageDesktop";
+import ProductPageTopMobile from '../ProductPage/ProductPageTopMobile';
+import ProductPageTopDesktop from "./ProductPageTopDesktop";
 
 interface Props {
     match: any;
@@ -15,6 +15,7 @@ export interface productData {
     product_type: string;
     thumbnail: string;
     product_owner: string;
+    images: Array<string>;
 }
 
 interface State {
@@ -45,8 +46,8 @@ export default class ProductPage extends React.Component<Props, State> {
         if (this.state.productData && !this.state.fetchingProductData) {
             return (
                 <div className="product-page-header">
-                    <ProductPageMobile productData={this.state.productData}/>
-                    <ProductPageDesktop productData={this.state.productData}/>
+                    <ProductPageTopMobile productData={this.state.productData}/>
+                    <ProductPageTopDesktop productData={this.state.productData}/>
                 </div>
             )
         }

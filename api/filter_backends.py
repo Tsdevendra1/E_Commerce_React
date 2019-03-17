@@ -1,6 +1,6 @@
 from django_filters import rest_framework as filters
 
-from main.models import Product
+from main.models import Product, Image
 from main.models import PRODUCT_TYPES
 
 
@@ -10,3 +10,9 @@ class ProductFilter(filters.FilterSet):
     class Meta:
         model = Product
         fields = ['price', 'product_owner', 'product_type']
+
+
+class ImageFilter(filters.FilterSet):
+    class Meta:
+        model = Image
+        fields = ['product']

@@ -1,16 +1,25 @@
 import * as React from 'react';
 import ProductService from '../ProductService';
 import {productData} from "./ProductPage";
+import ProductPageThumbnail from './ProductPageThumbnail';
+import GenericProductPageTop from './GenericProductPageTop';
 
 
-interface Props {
-    productData: productData;
-}
+export default class ProductPageTopDesktop extends GenericProductPageTop {
+    constructor(props) {
+        super(props);
+        this.createThumbnail = this.createThumbnail.bind(this);
+    }
 
-interface State {
-}
+    createThumbnail(imageSrc) {
+        return (
+            <div key={imageSrc} className="my-4">
+                <ProductPageThumbnail thumbnail={imageSrc}
+                                      setParentState={this.setCurrentMainPic}/>
+            </div>
+        )
+    }
 
-export default class ProductPageDesktop extends React.Component<Props, State> {
     render() {
         const {productData} = this.props;
         return (
@@ -18,16 +27,16 @@ export default class ProductPageDesktop extends React.Component<Props, State> {
                 <div className="product-desktop-content">
                     <div className="product-page-desktop-tophalf mb-5">
                         <div className="product-page-desktop-thumbnails">
-                            <div className="aspect-ratio-box">
-                                <div className="aspect-ratio-box-inside">
-                                    <img className="product-page-image" src={productData.thumbnail}/>
-                                </div>
+                            <div className="my-4">
+                                <ProductPageThumbnail thumbnail={productData.thumbnail}
+                                                      setParentState={this.setCurrentMainPic}/>
                             </div>
+                            {productData.images.map(this.createThumbnail)}
                         </div>
                         <div className="product-page-image-desktop">
                             <div className="aspect-ratio-box">
                                 <div className="aspect-ratio-box-inside">
-                                    <img className="product-page-image" src={productData.thumbnail}/>
+                                    <img className="product-page-image" src={this.state.currentActivePictureSrc}/>
                                 </div>
                             </div>
                         </div>
@@ -70,10 +79,10 @@ export default class ProductPageDesktop extends React.Component<Props, State> {
                             <h5 className="product-page-details-header">LOOK AFTER ME</h5>
                             <div className="product-page-description">
                                 <div>
-                                You know the drill.
+                                    You know the drill.
                                 </div>
                                 <div>
-                                Always check the label.
+                                    Always check the label.
                                 </div>
                                 Separate your colours, etc.
                             </div>

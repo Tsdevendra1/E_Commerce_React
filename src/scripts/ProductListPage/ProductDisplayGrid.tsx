@@ -27,7 +27,7 @@ class ProductDisplayGrid extends React.Component<Props, {}> {
                 <div className="grid-col-content">
 
                     <Link to={`/products/${productItem.id}`}>
-                        <ProductDisplay productName={productItem.product_name} productPrice={productItem.price}/>
+                        <ProductDisplay thumbnail={productItem.thumbnail} productName={productItem.product_name} productPrice={productItem.price}/>
                     </Link>
                 </div>
             </div>
