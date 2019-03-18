@@ -11,7 +11,13 @@ class HomePage extends React.Component {
 
     render() {
         return (
-            <h1>This is the omh this lellww homepage</h1>
+            <div className="typewriter-container">
+                <img className="homepage-image" src="/static/main/images/animal-avian-beak-1200857.jpg"/>
+                <div className="text-block typewriter">
+                    <h1>Welcome</h1>
+                    <p className="typewriter">To Parrot Clothing</p>
+                </div>
+            </div>
         )
     }
 }

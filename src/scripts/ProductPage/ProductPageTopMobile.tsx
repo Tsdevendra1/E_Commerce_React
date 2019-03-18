@@ -81,7 +81,7 @@ export default class ProductPageTopMobile extends GenericProductPageTop {
                             Separate your colours, etc.
                         </div>
                     </div>
-                    <button type="button" className="btn add-basket-btn">ADD TO BASKET</button>
+                    {this.props.render()}
                 </div>
             </div>
         )

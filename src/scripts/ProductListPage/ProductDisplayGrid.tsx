@@ -12,6 +12,8 @@ interface Props {
     products: Array<object>;
     isFetching: boolean;
     dispatch: any;
+    handleLoadingFinished: (value: boolean) => void;
+    loadingHasFinished: boolean;
 }
 
 class ProductDisplayGrid extends React.Component<Props, {}> {
@@ -20,6 +22,13 @@ class ProductDisplayGrid extends React.Component<Props, {}> {
         dispatch(fetchProductsIfNeeded(''));
     }
 
+   componentDidUpdate(prevProps){
+        if (prevProps.isFetching !== this.props.isFetching){
+            this.props.handleLoadingFinished(!this.props.isFetching);
+        }
+   }
+
+
     createGrid(productItem) {
         return (
             <div key={productItem.description + productItem.product_name + productItem.price + productItem.thumbnail}
@@ -27,7 +36,8 @@ class ProductDisplayGrid extends React.Component<Props, {}> {
                 <div className="grid-col-content">
 
                     <Link to={`/products/${productItem.id}`}>
-                        <ProductDisplay thumbnail={productItem.thumbnail} productName={productItem.product_name} productPrice={productItem.price}/>
+                        <ProductDisplay thumbnail={productItem.thumbnail} productName={productItem.product_name}
+                                        productPrice={productItem.price}/>
                     </Link>
                 </div>
             </div>
@@ -36,9 +46,9 @@ class ProductDisplayGrid extends React.Component<Props, {}> {
 
 
     render() {
-        let {products, isFetching} = this.props;
-        if (isFetching) {
-            return <h1>FETCHING DATA...</h1>
+        let {products} = this.props;
+        if (!this.props.loadingHasFinished) {
+            return <h1 style={{height: '100vh'}}></h1>
         } else {
             return (
                 <div className="grid-wrapper">

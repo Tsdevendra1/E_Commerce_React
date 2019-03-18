@@ -1,6 +1,8 @@
 import {combineReducers} from 'redux';
 import {
     REQUEST_PRODUCTS,
+    ADD_PRODUCT_BASKET,
+    UPDATE_PRODUCT_QUANTITY,
     RECEIVE_PRODUCTS,
 } from './actions/productActions'
 import {
@@ -10,6 +12,39 @@ import {
     SET_REFRESH_TOKEN,
     RESET_REFRESH_TOKEN
 } from "./actions/tokenActions";
+
+
+export interface singleProductInfo {
+    productThumbnailPath: string;
+    price: number
+    quantity: number
+}
+
+interface shoppingBasketInterface {
+    [key: number]: singleProductInfo
+}
+
+
+function shoppingBasket(state: shoppingBasketInterface = {}, action) {
+    switch (action.type) {
+        case ADD_PRODUCT_BASKET:
+            return Object.assign({}, state, {
+                ...state,
+                [action.productId]: {
+                    productThumbnailPath: action.productThumbnailPath,
+                    price: action.price,
+                    quantity: 1
+                },
+            });
+        case UPDATE_PRODUCT_QUANTITY:
+            return Object.assign({}, state, {
+                ...state,
+                [action.productId]: Object.assign({}, state[action.productId], {quantity: (state[action.productId].quantity + 1)}),
+            });
+        default:
+            return state
+    }
+}
 
 
 function jwtToken(state = {isFetching: false, accessToken: null, refreshToken: null}, action) {
@@ -74,6 +109,7 @@ function products(
 const rootReducer = combineReducers({
     productList: products,
     jwtToken,
+    shoppingBasket
 });
 
 export default rootReducer

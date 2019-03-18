@@ -6,6 +6,7 @@ import ProductPage from "./ProductPage/ProductPage";
 import LoginPage from "./LoginPage/LoginPage";
 import {Redirect} from 'react-router-dom';
 import React from 'react';
+import CheckoutPage from './CheckoutPage/CheckoutPage';
 
 
 export const routes = {
@@ -14,6 +15,7 @@ export const routes = {
         {path: '/products/', component: ProductListPage, name: 'Product', exact: true, show: true},
         {path: '/add/products/', component: AddProductPage, name: 'Add Product', exact: false, show: true},
         {path: '/login/', component: LoginPage, name: 'Login', exact: false, show: true},
+        {path: '/checkout/', component: CheckoutPage, name: 'Checkout', exact: false, show: true},
         {path: '/products/:id', component: ProductPage, name: 'Product Page', exact: false, show: false},
     ]
 };

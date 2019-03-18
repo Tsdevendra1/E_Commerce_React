@@ -5,6 +5,7 @@ import ProductPageThumbnail from './ProductPageThumbnail';
 
 interface Props {
     productData: productData;
+    render: () => void;
 }
 
 interface State {
@@ -26,3 +27,5 @@ export default class GenericProductPageTop extends React.Component<Props, State>
     }
 
 }
+
+

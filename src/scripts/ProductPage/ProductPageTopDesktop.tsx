@@ -47,7 +47,7 @@ export default class ProductPageTopDesktop extends GenericProductPageTop {
                             <div className="product-page-price">
                                 £{productData.price}
                             </div>
-                            <button type="button" className="btn add-basket-btn">ADD TO BASKET</button>
+                            {this.props.render()}
                         </div>
                     </div>
                     <div className="product-page-desktop-bottomhalf">

@@ -1,8 +1,8 @@
 import * as React from 'react';
-import OptionSelector from "./OptionSelector";
-import SelectOneOptionBox from "./SelectOneOptionBox";
-import SelectManyOptionBox from "./SelectManyOptionBox";
-import ProductService from '../../ProductService';
+import OptionSelector from "./ProductSelector/OptionSelector";
+import SelectOneOptionBox from "./ProductSelector/SelectOneOptionBox";
+import SelectManyOptionBox from "./ProductSelector/SelectManyOptionBox";
+import ProductService from '../ProductService';
 
 interface State {
     activeID: boolean | null;
@@ -24,8 +24,13 @@ interface componentInfo {
     customComponent: React.ReactElement<any>;
 }
 
+interface Props {
+    handleLoadingFinished: (value: boolean)=> void;
+    loadingHasFinished: boolean;
+}
 
-export default class ProductSelectorBar extends React.Component<{}, State> {
+
+export default class ProductSelectorBar extends React.Component<Props, State> {
     components: Array<componentInfo> = [
         {
             id: 1, type: 'Sort', selectorOptions: [
@@ -65,9 +70,10 @@ export default class ProductSelectorBar extends React.Component<{}, State> {
             });
             categorySelector.selectorOptions = selectOptionsArray;
             this.components.push(categorySelector);
-            this.setState({
-                haveGotCategories: true
-            });
+            // this.setState({
+            //     haveGotCategories: true
+            // });
+            this.props.handleLoadingFinished(true);
         }).catch(e => {
             console.log(e.response.data);
         })
@@ -99,9 +105,6 @@ export default class ProductSelectorBar extends React.Component<{}, State> {
 
 
     render() {
-        if (!this.state.haveGotCategories) {
-            return <h1>FETCHING DATA...</h1>;
-        }
         return (
             <div className="product-selector">
                 <div className="product-selector-content">
