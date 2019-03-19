@@ -15,22 +15,40 @@ export default class BasketShowcase extends React.Component<Props, State> {
         super(props);
     }
 
+    handleClick() {
+        let basketElement = (document.getElementsByClassName('basket-container')[0] as HTMLDivElement);
+        basketElement.style.left = '-344px';
+    }
+
     render() {
         return (
-            <div className="basket-showcase">
-                <div className="basket-header">
-                    <h4 style={{margin: '0'}}>Order Summary</h4>
-                </div>
-                <div className="basket-content">
-                    <BasketItem/>
-                </div>
-                <div className="basket-footer basket-content">
-                    <div className="basket-total">
-                        Total today
+            <div className="basket-container">
+                <div className="basket-showcase">
+                    <div className="basket-header">
+                        <h4 style={{margin: '0'}}>Order Summary</h4>
+                        <div className="flex-align-vertical">
+                            <i onClick={this.handleClick} className="close-basket-button fas fa-times"></i>
+                        </div>
                     </div>
-                    <span>
+                    <div className="basket-content">
+                        <BasketItem/>
+                        <BasketItem/>
+                        <BasketItem/>
+                        <BasketItem/>
+                        <BasketItem/>
+                        <BasketItem/>
+                        <BasketItem/>
+                        <BasketItem/>
+                        <BasketItem/>
+                    </div>
+                    <div className="basket-footer basket-content">
+                        <div className="basket-total">
+                            Total today
+                        </div>
+                        <span>
             £0.00
             </span>
+                    </div>
                 </div>
             </div>
         )
