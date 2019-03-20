@@ -172,15 +172,23 @@ html, body {
 //  display: none;
 //}
 
-
-.basket-container {
+.basket-mobile {
+  display: block;
+}
+.basket-container-mobile {
   flex-basis: 30%;
-  height: 55%;
+  //height: 55%;
+  height: 100%;
   display: block;
   position: fixed;
-  left: -344px;
-  top: 63.5px;
-  transition: left 0.6s;
+  left: 0;
+  top: 57px;
+  transition: all 0.6s linear;
+  width: 300px;
+}
+
+.basket-left {
+  left: -344px !important;
 }
 
 .close-basket-button {
@@ -191,12 +199,12 @@ html, body {
 .basket-showcase {
   width: auto;
   background: white;
-  height: auto;
+  height: 100%;
   box-shadow: 0 1px 3px 0 rgba(50, 50, 93, 0.15), 0 4px 6px 0 rgba(112, 157, 199, 0.15);
 }
 
 .basket-content {
-  padding: 8%;
+  padding: 6.2%;
   max-height: 70vh;
   overflow: auto;
 }
@@ -319,8 +327,21 @@ li:hover:after {
 
 }
 
+.basket-container-desktop{
+  display: none;
+  height: 100%;
+  position: relative;
+  transition: none;
+  top: 0;
+  left: 0 !important;
+  width: 340px;
+}
+
 @media screen and (min-width: 724px) {
 
+  .basket-container-mobile {
+    top: 63.4px;
+  }
   .checkout-information-container {
     margin: 2.5rem 0;
   }
@@ -329,6 +350,9 @@ li:hover:after {
 @media screen and (min-width: 1024px) {
   .show-basket-button {
     display: none
+  }
+  .basket-content {
+    padding: 6.6%;
   }
   .checkout-information-container {
     flex-basis: 70%;
@@ -348,14 +372,16 @@ li:hover:after {
     align-items: flex-start;
   }
   .close-basket-button {
-    display: none;
+    display: none !important;
   }
-  .basket-container {
+  .basket-container-desktop {
     display: block;
-    height: 100%;
-    position: relative;
-    transition: left 0s;
-    top: 0;
-    left: 0;
+  }
+  .basket-left {
+    left: 0 !important;
+  }
+
+  .basket-container-mobile {
+    display: none !important;
   }
 }

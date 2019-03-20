@@ -197,6 +197,7 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
         if (!this.props.accessToken) {
             return redirectFunction('Login');
         }
+        // TODO: Pretty sure this is bad practice
         const inputIds: Array<number> = [];
         let beginningId = 2;
         for (let i = 0; i < this.state.numExtraImages; i++) {

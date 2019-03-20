@@ -2,6 +2,7 @@ import React from 'react';
 import Logo from "./Logo";
 import {Link} from 'react-router-dom';
 import {routes} from './routers';
+import ProductsService from "./ProductService";
 
 export default class NavBar extends React.Component {
     constructor(props) {
@@ -9,13 +10,16 @@ export default class NavBar extends React.Component {
         this.state = {
             mobileActive: false,
             desktopActive: false,
+            searchResults: [],
         };
         this.handleClick = this.handleClick.bind(this);
         this.showDesktopLinks = this.showDesktopLinks.bind(this);
         this.closeMainTab = this.closeMainTab.bind(this);
         this.createDesktopNavItem = this.createDesktopNavItem.bind(this);
         this.createMobileNavItem = this.createMobileNavItem.bind(this);
+        this.getSearchResults = this.getSearchResults.bind(this);
         this.toggleNavMenuWithClick = this.toggleNavMenuWithClick.bind(this);
+        this.closeSearchResults = this.closeSearchResults.bind(this);
     }
 
     toggleNavMenuWithClick() {
@@ -113,7 +117,33 @@ export default class NavBar extends React.Component {
         )
     }
 
+    getSearchResults(e) {
+        let value = e.currentTarget.value;
+        if (value) {
+            ProductsService.getProducts(`product_name=${value}`).then(data => {
+                this.setState({searchResults: data})
+            }).catch(e => {
+                console.log(e.response.data);
+            })
+        } else {
+            this.setState({searchResults: []})
+        }
+    }
+
+    closeSearchResults() {
+        this.setState({searchResults: []});
+        document.querySelector('.search-bar').value = '';
+    }
+
     render() {
+        let addClass = function () {
+            let button = document.querySelector('.search-bar-button');
+            button.classList.add('button-focus');
+        };
+        let removeClass = function () {
+            let button = document.querySelector('.search-bar-button');
+            button.classList.remove('button-focus');
+        };
         return (
             <div className="nav-bar">
                 <div className="nav-content nav-border-bottom">
@@ -121,15 +151,29 @@ export default class NavBar extends React.Component {
                         <Logo/>
                         <div className="desktop-nav-button-group">
                             <span id="home-main-nav" onClick={this.showDesktopLinks}
-                               className="desktop-show desktop-nav-button">HOME</span>
+                                  className="desktop-show desktop-nav-button">HOME</span>
                         </div>
                     </div>
                     <div className="nav-right-content">
                         <i id="show-mobile-button" onClick={this.handleClick} className="mobile-show fas fa-bars"></i>
-                        <div className="center-vertical desktop-show">
-                            <input type="text" placeholder="Search.." name="search" className="search-bar"/>
+                        <div className="center-vertical desktop-show" style={{position: 'relative'}}>
+                            <input autoComplete="off" onChange={this.getSearchResults} onFocus={addClass}
+                                   onBlur={removeClass} type="text"
+                                   placeholder="Search.." name="search" className="search-bar"/>
                             <button type="submit" className="search-bar-button"><i className="fa fa-search"></i>
                             </button>
+                            {(this.state.searchResults.length !== 0) &&
+                            <div className="search-results">
+                                {this.state.searchResults.map(result => {
+                                    return (<div onClick={this.closeSearchResults} key={result.id} className="result">
+                                            <Link to={`/products/${result.id}`}>
+                                                {result.product_name}
+                                            </Link>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                            }
                             <i className="fas fa-shopping-basket desktop-show"></i>
                         </div>
                     </div>

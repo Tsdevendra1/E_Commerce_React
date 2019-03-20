@@ -20,7 +20,7 @@ export interface singleProductInfo {
     quantity: number
 }
 
-interface shoppingBasketInterface {
+export interface shoppingBasketInterface {
     [key: number]: singleProductInfo
 }
 

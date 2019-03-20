@@ -50,22 +50,43 @@ class ProductPage extends React.Component<Props, State> {
         })
     }
 
-    handleClick() {
-        if (this.state.productData){
+    handleClick(e) {
+        console.log('outsde');
+        const currentElement = (e.currentTarget as HTMLButtonElement);
+        if (this.state.productData && currentElement.getAttribute('data-justadded') === 'no') {
+            console.log('inside');
+            e.persist();
+            currentElement.setAttribute('data-justadded', 'yes');
+
+            const tick = (currentElement.getElementsByClassName('fas')[0] as HTMLIFrameElement);
+            const text = ((currentElement.getElementsByClassName('button-text')[0]) as HTMLSpanElement);
+            tick.style.display = 'inline';
+            text.innerHTML = 'ADDED';
+
+            setTimeout(function () {
+                // currentElement.innerText = 'ADD TO BASKET';
+                currentElement.setAttribute('data-justadded', 'no');
+                tick.style.display = 'none';
+                text.innerHTML = 'ADD TO BASKET';
+            }, 2000);
             let productId = parseInt(this.props.match.params.id);
-            if (this.props.shoppingBasket.hasOwnProperty(productId)){
+            if (this.props.shoppingBasket.hasOwnProperty(productId)) {
                 this.props.dispatch(updateProductQuantity(productId));
-            } else{
+            } else {
                 this.props.dispatch(addProductToBasket(productId, this.state.productData.thumbnail, this.state.productData.price))
             }
-        } else {
-            throw 'In ProductPage.tsx handleClick function, no productData was found';
         }
     }
 
     createAddBasketButton() {
         return (
-            <button onClick={this.handleClick} type="button" className="btn add-basket-btn">ADD TO BASKET</button>
+            <button data-justadded="no" onClick={this.handleClick} type="button" className="btn add-basket-btn">
+                <i style={{display: 'none', paddingRight:'10px'}}
+                   className="fas fa-check"></i>
+                <span className="button-text">
+                ADD TO BASKET
+                </span>
+            </button>
         )
     }
 
@@ -74,6 +95,7 @@ class ProductPage extends React.Component<Props, State> {
             return <h1>FETCHING DATA...</h1>
         }
         if (this.state.productData && !this.state.fetchingProductData) {
+            console.log(this.state.productData.id);
             return (
                 <div className="product-page-header">
                     <ProductPageTopMobile render={this.createAddBasketButton} productData={this.state.productData}/>
