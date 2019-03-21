@@ -18,13 +18,17 @@ export default class ProductPageTopDesktop extends GenericProductPageTop {
                 {wrapComponentWithClass(
                     <ProductPageThumbnail thumbnail={imageSrc}
                                           />
-                    , 'my-4', this.setCurrentMainPic)}
+                    , 'my-4', this.props.setCurrentMainPic, this.props.currentActivePictureSrc, imageSrc)}
             </React.Fragment>
         )
     }
 
     render() {
         const {productData} = this.props;
+        // let firstThumbnailClasses = 'mobile-thumbnail';
+        // if (productData.thumbnail === this.props.currentActivePictureSrc) {
+        //     firstThumbnailClasses += ' active-pic';
+        // }
         return (
             <div className="product-page-desktop">
                 <div className="product-desktop-content">
@@ -33,13 +37,13 @@ export default class ProductPageTopDesktop extends GenericProductPageTop {
                             {wrapComponentWithClass(
                                 <ProductPageThumbnail thumbnail={productData.thumbnail}
                                                       />
-                                , 'my-4', this.setCurrentMainPic)}
+                                , 'my-4', this.props.setCurrentMainPic, this.props.currentActivePictureSrc, productData.thumbnail)}
                             {productData.images.map(this.createThumbnail)}
                         </div>
                         <div className="product-page-image-desktop">
                             <div className="aspect-ratio-box">
                                 <div className="aspect-ratio-box-inside">
-                                    <img className="product-page-image" src={this.state.currentActivePictureSrc}/>
+                                    <img className="product-page-image" src={this.props.currentActivePictureSrc}/>
                                 </div>
                             </div>
                         </div>

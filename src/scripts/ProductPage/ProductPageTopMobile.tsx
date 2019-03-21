@@ -6,35 +6,40 @@ import GenericProductPageTop from "./GenericProductPageTop";
 import {wrapComponentWithClass} from "./GenericProductPageTop";
 
 export default class ProductPageTopMobile extends GenericProductPageTop {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.createThumbnail = this.createThumbnail.bind(this);
     }
 
-    createThumbnail(imageSrc){
+    createThumbnail(imageSrc) {
         return (
             <React.Fragment key={imageSrc}>
                 {wrapComponentWithClass(
                     <ProductPageThumbnail thumbnail={imageSrc}
                     />
-                    , 'mobile-thumbnail', this.setCurrentMainPic)}
+                    , 'mobile-thumbnail', this.props.setCurrentMainPic, this.props.currentActivePictureSrc, imageSrc)}
             </React.Fragment>
         )
     }
+
     render() {
         const {productData} = this.props;
+        let firstThumbnailClasses = 'mobile-thumbnail';
+        if (productData.thumbnail === this.props.currentActivePictureSrc) {
+            firstThumbnailClasses += ' active-pic';
+        }
         return (
             <div className="product-page-mobile">
                 <div className="aspect-ratio-box">
                     <div className="aspect-ratio-box-inside">
-                        <img className="product-page-image" src={this.state.currentActivePictureSrc}/>
+                        <img className="product-page-image" src={this.props.currentActivePictureSrc}/>
                     </div>
                 </div>
                 <div className="product-page-mobile-thumbnails">
                     {wrapComponentWithClass(
                         <ProductPageThumbnail thumbnail={productData.thumbnail}
                         />
-                        , 'mobile-thumbnail', this.setCurrentMainPic)}
+                        , 'mobile-thumbnail', this.props.setCurrentMainPic, this.props.currentActivePictureSrc, productData.thumbnail)}
                     {productData.images.map(this.createThumbnail)}
                 </div>
                 <div className="product-page-info">

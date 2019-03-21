@@ -6,13 +6,18 @@ import ProductPageThumbnail from './ProductPageThumbnail';
 interface Props {
     productData: productData;
     render: () => void;
+    currentActivePictureSrc: string;
+    setCurrentMainPic: (e:React.MouseEvent<HTMLImageElement>)=>void;
 }
 
 interface State {
     currentActivePictureSrc: string;
 }
 
-export function wrapComponentWithClass(WrappedComponent:JSX.Element, wrappingClass:string, onClickFunction: (e:any)=>any) {
+export function wrapComponentWithClass(WrappedComponent: JSX.Element, wrappingClass: string, onClickFunction: (e: any) => any, mainImageSrc:string, localImageSrc:string) {
+    if (mainImageSrc.includes(localImageSrc)){
+        wrappingClass += ' active-pic';
+    }
     return (
         <div className={wrappingClass} onClick={onClickFunction}>
             {WrappedComponent}
@@ -41,15 +46,15 @@ export default class GenericProductPageTop extends React.Component<Props, State>
     }
 
     setCurrentMainPic(e: React.MouseEvent<HTMLImageElement>) {
-        console.log(e.currentTarget);
-        let elems = document.getElementsByClassName('active-pic');
-        console.log(elems);
-        for (let el of elems){
-            el.classList.remove("active-pic");
+        if (e.currentTarget.parentElement) {
+            let elems = (e.currentTarget.parentElement.getElementsByClassName('active-pic') as HTMLCollectionOf<HTMLElement>);
+            for (let el of elems) {
+                el.classList.remove("active-pic");
+            }
+            e.currentTarget.classList.add('active-pic');
+            let image = (e.currentTarget.querySelector('img') as HTMLImageElement);
+            this.setState({currentActivePictureSrc: image.src})
         }
-        e.currentTarget.classList.add('active-pic');
-        let image = (e.currentTarget.querySelector('img') as HTMLImageElement);
-        this.setState({currentActivePictureSrc: image.src})
     }
 
 }

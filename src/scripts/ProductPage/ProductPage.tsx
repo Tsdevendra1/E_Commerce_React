@@ -28,25 +28,48 @@ export interface productData {
 interface State {
     fetchingProductData: boolean;
     productData: productData | null;
+    currentActivePictureSrc: string;
 }
 
 class ProductPage extends React.Component<Props, State> {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
-        this.createAddBasketButton = this.createAddBasketButton.bind(this)
+        this.createAddBasketButton = this.createAddBasketButton.bind(this);
+        this.setCurrentMainPic = this.setCurrentMainPic.bind(this);
     }
 
     state: Readonly<State> = {
         fetchingProductData: true,
-        productData: null
+        productData: null,
+        currentActivePictureSrc: '',
     };
+
+    setCurrentMainPic(e: React.MouseEvent<HTMLImageElement>) {
+        if (e.currentTarget.parentElement) {
+            // let elems = (e.currentTarget.parentElement.getElementsByClassName('active-pic') as HTMLCollectionOf<HTMLElement>);
+            // for (let el of elems) {
+            //     el.classList.remove("active-pic");
+            // }
+            // e.currentTarget.classList.add('active-pic');
+            let image = (e.currentTarget.querySelector('img') as HTMLImageElement);
+            this.setState({currentActivePictureSrc: image.src})
+        }
+    }
 
     getProductData(productId: number) {
         ProductService.getProduct(productId).then(data => {
-            this.setState({productData: data, fetchingProductData: false});
+            console.log(data);
+            this.setState({
+                productData: data,
+                fetchingProductData: false,
+                currentActivePictureSrc: data.thumbnail,
+            });
         }).catch(e => {
-            console.log(e.response.data)
+            if (e.response){
+                console.log(e.response);
+                // console.log(e.response.data)
+            }
         })
     }
 
@@ -111,8 +134,11 @@ class ProductPage extends React.Component<Props, State> {
         if (this.state.productData && !this.state.fetchingProductData) {
             return (
                 <div className="product-page-header">
-                    <ProductPageTopMobile render={this.createAddBasketButton} productData={this.state.productData}/>
-                    <ProductPageTopDesktop render={this.createAddBasketButton} productData={this.state.productData}/>
+                    <ProductPageTopMobile render={this.createAddBasketButton} setCurrentMainPic={this.setCurrentMainPic}
+                                          productData={this.state.productData}
+                                          currentActivePictureSrc={this.state.currentActivePictureSrc}/>
+                    <ProductPageTopDesktop setCurrentMainPic={this.setCurrentMainPic} render={this.createAddBasketButton} productData={this.state.productData}
+                                           currentActivePictureSrc={this.state.currentActivePictureSrc}/>
                 </div>
             )
         }
