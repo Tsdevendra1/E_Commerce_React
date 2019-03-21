@@ -53,7 +53,6 @@ class BasketShowcase extends React.Component<Props, State> {
 
     render() {
         let classes = (this.props.type === 'mobile') ? 'basket-container-mobile basket-left' : 'basket-container-desktop';
-        console.log(this.props.type);
         return (
             <div className={classes}>
                 <div className="basket-showcase">

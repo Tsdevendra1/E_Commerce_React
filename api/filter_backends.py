@@ -1,12 +1,14 @@
+from django_common.auth_backends import User
 from django_filters import rest_framework as filters
 
-from main.models import Product, Image
-from main.models import PRODUCT_TYPES
+from main.models import Product, Image, ProductCategories
 
 
 class ProductFilter(filters.FilterSet):
-    product_type = filters.MultipleChoiceFilter(choices=PRODUCT_TYPES)
+    product_type = filters.ModelMultipleChoiceFilter(queryset=ProductCategories.objects.all())
     product_name = filters.CharFilter(lookup_expr='icontains')
+
+    # product_owner = filters.ModelChoiceFilter(queryset=User.objects.all())
 
     class Meta:
         model = Product
@@ -17,3 +19,9 @@ class ImageFilter(filters.FilterSet):
     class Meta:
         model = Image
         fields = ['product']
+
+
+class ProductCategoriesFilter(filters.FilterSet):
+    class Meta:
+        model = ProductCategories
+        fields = ['name']

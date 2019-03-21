@@ -12,3 +12,15 @@
 .form-item {
   margin: 10px 0;
 }
+
+.form-select-field {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.add-category-button {
+  cursor: pointer;
+  color: blue;
+  font-weight: lighter !important;
+}

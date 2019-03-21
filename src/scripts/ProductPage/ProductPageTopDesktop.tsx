@@ -3,6 +3,7 @@ import ProductService from '../ProductService';
 import {productData} from "./ProductPage";
 import ProductPageThumbnail from './ProductPageThumbnail';
 import GenericProductPageTop from './GenericProductPageTop';
+import {wrapComponentWithClass} from "./GenericProductPageTop";
 
 
 export default class ProductPageTopDesktop extends GenericProductPageTop {
@@ -13,10 +14,12 @@ export default class ProductPageTopDesktop extends GenericProductPageTop {
 
     createThumbnail(imageSrc) {
         return (
-            <div key={imageSrc} className="my-4">
-                <ProductPageThumbnail thumbnail={imageSrc}
-                                      setParentState={this.setCurrentMainPic}/>
-            </div>
+            <React.Fragment key={imageSrc}>
+                {wrapComponentWithClass(
+                    <ProductPageThumbnail thumbnail={imageSrc}
+                                          />
+                    , 'my-4', this.setCurrentMainPic)}
+            </React.Fragment>
         )
     }
 
@@ -27,10 +30,10 @@ export default class ProductPageTopDesktop extends GenericProductPageTop {
                 <div className="product-desktop-content">
                     <div className="product-page-desktop-tophalf mb-5">
                         <div className="product-page-desktop-thumbnails">
-                            <div className="my-4">
+                            {wrapComponentWithClass(
                                 <ProductPageThumbnail thumbnail={productData.thumbnail}
-                                                      setParentState={this.setCurrentMainPic}/>
-                            </div>
+                                                      />
+                                , 'my-4', this.setCurrentMainPic)}
                             {productData.images.map(this.createThumbnail)}
                         </div>
                         <div className="product-page-image-desktop">

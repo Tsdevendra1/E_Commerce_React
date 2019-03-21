@@ -18,7 +18,6 @@ let keys = {37: 1, 38: 1, 39: 1, 40: 1};
 function preventDefault(e) {
     let basket = document.getElementsByClassName('basket-container-mobile')[0];
     let basketContainsEventTarget = basket.contains(e.target);
-    console.log(basketContainsEventTarget);
 
     e = e || window.event;
     if (!basketContainsEventTarget){

@@ -6,9 +6,11 @@ import ProductsService from "../ProductService";
 import BaseUploadField from "../Forms/BaseUploadField";
 import * as ReactDOM from "react-dom";
 import {redirectFunction} from "../routers";
+import {fetchProductsIfNeeded} from "../Redux/actions/productActions";
 
 interface IaddProductFormProps {
     accessToken: string;
+    dispatch: any;
 }
 
 interface showCaseImages {
@@ -20,23 +22,29 @@ interface showCaseImages {
 
 interface productFormFields {
     product_name: string;
-    product_type: string;
+    product_type: number | null;
     price: string;
     description: string;
     thumbnail: any;
 }
 
+export interface optionInterface {
+    id: number;
+    name: string;
+}
 
 interface IaddProductFormState extends productFormFields, showCaseImages {
     isSending: boolean;
     numExtraImages: number;
+    productCategories: Array<optionInterface>;
+    addModalValue: string;
 }
 
 
 class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFormState> {
 
-    product_type_default = 'Top';
     imageUploadRef: React.RefObject<HTMLInputElement>;
+    addModalRef: React.RefObject<HTMLInputElement>;
 
 
     constructor(props) {
@@ -46,22 +54,46 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
         this.addImageInput = this.addImageInput.bind(this);
         this.addNewShowcaseImageInput = this.addNewShowcaseImageInput.bind(this);
+        this.addModalRef = React.createRef();
+        this.hideAddModal = this.hideAddModal.bind(this);
+        this.showAddModal = this.showAddModal.bind(this);
+        this.addCategory = this.addCategory.bind(this);
     }
 
-    readonly state: IaddProductFormState = {
+    state: Readonly<IaddProductFormState> = {
         product_name: '',
-        product_type: this.product_type_default,
+        product_type: null,
         price: '',
+        addModalValue: '',
         description: '',
         thumbnail: '',
         isSending: false,
         showcaseImage1: '',
         numExtraImages: 0,
+        productCategories: [],
     };
 
+
+    componentDidMount() {
+        this.setProductCategories();
+    }
+
+    setProductCategories(){
+        ProductsService.getProductCategories().then(data => {
+            console.log(data);
+            // For product_type we set whatever is first as default value
+            if (this.props.accessToken){
+                this.setState({productCategories: data, product_type: data[0].id})
+            }
+        }).catch(e => {
+            console.log(e.response.data);
+        })
+    }
+
     handleInputChange(event) {
-        const target = event.target;
+        const target = event.currentTarget;
         let value;
+        console.log(target.type);
         if (target.type === 'checkbox') {
             value = target.checked
         } else if (target.type === 'file') {
@@ -78,9 +110,10 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
         for (let field in this.state) {
             if (field === 'product_type') {
                 this.setState({
-                    [field]: this.product_type_default,
+                    // Set first productCategory as default
+                    [field]: this.state.productCategories[0].id,
                 })
-            } else if (field !== 'isSending') {
+            } else if (field !== 'isSending' && field !== 'productCategories') {
                 this.setState({
                     [field]: ''
                 } as any)
@@ -116,40 +149,8 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
         this.setState({
             isSending: true,
         });
-        ProductsService.createProduct(data, this.props.accessToken).then(response => {
-            console.log(response.data);
-
-            //     const productId = response.data.id;
-            //
-            //     const {showcaseImage1, showcaseImage2, showcaseImage3, showcaseImage4} = this.state;
-            //
-            //     const imageData = {
-            //         showcaseImage1,
-            //         showcaseImage2,
-            //         showcaseImage3,
-            //         showcaseImage4,
-            //     };
-            //
-            //     let createImageForm = function (productId, image) {
-            //         const data = new FormData();
-            //         data.append('picture', image);
-            //         data.append('product', productId);
-            //         return data
-            //     };
-            //
-            //
-            //     let imagePromises: any = [];
-            //     for (let image in imageData) {
-            //         if (image) {
-            //             let imageForm = createImageForm(productId, image);
-            //             imagePromises.push(ProductsService.createProductImages(imageForm, this.props.accessToken));
-            //         }
-            //     }
-            //
-            //
-            //     return Promise.all(imagePromises);
-            // }).then(response => {
-            //     console.log(response);
+        ProductsService.createProduct(data, this.props.accessToken).then(data => {
+            console.log(data);
             this.resetForm();
         }).catch(e => {
             if (e.response) {
@@ -193,6 +194,32 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
         )
     };
 
+    hideAddModal() {
+        if (this.addModalRef.current) {
+            this.addModalRef.current.style.display = 'none';
+            (document.getElementsByClassName('overlay')[0] as HTMLDivElement).style.display = 'none';
+            this.setState({addModalValue: ''});
+        }
+    }
+
+    showAddModal() {
+        if (this.addModalRef.current) {
+            this.addModalRef.current.style.display = 'block';
+            (document.getElementsByClassName('overlay')[0] as HTMLDivElement).style.display = 'block';
+        }
+    }
+
+    addCategory() {
+        let input = (document.getElementById('add-category-input') as HTMLInputElement);
+        ProductsService.createProductCategory(input.value, this.props.accessToken).then(data => {
+            console.log(data);
+            this.setProductCategories();
+            this.hideAddModal();
+        }).catch(e => {
+            console.log(e);
+        });
+    }
+
     render() {
         if (!this.props.accessToken) {
             return redirectFunction('Login');
@@ -204,8 +231,34 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
             inputIds.push(beginningId);
             beginningId++;
         }
+        console.log(this.state.addModalValue);
         return (
             <form method="post" className="custom-form">
+                <div className="overlay"></div>
+                <div ref={this.addModalRef} className="add-category-modal">
+                    <div className="add-header">
+                        <span>
+                        Add Category
+                        </span>
+                        <span>
+                            <i onClick={this.hideAddModal} className="fas fa-times"></i>
+                        </span>
+                    </div>
+                    <div className="add-category-content">
+                        <label className="base-field">
+                        Category name:
+                        <input type="text" id="add-category-input" name="addModalValue" onChange={this.handleInputChange} value={this.state.addModalValue} placeholder="Enter category name..."/>
+                        </label>
+                        {/*<BaseInputField type="text" label="Category name" name="addModalValue"*/}
+                                        {/*inputValue={this.state.addModalValue}*/}
+                                        {/*onChangeFunction={this.handleInputChange}/>*/}
+                        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
+                            <button disabled={!(this.state.addModalValue !== '')} onClick={this.addCategory}
+                                    type="button" className="btn btn-primary">Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <BaseInputField type="text" label="Product Name" name="product_name"
                                 inputValue={this.state.product_name}
                                 onChangeFunction={this.handleInputChange}/>
@@ -216,12 +269,16 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
                                 onChangeFunction={this.handleInputChange}/>
                 <BaseUploadField onChangeFunction={this.handleInputChange} innerRef={this.imageUploadRef}
                                  name="thumbnail" label="Product Thumbnail"/>
-                <BaseSelectField options={['Top', 'Bottom']} label="Product Type" name="product_type"
+                {(this.state.productCategories && this.state.product_type) &&
+                <BaseSelectField showModalFunc={this.showAddModal} options={this.state.productCategories}
+                                 label="Product Type" name="product_type"
                                  inputValue={this.state.product_type}
                                  onChangeFunction={this.handleInputChange}/>
+                }
                 <label className="thumbnails label-class">
                     Images to Showcase:
-                    <input onChange={this.handleInputChange} className="showimage thumbnail-image-field mb-1"
+                    <input onChange={this.handleInputChange}
+                           className="showimage thumbnail-image-field mb-1"
                            type="file" name="showcaseImage1"/>
                     {
                         inputIds.map(this.addNewShowcaseImageInput)
@@ -249,5 +306,6 @@ function mapStateToProps(state) {
         accessToken
     }
 }
+
 
 export default connect(mapStateToProps)(AddProductForm);

@@ -3,6 +3,7 @@ import OptionSelector from "./ProductSelector/OptionSelector";
 import SelectOneOptionBox from "./ProductSelector/SelectOneOptionBox";
 import SelectManyOptionBox from "./ProductSelector/SelectManyOptionBox";
 import ProductService from '../ProductService';
+import {optionInterface} from "../AddProductPage/AddProductForm";
 
 interface State {
     activeID: boolean | null;
@@ -25,7 +26,7 @@ interface componentInfo {
 }
 
 interface Props {
-    handleLoadingFinished: (value: boolean)=> void;
+    handleLoadingFinished: (value: boolean) => void;
     loadingHasFinished: boolean;
 }
 
@@ -52,27 +53,35 @@ export default class ProductSelectorBar extends React.Component<Props, State> {
 
     componentDidMount() {
         ProductService.getProductCategoryCount().then(data => {
+            interface IproductTypeData {
+                amount: number;
+                id: number;
+            }
+
+            interface Idata {
+                [key: string]: IproductTypeData;
+            }
+
+            console.log(data);
             let selectOptionsArray: Array<selectOptions> = [];
             let categorySelector: componentInfo = {
                 id: 2, type: 'Category', selectorOptions: [], customComponent: <SelectManyOptionBox/>
             };
 
-            Object.entries(data).forEach(([productType, productAmount], index) => {
+
+            Object.entries(data as Idata).forEach(([productType, productTypeData], index) => {
                 let baseCategoryRowInfo: selectOptions =
                     {
                         id: index,
                         optionName: productType,
-                        optionAmount: (productAmount as number),
+                        optionAmount: (productTypeData.amount as number),
                         paramType: 'product_type',
-                        paramValue: productType
+                        paramValue: `${productTypeData.id}`,
                     };
                 selectOptionsArray.push(baseCategoryRowInfo);
             });
             categorySelector.selectorOptions = selectOptionsArray;
             this.components.push(categorySelector);
-            // this.setState({
-            //     haveGotCategories: true
-            // });
             this.props.handleLoadingFinished(true);
         }).catch(e => {
             console.log(e.response.data);

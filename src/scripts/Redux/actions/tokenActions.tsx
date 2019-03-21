@@ -62,7 +62,7 @@ function receieveToken(data: any): object {
     }
 }
 
-export function fetchToken(username: string, password: string): (dispatch: any)=> Promise<void> {
+export function fetchToken(username: string, password: string): (dispatch: any) => Promise<void> {
     return dispatch => {
         dispatch(requestToken());
         let data = {username: username, password: password};

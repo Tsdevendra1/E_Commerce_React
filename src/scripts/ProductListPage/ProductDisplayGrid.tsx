@@ -18,21 +18,15 @@ interface Props {
 
 class ProductDisplayGrid extends React.Component<Props, {}> {
     componentDidMount() {
-        let productArray = this.props.products;
-        if (!productArray.length || !Array.isArray(productArray)){
-            const {dispatch} = this.props;
-            dispatch(fetchProductsIfNeeded(''));
-        } else {
-            this.props.handleLoadingFinished(true);
-        }
-        console.log(productArray);
+        const {dispatch} = this.props;
+        dispatch(fetchProductsIfNeeded(''));
     }
 
-   componentDidUpdate(prevProps){
-        if (prevProps.isFetching !== this.props.isFetching){
+    componentDidUpdate(prevProps) {
+        if (prevProps.isFetching !== this.props.isFetching) {
             this.props.handleLoadingFinished(!this.props.isFetching);
         }
-   }
+    }
 
 
     createGrid(productItem) {

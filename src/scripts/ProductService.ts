@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export const API_URL = 'http://127.0.0.1:8000';
 import getCookie from './getCookiesFunction'
+import {store} from './App';
 
 export const headers = {
     "X-CSRFToken": getCookie("csrftoken"),
@@ -9,13 +10,12 @@ export const headers = {
     "Content-Type": "application/json",
 };
 
-
 export default class ProductsService {
 
     constructor() {
     }
 
-    static createProductImages(imageData: object, accessToken: string){
+    static createProductImages(imageData: object, accessToken: string) {
         headers['Authorization'] = 'Bearer ' + accessToken;
         const url = `${API_URL}/api/image/`;
         return axios({
@@ -24,6 +24,23 @@ export default class ProductsService {
             data: imageData,
             headers: headers,
         });
+    }
+
+    static createProductCategory(name: string, accessToken: string) {
+        headers['Authorization'] = 'Bearer ' + accessToken;
+        const url = `${API_URL}/api/productcategories/`;
+        let data = {name};
+        return axios({
+            method: 'post', //you can set what request you want to be
+            url: url,
+            data: data,
+            headers: headers,
+        });
+    }
+
+    static getProductCategories() {
+        let url: string = `${API_URL}/api/productcategories/`;
+        return axios.get(url).then(response => response.data);
     }
 
     static getProductCategoryCount() {
@@ -79,7 +96,7 @@ export default class ProductsService {
         });
     }
 
-    static replaceProduct(productData:object, pk:number) {
+    static replaceProduct(productData: object, pk: number) {
         const url = `${API_URL}/api/product/${pk}/`;
         return axios({
             method: 'put', //you can set what request you want to be

@@ -28,9 +28,6 @@ class LoginForm extends React.Component<IloginFormProps, IloginFormState> {
         password: ''
     };
 
-    componentDidMount() {
-        console.log('Inside the tsx file');
-    }
 
     handleInputChange(event) {
         const target = event.target;

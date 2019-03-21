@@ -3,6 +3,7 @@ import ProductService from '../ProductService';
 import {productData} from "./ProductPage";
 import ProductPageThumbnail from './ProductPageThumbnail';
 import GenericProductPageTop from "./GenericProductPageTop";
+import {wrapComponentWithClass} from "./GenericProductPageTop";
 
 export default class ProductPageTopMobile extends GenericProductPageTop {
     constructor(props){
@@ -12,10 +13,12 @@ export default class ProductPageTopMobile extends GenericProductPageTop {
 
     createThumbnail(imageSrc){
         return (
-            <div key={imageSrc} className="mobile-thumbnail">
-                <ProductPageThumbnail thumbnail={imageSrc}
-                                      setParentState={this.setCurrentMainPic}/>
-            </div>
+            <React.Fragment key={imageSrc}>
+                {wrapComponentWithClass(
+                    <ProductPageThumbnail thumbnail={imageSrc}
+                    />
+                    , 'mobile-thumbnail', this.setCurrentMainPic)}
+            </React.Fragment>
         )
     }
     render() {
@@ -28,10 +31,10 @@ export default class ProductPageTopMobile extends GenericProductPageTop {
                     </div>
                 </div>
                 <div className="product-page-mobile-thumbnails">
-                    <div className="mobile-thumbnail">
+                    {wrapComponentWithClass(
                         <ProductPageThumbnail thumbnail={productData.thumbnail}
-                                              setParentState={this.setCurrentMainPic}/>
-                    </div>
+                        />
+                        , 'mobile-thumbnail', this.setCurrentMainPic)}
                     {productData.images.map(this.createThumbnail)}
                 </div>
                 <div className="product-page-info">

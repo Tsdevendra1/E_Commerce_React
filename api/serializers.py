@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from main.models import Product, Image
+from main.models import Product, Image, ProductCategories
 
 
 class ImageRelationField(serializers.RelatedField):
@@ -20,3 +20,9 @@ class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
         fields = ['picture']
+
+
+class ProductCategoriesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductCategories
+        fields = ['id', 'name']

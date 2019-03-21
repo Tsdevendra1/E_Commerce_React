@@ -5,6 +5,7 @@ import ProductPageTopDesktop from "./ProductPageTopDesktop";
 import {connect} from 'react-redux';
 import {singleProductInfo} from "../Redux/reducers";
 import {addProductToBasket, updateProductQuantity} from "../Redux/actions/productActions";
+import LoadingOverlay from "../LoadingOverlay";
 
 
 interface Props {
@@ -41,20 +42,30 @@ class ProductPage extends React.Component<Props, State> {
         productData: null
     };
 
-
-    componentDidMount() {
-        ProductService.getProduct(this.props.match.params.id).then(data => {
+    getProductData(productId: number) {
+        ProductService.getProduct(productId).then(data => {
             this.setState({productData: data, fetchingProductData: false});
         }).catch(e => {
             console.log(e.response.data)
         })
     }
 
+    componentDidMount() {
+        this.getProductData(this.props.match.params.id);
+    }
+
+    componentDidUpdate(prevProps) {
+        let prevPropsProductId = parseInt(prevProps.match.params.id);
+        let productId = parseInt(this.props.match.params.id);
+        if (prevPropsProductId !== productId) {
+            this.setState({fetchingProductData: true});
+            this.getProductData(productId);
+        }
+    }
+
     handleClick(e) {
-        console.log('outsde');
         const currentElement = (e.currentTarget as HTMLButtonElement);
         if (this.state.productData && currentElement.getAttribute('data-justadded') === 'no') {
-            console.log('inside');
             e.persist();
             currentElement.setAttribute('data-justadded', 'yes');
 
@@ -81,7 +92,7 @@ class ProductPage extends React.Component<Props, State> {
     createAddBasketButton() {
         return (
             <button data-justadded="no" onClick={this.handleClick} type="button" className="btn add-basket-btn">
-                <i style={{display: 'none', paddingRight:'10px'}}
+                <i style={{display: 'none', paddingRight: '10px'}}
                    className="fas fa-check"></i>
                 <span className="button-text">
                 ADD TO BASKET
@@ -92,10 +103,12 @@ class ProductPage extends React.Component<Props, State> {
 
     render() {
         if (this.state.fetchingProductData) {
-            return <h1>FETCHING DATA...</h1>
+            return (
+                <LoadingOverlay/>
+            )
+
         }
         if (this.state.productData && !this.state.fetchingProductData) {
-            console.log(this.state.productData.id);
             return (
                 <div className="product-page-header">
                     <ProductPageTopMobile render={this.createAddBasketButton} productData={this.state.productData}/>

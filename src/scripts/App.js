@@ -9,7 +9,7 @@ import GenericPage from './GenericPage'
 // REDUX
 import configureStore from './Redux/configureStore';
 
-const store = configureStore();
+export const store = configureStore();
 
 function createRoutes(routeInfo) {
     return (

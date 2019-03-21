@@ -47,7 +47,7 @@ function shoppingBasket(state: shoppingBasketInterface = {}, action) {
 }
 
 
-function jwtToken(state = {isFetching: false, accessToken: null, refreshToken: null}, action) {
+function jwtToken(state = {isFetching: false, accessToken: null, refreshToken: null, expiresAt: null}, action) {
     switch (action.type) {
         case RESET_REFRESH_TOKEN:
             return Object.assign({}, state, {
@@ -60,6 +60,7 @@ function jwtToken(state = {isFetching: false, accessToken: null, refreshToken: n
         case RECIEVE_ACCESS_TOKEN:
             return Object.assign({}, state, {
                 accessToken: action.accessToken,
+                expiresAt: (new Date).getTime() + 300000,
             });
         case REQUEST_TOKEN:
             return Object.assign({}, state, {
@@ -70,6 +71,7 @@ function jwtToken(state = {isFetching: false, accessToken: null, refreshToken: n
                 isFetching: false,
                 accessToken: action.accessToken,
                 refreshToken: action.refreshToken,
+                expiresAt: (new Date).getTime() + 300000,
             });
         default:
             return state
