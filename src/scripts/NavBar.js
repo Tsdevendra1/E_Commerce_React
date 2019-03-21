@@ -166,7 +166,7 @@ export default class NavBar extends React.Component {
                             <div className="search-results">
                                 {this.state.searchResults.map(result => {
                                     return (<div onClick={this.closeSearchResults} key={result.id} className="result">
-                                            <Link to={`/products/${result.id}`}>
+                                            <Link className="nav-search-link" to={`/products/${result.id}`}>
                                                 {result.product_name}
                                             </Link>
                                         </div>

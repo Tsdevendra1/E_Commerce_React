@@ -49,6 +49,9 @@ $optionBoxMargin: 1rem;
 
 .selector-options-content {
   margin: $optionBoxMargin;
+  max-height: 248px;
+  overflow: auto;
+
 }
 
 .selector-options-header {
@@ -57,6 +60,7 @@ $optionBoxMargin: 1rem;
 }
 
 .option-box {
+  cursor: pointer;
   margin-top: 0.7rem;
   margin-bottom: 0.7rem;
   padding-top: 0.7rem;

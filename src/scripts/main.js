@@ -14,6 +14,7 @@ import {getAccessToken} from "./Redux/actions/tokenActions";
 
 // Add a request interceptor
 axios.interceptors.response.use(undefined, (error) => {
+        console.log(error, 'INSIDE THE ERROR');
         if (error.config && error.response && error.response.status === 401) {
             // Dispatch action to get new accessToken and then retry request
             console.log('INSIDE INTERCEPTOR');
@@ -22,7 +23,6 @@ axios.interceptors.response.use(undefined, (error) => {
                 return axios.request(error.config);
             });
         }
-
         return Promise.reject(error);
     }
 );
