@@ -24,3 +24,45 @@
   color: blue;
   font-weight: lighter !important;
 }
+
+$inputIconBackground: #F3F7F7;
+
+.input-with-icon {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  box-shadow: inset 0 1px 4px rgba(115, 143, 147, .25), 0 0 0 transparent;
+  background: $inputIconBackground;
+  padding: 4px;
+  z-index: 1;
+}
+
+$paddingInside: 5px;
+
+.input-input {
+  flex-basis: 96%;
+  width: 100%;
+  padding: $paddingInside;
+  background: $inputIconBackground;
+  outline: none !important;
+  border: 0;
+}
+
+.input-input::placeholder {
+  color: #799195;
+}
+
+.input-input:focus {
+  outline: none !important;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.input-icon {
+  flex-basis: 4%;
+  width: 100%;
+  font-size: 1.5rem;
+  padding: $paddingInside;
+  color: #799195;
+  background: $inputIconBackground;
+}

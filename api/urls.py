@@ -14,10 +14,13 @@ router = DefaultRouter()
 router.register(r'product', m_views.ProductViewSet)
 router.register(r'image', m_views.ImageViewSet)
 router.register(r'productcategories', m_views.ProductCategoriesViewSet)
+router.register(r'user', m_views.UserViewset)
 
 urlpatterns = [
     path('schema/', schema_view),
+
     path('api-token-auth/', views.obtain_auth_token),
+    # path('user/', m_views.UserCreate),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
     path('docs/', include_docs_urls(title='My API service')),

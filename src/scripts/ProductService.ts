@@ -10,9 +10,25 @@ export const headers = {
     "Content-Type": "application/json",
 };
 
+interface UserCreateData {
+    username: string;
+    email: string;
+    password: string;
+}
+
 export default class ProductsService {
 
     constructor() {
+    }
+
+    static createUser(userData: UserCreateData) {
+        const url = `${API_URL}/api/user/`;
+        return axios({
+            method: 'post',
+            url: url,
+            data: userData,
+            headers: headers,
+        });
     }
 
     static createProductImages(imageData: object, accessToken: string) {

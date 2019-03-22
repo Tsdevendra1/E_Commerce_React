@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -9,6 +9,7 @@ from rest_framework import permissions
 from django_filters import rest_framework as filters
 from rest_framework.filters import SearchFilter, OrderingFilter
 from main.models import ProductCategories
+from rest_framework import generics
 
 
 # Create your views here.
@@ -50,7 +51,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         type_count = {}
         product_types = ProductCategories.objects.all()
         for product_type in product_types:
-            type_count[product_type.name] = {'amount':product_type.product_set.all().count(), 'id':product_type.id}
+            type_count[product_type.name] = {'amount': product_type.product_set.all().count(), 'id': product_type.id}
         return Response(type_count)
 
 
@@ -87,3 +88,12 @@ class ProductCategoriesViewSet(viewsets.ModelViewSet):
                           IsOwnerOrReadOnly,)
     filter_backends = (filters.DjangoFilterBackend, SearchFilter, OrderingFilter)
     filterset_class = ProductCategoriesFilter
+
+
+class UserViewset(mixins.CreateModelMixin, viewsets.GenericViewSet):
+    """
+    List all snippets, or create a new snippet.
+    """
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+

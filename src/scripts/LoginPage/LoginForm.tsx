@@ -1,81 +1,67 @@
 import * as React from 'react';
-import BaseInputField from "../Forms/BaseInputField";
-import {connect} from 'react-redux';
 import {fetchToken} from '../Redux/actions/tokenActions';
 import {redirectFunction, routes} from '../routers';
+import InputWithIcon from "../Forms/InputWithIcon";
 
-interface IloginFormProps {
+interface Props {
     dispatch: any;
     isFetching: boolean;
     accessToken: string;
-}
-
-interface IloginFormState {
+    handleInputChange: (e:any) => void;
     username: string;
     password: string;
+    isSubmitEnabled: ()=>boolean;
 }
 
 
-class LoginForm extends React.Component<IloginFormProps, IloginFormState> {
-    constructor(props) {
+
+export default class LoginForm extends React.Component<Props, {}> {
+    constructor(props){
         super(props);
-        this.handleInputChange = this.handleInputChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
-
-    readonly state: IloginFormState = {
+    static defaultProps = {
         username: '',
-        password: ''
+        password: '',
     };
 
 
-    handleInputChange(event) {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-        this.setState({
-            [name]: value
-        } as any);
-    }
-
     handleClick() {
-        const {dispatch} = this.props;
-        dispatch(fetchToken(this.state.username, this.state.password));
+
+        const {dispatch, username, password} = this.props;
+        if (username && password){
+            dispatch(fetchToken(username, password));
+        }
     }
 
     render() {
-        const isEnabled = this.state.username.length > 0 && this.state.password.length > 0;
         const {isFetching, accessToken} = this.props;
 
         // accessToken is considered as user being 'logged in'
         if (accessToken) {
-            return redirectFunction('Product');
+            // return redirectFunction('Product');
         }
         return (
-            <form method="post" className="custom-form">
-                <BaseInputField type="username" label="Username" name="username" inputValue={this.state.username}
-                                onChangeFunction={this.handleInputChange}/>
-                <BaseInputField type="password" label="Password" name="password" inputValue={this.state.password}
-                                onChangeFunction={this.handleInputChange}/>
-                <button disabled={!isEnabled} onClick={this.handleClick} type="button"
-                        className="form-item btn btn-primary">
-                    {isFetching ?
-                        <i id="spinner" className="fas fa-spinner fa-spin"></i> : <span>Submit</span>
-                    }
-                </button>
-            </form>
+            <div className="form-content">
+                <div className="login-form-content">
+                    <InputWithIcon name="username" type="username" placeholder="Enter username..."
+                                   onChange={this.props.handleInputChange} value={this.props.username}>
+                        <i className="far fa-user"></i>
+                    </InputWithIcon>
+                    <InputWithIcon name="password" type="password" placeholder="Enter password..."
+                    onChange={this.props.handleInputChange} value={this.props.password}>
+                    <i className="fas fa-key"></i>
+                    </InputWithIcon>
+                    <button style={{float: 'right'}} disabled={!this.props.isSubmitEnabled()} onClick={this.handleClick} type="button"
+                            className="form-item btn btn-primary">
+                        {isFetching ?
+                            <i id="spinner" className="fas fa-spinner fa-spin"></i> : <span>Submit</span>
+                        }
+                    </button>
+                </div>
+            </div>
         )
     }
 }
 
 
-function mapStateToProps(state) {
-    const {jwtToken} = state;
-    const {isFetching, accessToken} = jwtToken;
-    return {
-        isFetching,
-        accessToken,
-    }
-}
-
-export default connect(mapStateToProps)(LoginForm)

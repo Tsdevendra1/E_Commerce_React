@@ -1,3 +1,4 @@
+from django_common.auth_backends import User
 from rest_framework import serializers
 from main.models import Product, Image, ProductCategories
 
@@ -26,3 +27,21 @@ class ProductCategoriesSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductCategories
         fields = ['id', 'name']
+
+
+class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password')
+
+    def create(self, validated_data):
+        username = validated_data['username']
+        email = validated_data['email']
+        password = validated_data['password']
+        user_obj = User(username=username,
+                        email=email)
+        user_obj.set_password(password)
+        user_obj.save()
+        return validated_data
