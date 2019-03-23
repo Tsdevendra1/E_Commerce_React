@@ -25,6 +25,7 @@ class OptionSelectRow extends React.Component {
                 for (let value of currentParamTypeValues) {
                     currentUrlParams.append(paramType, value);
                 }
+                // Only allow one type variable value for this parameter
             } else if (this.props.selectType === "one") {
                 // Delete all instances of current paramtype
                 currentUrlParams.delete(paramType);
@@ -36,7 +37,6 @@ class OptionSelectRow extends React.Component {
         } else {
             currentUrlParams.append(paramType, paramValue);
         }
-        console.log(currentUrlParams.toString());
         dispatch(fetchProductsIfNeeded((currentUrlParams.toString())));
     }
 
@@ -44,14 +44,16 @@ class OptionSelectRow extends React.Component {
         if (this.props.handleClick) {
             this.props.handleClick();
         }
-        this.setParamAndDispatch();
+        if (!this.props.ignoreParamDispatch){
+            this.setParamAndDispatch();
+        }
         let row = this.rowRef.current;
         row.classList.toggle('option-box-active');
     }
 
     render() {
         return (
-            <div ref={this.rowRef} onClick={this.handleClick}
+            <div data-paramtype={this.props.paramType} data-paramvalue={this.props.paramValue} ref={this.rowRef} onClick={this.handleClick}
                  className="option-box option-box-flex">
                 {this.props.selectType === 'one' && this.props.optionName}
                 {this.props.children}

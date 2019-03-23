@@ -16,14 +16,14 @@ import {getAccessToken} from "./Redux/actions/tokenActions";
 // TODO: Need to add case where RequestToken times out, otherwise ends up in a loop
 axios.interceptors.response.use(undefined, (error) => {
         console.log(error.response, 'INSIDE THE ERROR');
-        // if (error.config && error.response && error.response.status === 401) {
-        //     // Dispatch action to get new accessToken and then retry request
-        //     console.log('INSIDE INTERCEPTOR');
-        //     return store.dispatch(getAccessToken(store.getState().jwtToken.refreshToken)).then(() => {
-        //         error.config.headers['Authorization'] = 'Bearer ' + store.getState().jwtToken.accessToken;
-        //         return axios.request(error.config);
-        //     });
-        // }
+        if (error.config && error.response && error.response.status === 401) {
+            // Dispatch action to get new accessToken and then retry request
+            console.log('INSIDE INTERCEPTOR');
+            return store.dispatch(getAccessToken(store.getState().jwtToken.refreshToken)).then(() => {
+                error.config.headers['Authorization'] = 'Bearer ' + store.getState().jwtToken.accessToken;
+                return axios.request(error.config);
+            });
+        }
         return Promise.reject(error);
     }
 );

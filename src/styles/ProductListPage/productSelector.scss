@@ -57,6 +57,23 @@ $optionBoxMargin: 1rem;
 .selector-options-header {
   padding: $optionBoxMargin;
   background: white;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+//.select-all-active
+
+.select-all-box {
+  border: 3px solid darkgrey;
+  width: 70px;
+  height: 34px;
+}
+
+.select-all-box-content {
+  padding: 2px;
+  display: flex;
+  justify-content: center;
 }
 
 .option-box {

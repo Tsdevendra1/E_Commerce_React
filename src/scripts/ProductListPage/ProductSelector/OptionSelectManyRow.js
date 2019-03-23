@@ -2,11 +2,6 @@ import React from 'react';
 import OptionSelectRow from "./OptionSelectRow";
 
 export default class OptionSelectManyRow extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-
     render() {
         return (
             <OptionSelectRow {...this.props} selectType="many">

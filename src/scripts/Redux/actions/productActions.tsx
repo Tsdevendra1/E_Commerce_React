@@ -47,6 +47,7 @@ function fetchProducts(searchParams: string): (dispatch: any) => any {
 }
 
 export function fetchProductsIfNeeded(searchParams: string) {
+    console.log('fetching');
     return dispatch => {
         return dispatch(fetchProducts(searchParams))
     }

@@ -34,9 +34,8 @@ class LoginPage extends React.Component<{}, State> {
 
     render() {
         return (
-            <div className="login-page">
+            <div className="login-page my-5">
                 <div className="login-form-container">
-                    <h1 style={{textDecoration: 'underline'}}>Login</h1>
                     <div className="form-wrapper">
                         <div className="form-tabs">
                             <div onClick={this.handleClick} data-type="signup" className="signup-tab generic-tab signup-tab-active">
