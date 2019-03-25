@@ -32,11 +32,11 @@ export default class NavBar extends React.Component {
     }
 
     componentDidMount() {
-        window.addEventListener('resize', this.toggleNavMenuWithClick)
+        window.addEventListener('resize', this.toggleNavMenuWithClick);
     }
 
     componentWillUnmount() {
-        window.removeEventListener('resize', this.toggleNavMenuWithClick)
+        window.removeEventListener('resize', this.toggleNavMenuWithClick);
     }
 
     handleClick(e) {

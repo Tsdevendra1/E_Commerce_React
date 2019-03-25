@@ -12,10 +12,40 @@ class GenericPage extends React.Component {
     componentDidMount() {
         this.props.loadUserFromToken();
         window.addEventListener('click', event => {
-            clickAnywhereToClose('.nav-bar', '#home-main-nav','desktop-nav-button-active', event);
-            clickAnywhereToClose('#sortselector', '#sortselectorclick','selected-option-active', event);
-            clickAnywhereToClose('#categoryselector', '#categoryselectorclick','selected-option-active', event);
-            clickAnywhereToClose('.nav-bar', '#show-mobile-button','show-mobile-active', event);
+            let clickers = [
+                {
+                    capsuleElementInfo: '.nav-bar',
+                    clickTargetInfo: '#home-main-nav',
+                    activeStateIndicator: 'desktop-nav-button-active',
+                },
+                {
+                    capsuleElementInfo: '#sortselector',
+                    clickTargetInfo: '#sortselectorclick',
+                    activeStateIndicator: 'selected-option-active',
+                },
+                {
+                    capsuleElementInfo: '#categoryselector',
+                    clickTargetInfo: '#categoryselectorclick',
+                    activeStateIndicator: 'selected-option-active',
+                },
+                {
+                    capsuleElementInfo: '.nav-bar',
+                    clickTargetInfo: '#show-mobile-button',
+                    activeStateIndicator: 'show-mobile-active',
+                },
+
+            ];
+
+            for (let clicker of clickers) {
+                let alsoClickOutsideElement = false;
+                for (let clicker of clickers) {
+                    if (event.target === document.querySelector(clicker.clickTargetInfo)) {
+                        alsoClickOutsideElement = true;
+                        break
+                    }
+                }
+                clickAnywhereToClose(clicker.capsuleElementInfo, clicker.clickTargetInfo, clicker.activeStateIndicator, event, alsoClickOutsideElement);
+            }
         })
     }
 

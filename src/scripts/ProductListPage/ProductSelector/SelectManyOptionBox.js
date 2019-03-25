@@ -58,7 +58,10 @@ class SelectManyOptionBox extends React.Component {
     componentDidUpdate(prevProps) {
         if (prevProps.currentParams !== this.props.currentParams) {
             let activeOptions = ReactDOM.findDOMNode(this).parentElement.getElementsByClassName('option-box-active').length;
-            this.setState({numSelected: activeOptions})
+            this.setState({numSelected: activeOptions});
+            if (activeOptions === 0 && this.state.allButtonClicked){
+                this.setState({allButtonClicked: false});
+            }
         }
     }
 
