@@ -5,14 +5,18 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux';
 import {getAccessToken, setRefreshToken} from "./Redux/actions/tokenActions";
 import {withRouter} from 'react-router-dom'
+import clickAnywhereToClose from './clickAnywhereToCloseFunction';
 
 class GenericPage extends React.Component {
-    constructor(props) {
-        super(props)
-    }
 
     componentDidMount() {
-        this.props.loadUserFromToken()
+        this.props.loadUserFromToken();
+        window.addEventListener('click', event => {
+            clickAnywhereToClose('.nav-bar', '#home-main-nav','desktop-nav-button-active', event);
+            clickAnywhereToClose('#sortselector', '#sortselectorclick','selected-option-active', event);
+            clickAnywhereToClose('#categoryselector', '#categoryselectorclick','selected-option-active', event);
+            clickAnywhereToClose('.nav-bar', '#show-mobile-button','show-mobile-active', event);
+        })
     }
 
     render() {

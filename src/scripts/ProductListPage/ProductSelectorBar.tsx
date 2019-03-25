@@ -19,7 +19,7 @@ interface selectOptions {
 }
 
 interface componentInfo {
-    id: number;
+    id: string;
     type: string;
     selectorOptions: Array<selectOptions>;
     customComponent: React.ReactElement<any>;
@@ -34,7 +34,7 @@ interface Props {
 export default class ProductSelectorBar extends React.Component<Props, State> {
     components: Array<componentInfo> = [
         {
-            id: 1, type: 'Sort', selectorOptions: [
+            id: 'sortselector', type: 'Sort', selectorOptions: [
                 {id: 1, optionName: 'High to low', paramType: 'ordering', paramValue: '-price'},
                 {id: 2, optionName: 'Low to high', paramType: 'ordering', paramValue: 'price'},
             ], customComponent: <SelectOneOptionBox/>,
@@ -65,7 +65,7 @@ export default class ProductSelectorBar extends React.Component<Props, State> {
             console.log(data);
             let selectOptionsArray: Array<selectOptions> = [];
             let categorySelector: componentInfo = {
-                id: 2, type: 'Category', selectorOptions: [], customComponent: <SelectManyOptionBox/>
+                id: 'categoryselector', type: 'Category', selectorOptions: [], customComponent: <SelectManyOptionBox/>
             };
 
 

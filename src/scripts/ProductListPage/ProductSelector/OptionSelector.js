@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 export default class OptionSelector extends React.Component {
     constructor(props) {
@@ -58,8 +59,8 @@ export default class OptionSelector extends React.Component {
 
     render() {
         return (
-            <div className="selector-group">
-                <div onClick={this.showOptionsBox} ref={this.selectorStyleRef} className="selector-style">
+            <div id={this.props.componentId} className="selector-group">
+                <div id={`${this.props.componentId}click`} onClick={this.showOptionsBox} ref={this.selectorStyleRef} className="selector-style">
                     <div className="selector-type-text">
                         {this.props.selectorType}
                     </div>
