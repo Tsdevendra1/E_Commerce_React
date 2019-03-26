@@ -193,7 +193,7 @@ $desktopButtonBackgroundColor: #525050;
   @extend %desktop-default-style;
 }
 
-@media screen and (min-width: 724px) {
+@media screen and (min-width: 780px) {
   .mobile-show {
     display: none !important;
   }

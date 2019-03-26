@@ -14,8 +14,8 @@ export const routes = {
         {path: '/', component: HomePage, name: 'Home', exact: true, show: true},
         {path: '/products/', component: ProductListPage, name: 'Product', exact: true, show: true},
         {path: '/add/products/', component: AddProductPage, name: 'Add Product', exact: false, show: true},
-        {path: '/login/', component: LoginPage, name: 'Login', exact: false, show: true},
-        {path: '/checkout/', component: CheckoutPage, name: 'Checkout', exact: false, show: true},
+        {path: '/login/', component: LoginPage, name: 'Login', exact: false, show: false},
+        {path: '/checkout/', component: CheckoutPage, name: 'Checkout', exact: false, show: false},
         {path: '/products/:id', component: ProductPage, name: 'Product Page', exact: false, show: false},
     ]
 };

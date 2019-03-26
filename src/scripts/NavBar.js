@@ -174,7 +174,12 @@ export default class NavBar extends React.Component {
                                 })}
                             </div>
                             }
-                            <i className="fas fa-shopping-basket desktop-show"></i>
+                            <Link to="/login/">
+                                <i style={{margin: '0 25px 0 10px'}} className="fas fa-user desktop-show"></i>
+                            </Link>
+                            <Link to="/checkout/">
+                                <i className="fas fa-shopping-basket desktop-show"></i>
+                            </Link>
                         </div>
                     </div>
                 </div>
