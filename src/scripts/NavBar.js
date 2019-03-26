@@ -20,6 +20,7 @@ export default class NavBar extends React.Component {
         this.getSearchResults = this.getSearchResults.bind(this);
         this.toggleNavMenuWithClick = this.toggleNavMenuWithClick.bind(this);
         this.closeSearchResults = this.closeSearchResults.bind(this);
+        this.removeClass = this.removeClass.bind(this);
     }
 
     toggleNavMenuWithClick() {
@@ -145,17 +146,20 @@ export default class NavBar extends React.Component {
         mobileSearchBar.classList.toggle('base-hide-class');
     }
 
+    removeClass(event) {
+        event.target.value = '';
+        this.setState({searchResults: []});
+        let buttons = document.getElementsByClassName('search-bar-button');
+        for (let button of buttons) {
+            button.classList.remove('button-focus');
+        }
+    };
+
     render() {
         let addClass = function () {
             let buttons = document.getElementsByClassName('search-bar-button');
             for (let button of buttons) {
                 button.classList.add('button-focus');
-            }
-        };
-        let removeClass = function () {
-            let buttons = document.getElementsByClassName('search-bar-button');
-            for (let button of buttons) {
-                button.classList.remove('button-focus');
             }
         };
         return (
@@ -177,14 +181,15 @@ export default class NavBar extends React.Component {
                         <i id="show-mobile-button" onClick={this.handleClick} className="mobile-show fas fa-bars"></i>
                         <div className="center-vertical search-bar-wrapper desktop-show" style={{position: 'relative'}}>
                             <input autoComplete="off" onChange={this.getSearchResults} onFocus={addClass}
-                                   onBlur={removeClass} type="text"
+                                   onBlur={this.removeClass} type="text"
                                    placeholder="Search.." name="search" className="search-bar"/>
                             <button type="submit" className="search-bar-button"><i className="fa fa-search"></i>
                             </button>
                             {(this.state.searchResults.length !== 0) &&
                             <div className="search-results">
                                 {this.state.searchResults.map(result => {
-                                    return (<div onClick={this.closeSearchResults} key={result.id} className="result nav-search-link">
+                                    return (<div onClick={this.closeSearchResults} key={result.id}
+                                                 className="result nav-search-link">
                                             <Link to={`/products/${result.id}`}>
                                                 {result.product_name}
                                             </Link>
@@ -212,7 +217,7 @@ export default class NavBar extends React.Component {
                        className="fas fa-times mobile-show mobile-search-bar-close"></i>
                     <div className="mobile-search-bar-wrapper">
                         <input autoComplete="off" onChange={this.getSearchResults} onFocus={addClass}
-                               onBlur={removeClass} type="text"
+                               onBlur={this.removeClass} type="text"
                                placeholder="Search.." name="search" className="search-bar mobile-search-bar-input"/>
                         <button type="submit" className="search-bar-button mobile-search-bar-button"><i
                             className="fa fa-search"></i>
@@ -220,7 +225,8 @@ export default class NavBar extends React.Component {
                         <div className="mobile-search-results"
                              style={{display: (this.state.searchResults.length === 0) ? 'none' : 'block'}}>
                             {this.state.searchResults.map(result => {
-                                return (<div onClick={this.closeSearchResults} key={result.id} className="result nav-search-link">
+                                return (<div onClick={this.closeSearchResults} key={result.id}
+                                             className="result nav-search-link">
                                         <Link to={`/products/${result.id}`}>
                                             {result.product_name}
                                         </Link>
