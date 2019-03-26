@@ -135,14 +135,23 @@ export default class NavBar extends React.Component {
         document.querySelector('.search-bar').value = '';
     }
 
+
     render() {
         let addClass = function () {
-            let button = document.querySelector('.search-bar-button');
-            button.classList.add('button-focus');
+            let buttons = document.getElementsByClassName('search-bar-button');
+            for (let button of buttons) {
+                button.classList.add('button-focus');
+            }
+        };
+        let toggleMobileSearchBar = function () {
+            let mobileSearchBar = document.getElementsByClassName('mobile-search-bar')[0];
+            mobileSearchBar.classList.toggle('base-hide-class');
         };
         let removeClass = function () {
-            let button = document.querySelector('.search-bar-button');
-            button.classList.remove('button-focus');
+            let buttons = document.getElementsByClassName('search-bar-button');
+            for (let button of buttons) {
+                button.classList.remove('button-focus');
+            }
         };
         return (
             <div className="nav-bar">
@@ -155,8 +164,10 @@ export default class NavBar extends React.Component {
                         </div>
                     </div>
                     <div className="nav-right-content">
+                        <i onClick={toggleMobileSearchBar} style={{margin: '0 25px 0 0'}}
+                           className="fas fa-search mobile-show"></i>
                         <Link to="/login/">
-                            <i style={{margin: '0 25px 0 10px'}} className="fas fa-user mobile-show"></i>
+                            <i style={{margin: '0 25px 0 0'}} className="fas fa-user mobile-show"></i>
                         </Link>
                         <i id="show-mobile-button" onClick={this.handleClick} className="mobile-show fas fa-bars"></i>
                         <div className="center-vertical desktop-show" style={{position: 'relative'}}>
@@ -189,6 +200,28 @@ export default class NavBar extends React.Component {
                 <div className="mobile-nav-links mobile-show">
                     <div id="mobile-height-marker">
                         {routes.routes.map(this.createMobileNavItem)}
+                    </div>
+                </div>
+                <div className="mobile-search-bar mobile-show base-hide-class">
+                    <i onClick={toggleMobileSearchBar} className="fas fa-times mobile-show mobile-search-bar-close"></i>
+                    <div className="mobile-search-bar-wrapper">
+                        <input autoComplete="off" onChange={this.getSearchResults} onFocus={addClass}
+                               onBlur={removeClass} type="text"
+                               placeholder="Search.." name="search" className="search-bar mobile-search-bar-input"/>
+                        <button type="submit" className="search-bar-button mobile-search-bar-button"><i
+                            className="fa fa-search"></i>
+                        </button>
+                        <div className="mobile-search-results"
+                             style={{display: (this.state.searchResults.length === 0) ? 'none' : 'block'}}>
+                            {this.state.searchResults.map(result => {
+                                return (<div onClick={this.closeSearchResults} key={result.id} className="result">
+                                        <Link className="nav-search-link" to={`/products/${result.id}`}>
+                                            {result.product_name}
+                                        </Link>
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </div>
                 </div>
                 <div className="desktop-nav-links desktop-show" style={{'display': 'none'}}>
