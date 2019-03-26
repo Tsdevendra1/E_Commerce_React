@@ -124,7 +124,7 @@ $searchResultWidth: 80%;
 
 .nav-search-link {
   display: block;
-  width: 100%;
+  width: 100% !important;
   height: 100%;
   padding: 3%;
 }
@@ -156,11 +156,12 @@ $searchResultWidth: 80%;
 }
 
 %search-bar-height {
-  height: 2rem;
+  //height: 2rem !important;
 }
 
 .search-bar-button {
-  @extend %search-bar-height;
+  //@extend %search-bar-height;
+  height: 2rem !important;
   margin-right: 16px;
   background: white;
   border: 1px solid $searchBarBorderColor;
@@ -172,7 +173,8 @@ $searchResultWidth: 80%;
 }
 
 .search-bar {
-  @extend %search-bar-height;
+  //@extend %search-bar-height;
+  height: 2rem !important;
   border: 1px solid $searchBarBorderColor;
   border-right: 0px transparent;
   padding-left: 10px;
@@ -228,12 +230,17 @@ $searchResultWidth: 80%;
   position: relative;
   top: 5rem;
   left: 50%;
-  transform: translate(-50%,0);
+  transform: translate(-50%, 0);
   width: 80%;
+  height: 2rem;
 }
 
 .mobile-search-bar-input {
   width: calc(100% - 37px) !important;
+}
+
+.search-bar-wrapper {
+  height: 2rem;
 }
 
 .mobile-search-bar-button {

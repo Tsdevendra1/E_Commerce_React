@@ -175,7 +175,7 @@ export default class NavBar extends React.Component {
                             <i style={{margin: '0 25px 0 0'}} className="fas fa-user mobile-show"></i>
                         </Link>
                         <i id="show-mobile-button" onClick={this.handleClick} className="mobile-show fas fa-bars"></i>
-                        <div className="center-vertical desktop-show" style={{position: 'relative'}}>
+                        <div className="center-vertical search-bar-wrapper desktop-show" style={{position: 'relative'}}>
                             <input autoComplete="off" onChange={this.getSearchResults} onFocus={addClass}
                                    onBlur={removeClass} type="text"
                                    placeholder="Search.." name="search" className="search-bar"/>
@@ -184,8 +184,8 @@ export default class NavBar extends React.Component {
                             {(this.state.searchResults.length !== 0) &&
                             <div className="search-results">
                                 {this.state.searchResults.map(result => {
-                                    return (<div onClick={this.closeSearchResults} key={result.id} className="result">
-                                            <Link className="nav-search-link" to={`/products/${result.id}`}>
+                                    return (<div onClick={this.closeSearchResults} key={result.id} className="result nav-search-link">
+                                            <Link to={`/products/${result.id}`}>
                                                 {result.product_name}
                                             </Link>
                                         </div>
@@ -220,8 +220,8 @@ export default class NavBar extends React.Component {
                         <div className="mobile-search-results"
                              style={{display: (this.state.searchResults.length === 0) ? 'none' : 'block'}}>
                             {this.state.searchResults.map(result => {
-                                return (<div onClick={this.closeSearchResults} key={result.id} className="result">
-                                        <Link className="nav-search-link" to={`/products/${result.id}`}>
+                                return (<div onClick={this.closeSearchResults} key={result.id} className="result nav-search-link">
+                                        <Link to={`/products/${result.id}`}>
                                             {result.product_name}
                                         </Link>
                                     </div>

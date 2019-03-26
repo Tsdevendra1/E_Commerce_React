@@ -24,6 +24,10 @@ html, body {
   height: 100%;
 }
 
+input, button {
+  line-height: 0 !important;
+}
+
 .base-hide-class {
   display: none !important;
 }

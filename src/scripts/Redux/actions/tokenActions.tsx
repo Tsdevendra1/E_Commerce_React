@@ -32,11 +32,9 @@ export function getAccessToken(refreshToken: string) {
         let refreshTokenExpireTime = localStorage.getItem("refreshTokenExpire");
         let extraHoursBeforeExpire = 4;
         // If the token will expire within 4 hours, reset the refreshtoken
-        if (refreshTokenExpireTime && (parseInt(refreshTokenExpireTime) <= (new Date().getTime() + (60 * 60 * 1000 * extraHoursBeforeExpire)))) {
+        if ((refreshTokenExpireTime && (parseInt(refreshTokenExpireTime) <= (new Date().getTime() + (60 * 60 * 1000 * extraHoursBeforeExpire)))) || !refreshTokenExpireTime) {
             dispatch(resetRefreshToken());
-        } else if(!refreshTokenExpireTime){
-            throw 'refreshTokenExpireTime was not set in the flow';
-        }else {
+        } else {
             return axios.post(`${API_URL}/api/token/refresh/`, data, {headers}).then(function (response) {
                 // If successful save the refresh token
                 dispatch(setRefreshToken(refreshToken));
