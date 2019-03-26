@@ -130,11 +130,20 @@ export default class NavBar extends React.Component {
         }
     }
 
-    closeSearchResults() {
+    closeSearchResults(event) {
         this.setState({searchResults: []});
         document.querySelector('.search-bar').value = '';
+        document.querySelector('.mobile-search-bar-input').value = '';
+        let mobileSearchBar = document.getElementsByClassName('mobile-search-bar')[0];
+        if (!mobileSearchBar.classList.contains('base-hide-class')) {
+            mobileSearchBar.classList.add('base-hide-class');
+        }
     }
 
+    toggleMobileSearchBar() {
+        let mobileSearchBar = document.getElementsByClassName('mobile-search-bar')[0];
+        mobileSearchBar.classList.toggle('base-hide-class');
+    }
 
     render() {
         let addClass = function () {
@@ -142,10 +151,6 @@ export default class NavBar extends React.Component {
             for (let button of buttons) {
                 button.classList.add('button-focus');
             }
-        };
-        let toggleMobileSearchBar = function () {
-            let mobileSearchBar = document.getElementsByClassName('mobile-search-bar')[0];
-            mobileSearchBar.classList.toggle('base-hide-class');
         };
         let removeClass = function () {
             let buttons = document.getElementsByClassName('search-bar-button');
@@ -164,7 +169,7 @@ export default class NavBar extends React.Component {
                         </div>
                     </div>
                     <div className="nav-right-content">
-                        <i onClick={toggleMobileSearchBar} style={{margin: '0 25px 0 0'}}
+                        <i onClick={this.toggleMobileSearchBar} style={{margin: '0 25px 0 0'}}
                            className="fas fa-search mobile-show"></i>
                         <Link to="/login/">
                             <i style={{margin: '0 25px 0 0'}} className="fas fa-user mobile-show"></i>
@@ -203,7 +208,8 @@ export default class NavBar extends React.Component {
                     </div>
                 </div>
                 <div className="mobile-search-bar mobile-show base-hide-class">
-                    <i onClick={toggleMobileSearchBar} className="fas fa-times mobile-show mobile-search-bar-close"></i>
+                    <i onClick={this.toggleMobileSearchBar}
+                       className="fas fa-times mobile-show mobile-search-bar-close"></i>
                     <div className="mobile-search-bar-wrapper">
                         <input autoComplete="off" onChange={this.getSearchResults} onFocus={addClass}
                                onBlur={removeClass} type="text"
