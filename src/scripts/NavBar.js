@@ -155,6 +155,9 @@ export default class NavBar extends React.Component {
                         </div>
                     </div>
                     <div className="nav-right-content">
+                        <Link to="/login/">
+                            <i style={{margin: '0 25px 0 10px'}} className="fas fa-user mobile-show"></i>
+                        </Link>
                         <i id="show-mobile-button" onClick={this.handleClick} className="mobile-show fas fa-bars"></i>
                         <div className="center-vertical desktop-show" style={{position: 'relative'}}>
                             <input autoComplete="off" onChange={this.getSearchResults} onFocus={addClass}

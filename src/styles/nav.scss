@@ -86,12 +86,14 @@ $desktopButtonBackgroundColor: #525050;
 
 }
 
+$searchResultWidth: 80%;
+
 .search-results {
   position: absolute;
   top: 1.95rem;
   left: 0;
   background: white;
-  width: 91%;
+  width: $searchResultWidth !important;
   border-top: 1px solid orange;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   display: flex;
@@ -101,7 +103,7 @@ $desktopButtonBackgroundColor: #525050;
 }
 
 .result {
-  width: 100%;
+  width: $searchResultWidth !important;
   cursor: pointer;
   margin: 0;
 }

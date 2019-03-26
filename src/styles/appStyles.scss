@@ -21,7 +21,8 @@ html, body {
 
 .homepage-image {
   width: 100%;
-  min-height: 500px;
+  height: 100%;
+  //min-height: 500px;
 }
 
 #root {
@@ -67,6 +68,7 @@ a, a:hover, a:focus {
 
 .typewriter-container {
   position: relative;
+  height: 100%;
 }
 
 .text-block {
