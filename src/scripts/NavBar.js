@@ -3,6 +3,9 @@ import Logo from "./Logo";
 import {Link} from 'react-router-dom';
 import {routes} from './routers';
 import ProductsService from "./ProductService";
+import BasketItem from './CheckoutPage/BasketItem';
+import NavBasket from "./NavBasket";
+import {MobileBasket} from "./BasketHoc";
 
 export default class NavBar extends React.Component {
     constructor(props) {
@@ -243,6 +246,7 @@ export default class NavBar extends React.Component {
                         })}
                     </div>
                 </div>
+                <MobileBasket/>
             </div>
         )
     }

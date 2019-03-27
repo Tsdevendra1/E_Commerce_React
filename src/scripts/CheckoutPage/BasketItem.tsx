@@ -7,6 +7,7 @@ interface Props {
     quantity: number;
     productId: number
     addPriceToTotal: (price: number) => void;
+    ignoreDefaultMargin: boolean;
 }
 
 interface State {
@@ -18,6 +19,10 @@ export default class BasketItem extends React.Component<Props, State> {
     state: Readonly<State> = {
         price: null,
         name: '',
+    };
+
+    static defaultProps = {
+        ignoreDefaultMargin:false,
     };
 
 
@@ -34,7 +39,7 @@ export default class BasketItem extends React.Component<Props, State> {
             return <h1>FETCHING DATA...</h1>
         }
         return (
-            <div className="basket-item">
+            <div className="basket-item" style={{margin: (!this.props.ignoreDefaultMargin)?'40px 0': 0}}>
                 <img
                     src={this.props.thumbnail}
                     className="basket-item-img"/>

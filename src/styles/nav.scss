@@ -248,6 +248,36 @@ $searchResultWidth: 80%;
   //width: 10px !important;
 }
 
+.nav-basket-wrapper {
+  height: auto;
+  //width: 100px;
+  padding: 10px;
+  position: absolute;
+  top: 100%;
+  right: 4.5%;
+  background: red;
+  z-index: 999999;
+}
+
+.nav-basket-items {
+  max-height: 160px;
+  overflow: auto;
+}
+
+.nav-basket-item {
+  margin-bottom: 20px;
+}
+
+.nav-basket-total {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.nav-basket-button {
+  width: 100%;
+}
+
 @media screen and (min-width: 780px) {
   .mobile-show {
     display: none !important;
