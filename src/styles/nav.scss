@@ -248,35 +248,63 @@ $searchResultWidth: 80%;
   //width: 10px !important;
 }
 
+$navBasketPadding: 10px;
+
 .nav-basket-wrapper {
   height: auto;
-  //width: 100px;
-  padding: 10px;
   position: absolute;
+  width: 220px;
   top: 100%;
   right: 4.5%;
-  background: red;
   z-index: 999999;
 }
 
+$navBorderColor: darkgrey;
+
 .nav-basket-items {
   max-height: 160px;
+  border-right: 1px solid $navBorderColor;
+  border-left: 1px solid $navBorderColor;
   overflow: auto;
+  background: #ffffff;
+  padding: $navBasketPadding;
 }
 
-.nav-basket-item {
-  margin-bottom: 20px;
-}
+//.nav-basket-item {
+//  margin-bottom: 20px;
+//}
 
 .nav-basket-total {
+  border-right: 1px solid $navBorderColor;
+  border-left: 1px solid $navBorderColor;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding: $navBasketPadding;
+  background: #f8f8f8;
+  box-shadow: 0 -5px 5px -5px rgba(0, 0, 0, 0.2);
+}
+
+.nav-basket-footer {
+  padding: $navBasketPadding;
+  background: #eeeeee;
+  border-right: 1px solid $navBorderColor;
+  border-left: 1px solid $navBorderColor;
+  border-bottom: 1px solid $navBorderColor;
 }
 
 .nav-basket-button {
   width: 100%;
 }
+
+.nav-basket-header {
+  background: #eeeeee;
+  padding: $navBasketPadding;
+  border-right: 1px solid $navBorderColor;
+  border-left: 1px solid $navBorderColor;
+}
+
+
 
 @media screen and (min-width: 780px) {
   .mobile-show {

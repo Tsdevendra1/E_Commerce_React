@@ -7,6 +7,8 @@ import BasketItem from './CheckoutPage/BasketItem';
 import NavBasket from "./NavBasket";
 import {MobileBasket} from "./BasketHoc";
 
+export var timeoutHandle;
+
 export default class NavBar extends React.Component {
     constructor(props) {
         super(props);
@@ -158,6 +160,23 @@ export default class NavBar extends React.Component {
         }
     };
 
+    static showMobileBasket() {
+        const mobileBasket = document.getElementById('mobile-basket');
+        const numBasketItems = parseInt(mobileBasket.getAttribute('data-numitems'));
+        if (timeoutHandle) {
+            window.clearTimeout(timeoutHandle);
+            timeoutHandle = null;
+        }
+        if (numBasketItems > 0) {
+            // Make basket visible
+            mobileBasket.classList.remove('base-hide-class');
+            timeoutHandle = window.setTimeout(function () {
+                const mobileBasket = document.getElementById('mobile-basket');
+                mobileBasket.classList.add('base-hide-class');
+            }, 1500);
+        }
+    }
+
     render() {
         let addClass = function () {
             let buttons = document.getElementsByClassName('search-bar-button');
@@ -205,7 +224,8 @@ export default class NavBar extends React.Component {
                                 <i style={{margin: '0 25px 0 10px'}} className="fas fa-user desktop-show"></i>
                             </Link>
                             <Link to="/checkout/">
-                                <i className="fas fa-shopping-basket desktop-show"></i>
+                                <i onMouseOverCapture={this.showMobileBasket}
+                                   className="fas fa-shopping-basket desktop-show"></i>
                             </Link>
                         </div>
                     </div>

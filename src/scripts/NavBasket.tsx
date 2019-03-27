@@ -1,6 +1,7 @@
 import * as React from 'react';
 import BasketItem from "./CheckoutPage/BasketItem";
 import {shoppingBasketInterface} from "./Redux/reducers";
+import NavBar from './NavBar';
 
 
 interface Props {
@@ -12,26 +13,45 @@ interface Props {
 
 
 export default class NavBasket extends React.Component<Props, {}> {
-    render() {
+    constructor(props) {
+        super(props);
+        this.createMobileBasketItem = this.createMobileBasketItem.bind(this);
+    }
+
+    createMobileBasketItem(itemId, index, numItemsInBasket) {
+        let itemInfo = this.props.shoppingBasket[itemId];
+        let classes = '';
+        if (numItemsInBasket > 1 && index !== numItemsInBasket - 1) {
+            classes = 'mb-4';
+        }
         return (
-            <div className="nav-basket-wrapper desktop-show">
-                <div className="nav-basket-header py-2">
-                    <strong>My Bag,</strong> <span>0</span> items
+            <div key={itemId} className={classes}>
+                <BasketItem ignoreDefaultMargin={true}
+                            thumbnail={itemInfo.productThumbnailPath} quantity={itemInfo.quantity}
+                            productId={itemId} addPriceToTotal={this.props.addPriceToTotal}/>
+            </div>
+        )
+    }
+
+    extendBasketShowTime() {
+        NavBar.showMobileBasket();
+    }
+
+
+    render() {
+        let numBasketItems = Object.keys(this.props.shoppingBasket).length;
+        return (
+            <div onMouseMove={() => this.extendBasketShowTime()} data-numitems={numBasketItems} id="mobile-basket"
+                 className="nav-basket-wrapper desktop-show base-hide-class">
+                <div className="nav-basket-header">
+                    <strong>My Bag,</strong>
+                    <span>{numBasketItems}</span> item{(numBasketItems > 1 || numBasketItems == 0) && <span>s</span>}
                 </div>
-                <div className="nav-basket-items py-2">
-                    <div className="nav-basket-item">
-                        <BasketItem ignoreDefaultMargin={true}
-                                    thumbnail="/static/main/images/animal-avian-beak-1200857.jpg" quantity={3}
-                                    productId={35} addPriceToTotal={this.props.addPriceToTotal}/>
-                    </div>
-                    <div className="nav-basket-item">
-                        <BasketItem ignoreDefaultMargin={true}
-                                    thumbnail="/static/main/images/animal-avian-beak-1200857.jpg" quantity={3}
-                                    productId={35} addPriceToTotal={this.props.addPriceToTotal}/>
-                    </div>
+                <div className="nav-basket-items">
+                    {Object.keys(this.props.shoppingBasket).map((item, index) => this.createMobileBasketItem(item, index, numBasketItems))}
                 </div>
-                <div className="nav-basket-total py-2">
-                    Sub-total <span>£<span>0</span></span>
+                <div className="nav-basket-total">
+                    Sub-total <span>£<span>{this.props.itemPrices}</span></span>
                 </div>
                 <div className="nav-basket-footer pt-2">
                     <button type="button" className="nav-basket-button btn btn-success"
