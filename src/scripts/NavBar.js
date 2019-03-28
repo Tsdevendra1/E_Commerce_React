@@ -127,15 +127,20 @@ export default class NavBar extends React.Component {
         }
         let className = 'mobile-nav-bar-item';
         return (
-            <div key={`${navItem.name}-mobile`} className="row mobile-nav-row"
-                 style={{margin: 0, paddingBottom: '1rem', paddingTop: '1rem'}}>
-                <div className="col mobile-link-flex">
-                    <Link onClick={this.closeMobileTab} className={className} to={navItem.path}>{navItem.name}</Link>
-                    <div className="mobile-nav-bar-item">
-                        <i className="fas fa-chevron-right"></i>
+            <Link onClick={this.closeMobileTab} to={navItem.path} style={{display: 'block'}}
+                  className="row mobile-nav-row" key={`${navItem.name}-mobile`}>
+                <div
+                    style={{margin: 0, paddingBottom: '1rem', paddingTop: '1rem'}}>
+                    <div className="col mobile-link-flex">
+                        <span style={{marginLeft: '1rem'}}>
+                        {navItem.name}
+                        </span>
+                        <div className="flex-align-vertical" style={{marginRight: '1rem'}}>
+                            <i className="fas fa-chevron-right"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </Link>
         )
     }
 
