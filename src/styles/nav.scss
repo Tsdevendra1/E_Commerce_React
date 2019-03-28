@@ -159,6 +159,10 @@ $searchResultWidth: 80%;
   //height: 2rem !important;
 }
 
+.active-selector {
+  border-top: 4px solid #0770cf !important;
+}
+
 .search-bar-button {
   //@extend %search-bar-height;
   height: 2rem !important;

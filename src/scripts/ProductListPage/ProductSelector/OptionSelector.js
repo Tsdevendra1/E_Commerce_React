@@ -55,6 +55,13 @@ export default class OptionSelector extends React.Component {
         if (this.props.currentActiveComponentId !== prevProps.currentActiveComponentId) {
             this.checkCurrentActive();
         }
+        let selectedOptions = ReactDOM.findDOMNode(this).getElementsByClassName('option-box-active');
+        let selectorButton = document.getElementById(`${this.props.componentId}click`);
+        if (selectedOptions.length){
+            selectorButton.classList.add('active-selector');
+        } else {
+            selectorButton.classList.remove('active-selector');
+        }
     }
 
     render() {
