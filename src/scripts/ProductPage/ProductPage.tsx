@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {singleProductInfo} from "../Redux/reducers";
 import {addProductToBasket, updateProductQuantity} from "../Redux/actions/productActions";
 import LoadingOverlay from "../LoadingOverlay";
+import NavBar from '../NavBar';
 
 
 interface Props {
@@ -84,6 +85,9 @@ class ProductPage extends React.Component<Props, State> {
             this.setState({fetchingProductData: true});
             this.getProductData(productId);
         }
+        if(this.props.shoppingBasket[productId] !== prevProps.shoppingBasket[productId]){
+            NavBar.showMobileBasket();
+        }
     }
 
     handleClick(e) {
@@ -111,6 +115,8 @@ class ProductPage extends React.Component<Props, State> {
             }
         }
     }
+
+
 
     createAddBasketButton() {
         return (

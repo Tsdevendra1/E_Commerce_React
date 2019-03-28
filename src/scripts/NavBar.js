@@ -160,7 +160,25 @@ export default class NavBar extends React.Component {
         }
     };
 
-    static showMobileBasket() {
+    // static showMobileBasket() {
+    //     const mobileBasket = document.getElementById('mobile-basket');
+    //     const numBasketItems = parseInt(mobileBasket.getAttribute('data-numitems'));
+    //     if (timeoutHandle) {
+    //         window.clearTimeout(timeoutHandle);
+    //         timeoutHandle = null;
+    //     }
+    //     if (numBasketItems > 0) {
+    //         // Make basket visible
+    //         mobileBasket.classList.remove('base-hide-class');
+    //         timeoutHandle = window.setTimeout(function () {
+    //             const mobileBasket = document.getElementById('mobile-basket');
+    //             mobileBasket.classList.add('base-hide-class');
+    //         }, 1500);
+    //     }
+    // }
+
+    static showMobileBasket(keepDisplay) {
+        console.log(keepDisplay);
         const mobileBasket = document.getElementById('mobile-basket');
         const numBasketItems = parseInt(mobileBasket.getAttribute('data-numitems'));
         if (timeoutHandle) {
@@ -170,10 +188,18 @@ export default class NavBar extends React.Component {
         if (numBasketItems > 0) {
             // Make basket visible
             mobileBasket.classList.remove('base-hide-class');
-            timeoutHandle = window.setTimeout(function () {
-                const mobileBasket = document.getElementById('mobile-basket');
-                mobileBasket.classList.add('base-hide-class');
-            }, 1500);
+            mobileBasket.classList.add('top-change');
+            if (!keepDisplay){
+                timeoutHandle = window.setTimeout(function () {
+                    const mobileBasket = document.getElementById('mobile-basket');
+                    mobileBasket.classList.remove('top-change');
+                    mobileBasket.classList.add('top-change-reverse');
+                    setTimeout(()=>{
+                        mobileBasket.classList.remove('top-change-reverse');
+                        mobileBasket.classList.add('base-hide-class');
+                    }, 500)
+                }, 1000);
+            }
         }
     }
 
@@ -224,7 +250,7 @@ export default class NavBar extends React.Component {
                                 <i style={{margin: '0 25px 0 10px'}} className="fas fa-user desktop-show"></i>
                             </Link>
                             <Link to="/checkout/">
-                                <i onMouseOverCapture={this.showMobileBasket}
+                                <i onMouseOverCapture={()=>{this.showMobileBasket()}}
                                    className="fas fa-shopping-basket desktop-show"></i>
                             </Link>
                         </div>

@@ -252,11 +252,62 @@ $navBasketPadding: 10px;
 
 .nav-basket-wrapper {
   height: auto;
+  opacity: 0;
   position: absolute;
+  overflow: hidden;
   width: 220px;
-  top: 100%;
+  //top: 100%;
   right: 4.5%;
   z-index: 999999;
+}
+
+.top-change {
+  -webkit-animation: topchange 1s forwards; /* Safari 4.0 - 8.0 */
+  animation: topchange 1s forwards;
+}
+
+$topChangeTime: 0.5s;
+
+.top-change-reverse {
+  -webkit-animation: topchangereverse $topChangeTime forwards; /* Safari 4.0 - 8.0 */
+  animation: topchangereverse $topChangeTime forwards;
+}
+
+.height-change {
+  -webkit-animation: heightchange $topChangeTime forwards; /* Safari 4.0 - 8.0 */
+  animation: heightchange $topChangeTime forwards;
+}
+
+/* standard syntax */
+@keyframes heightchange {
+  from {
+    height: 0;
+  }
+  to {
+    height: 200px;
+  }
+}
+
+@keyframes topchange {
+  from {
+    top: -100%;
+    opacity: 0;
+  }
+  to {
+    top: 100%;
+    opacity: 1;
+  }
+}
+
+@keyframes topchangereverse {
+  from {
+    top: 100%;
+    opacity: 1;
+  }
+  to {
+    top: -100%;
+    opacity: 0;
+  }
 }
 
 $navBorderColor: darkgrey;
@@ -303,8 +354,6 @@ $navBorderColor: darkgrey;
   border-right: 1px solid $navBorderColor;
   border-left: 1px solid $navBorderColor;
 }
-
-
 
 @media screen and (min-width: 780px) {
   .mobile-show {
