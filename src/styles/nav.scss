@@ -267,7 +267,7 @@ $navBasketPadding: 10px;
 }
 
 $topChangeTime: 1.0s;
-.top-change {
+.height-change {
   -webkit-animation: heightchange $topChangeTime forwards; /* Safari 4.0 - 8.0 */
   animation: heightchange $topChangeTime forwards;
 }
@@ -303,17 +303,28 @@ $topChangeTime: 1.0s;
 
 
 
-.top-change-reverse {
+.height-change-reverse {
   -webkit-animation: heightchangereverse $topChangeTime forwards; /* Safari 4.0 - 8.0 */
   animation: heightchangereverse $topChangeTime forwards;
 }
+//
+//.height-change {
+//  -webkit-animation: heightchange $topChangeTime forwards; /* Safari 4.0 - 8.0 */
+//  animation: heightchange $topChangeTime forwards;
+//}
 
-.height-change {
-  -webkit-animation: heightchange $topChangeTime forwards; /* Safari 4.0 - 8.0 */
-  animation: heightchange $topChangeTime forwards;
+.height-change-higher {
+  -webkit-animation: heightchangehigher $topChangeTime forwards; /* Safari 4.0 - 8.0 */
+  animation: heightchangehigher $topChangeTime forwards;
 }
 
-$heightChange: 400px;
+.height-change-higher-reverse {
+  -webkit-animation: heightchangehigherreverse $topChangeTime forwards; /* Safari 4.0 - 8.0 */
+  animation: heightchangehigherreverse $topChangeTime forwards;
+}
+
+$heightChange: 257.67px;
+$heightChangeHigher: 297.67px;
 
 /* standard syntax */
 @keyframes heightchange {
@@ -330,6 +341,29 @@ $heightChange: 400px;
 @keyframes heightchangereverse {
   from {
     height: $heightChange;
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
+}
+
+/* standard syntax */
+@keyframes heightchangehigher {
+  from {
+    height: 0px;
+    opacity: 0;
+  }
+  to {
+    height: $heightChangeHigher;
+    opacity: 1;
+  }
+}
+
+@keyframes heightchangehigherreverse {
+  from {
+    height: $heightChangeHigher;
     opacity: 1;
   }
   to {

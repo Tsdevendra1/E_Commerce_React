@@ -194,7 +194,6 @@ export default class NavBar extends React.Component {
     };
 
     static showMobileBasket(keepDisplay) {
-        console.log('inside');
         const mobileBasket = document.getElementById('mobile-basket');
         const numBasketItems = parseInt(mobileBasket.getAttribute('data-numitems'));
         const triangle = document.getElementsByClassName('little-triangle')[0];
@@ -206,7 +205,11 @@ export default class NavBar extends React.Component {
             // Make basket visible
             mobileBasket.classList.remove('base-hide-class');
             triangle.classList.add('opacity-change');
-            mobileBasket.classList.add('top-change');
+            if (numBasketItems === 1){
+                mobileBasket.classList.add('height-change');
+            } else {
+                mobileBasket.classList.add('height-change-higher');
+            }
             NavBar.closeMobileBasket(keepDisplay);
         }
     }
@@ -217,12 +220,23 @@ export default class NavBar extends React.Component {
             let timeToRemove = 1000;
             const mobileBasket = document.getElementById('mobile-basket');
             const triangle = document.getElementsByClassName('little-triangle')[0];
-            mobileBasket.classList.remove('top-change');
-            mobileBasket.classList.add('top-change-reverse');
+            const numBasketItems = parseInt(mobileBasket.getAttribute('data-numitems'));
+            if (numBasketItems === 1){
+                mobileBasket.classList.remove('height-change');
+                mobileBasket.classList.add('height-change-reverse');
+            } else {
+                mobileBasket.classList.remove('height-change-higher');
+                mobileBasket.classList.add('height-change-higher-reverse');
+            }
             triangle.classList.remove('opacity-change');
             triangle.classList.add('opacity-change-reverse');
             setTimeout(() => {
-                mobileBasket.classList.remove('top-change-reverse');
+                mobileBasket.classList.remove('height-change-reverse');
+                if (numBasketItems === 1){
+                    mobileBasket.classList.remove('height-change-reverse');
+                } else {
+                    mobileBasket.classList.remove('height-change-higher-reverse');
+                }
                 triangle.classList.remove('opacity-change-reverse');
                 mobileBasket.classList.add('base-hide-class');
             }, timeToRemove);
@@ -233,7 +247,7 @@ export default class NavBar extends React.Component {
         } else if (!keepDisplay) {
             timeoutHandle = window.setTimeout(function () {
                 closeBasket();
-            }, 1200);
+            }, 1600);
         }
     }
 
