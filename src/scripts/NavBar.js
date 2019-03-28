@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Logo from "./Logo";
 import {Link} from 'react-router-dom';
 import {routes} from './routers';
@@ -38,6 +39,19 @@ export default class NavBar extends React.Component {
     }
 
     componentDidMount() {
+        let sBrowser, sUsrAg = navigator.userAgent;
+        let thisComponent = ReactDOM.findDOMNode(this);
+        if (sUsrAg.indexOf("Chrome") > -1) {
+            let buttons = thisComponent.getElementsByTagName('button');
+            let inputs = thisComponent.getElementsByTagName('inputs');
+
+            for (let button of buttons) {
+                button.classList.add('change-line-height');
+            }
+            for (let input of inputs) {
+                input.classList.add('change-line-height');
+            }
+        }
         window.addEventListener('resize', this.toggleNavMenuWithClick);
     }
 
@@ -95,9 +109,11 @@ export default class NavBar extends React.Component {
             return;
         }
         return (
-            <div key={navItem.name} className="desktop-nav-item"><Link data-main-nav={parentNavId}
-                                                                       onClick={this.closeMainTab}
-                                                                       to={navItem.path}>{navItem.name}</Link></div>
+            <div key={navItem.name}><Link style={{height: '100%', width: '100%', display: 'block'}}
+                                          data-main-nav={parentNavId}
+                                          onClick={this.closeMainTab}
+                                          className="desktop-nav-item"
+                                          to={navItem.path}>{navItem.name}</Link></div>
         )
     };
 
@@ -152,13 +168,13 @@ export default class NavBar extends React.Component {
     }
 
     removeClass(event) {
+        let buttons = document.getElementsByClassName('search-bar-button');
+        for (let button of buttons) {
+            button.classList.remove('button-focus');
+        }
         // TODO: Not a great way to do this, should fix later. Need timeout to let click fire first if a link is clicked on the search results
-        setTimeout(()=>{
+        setTimeout(() => {
             this.setState({searchResults: []});
-            let buttons = document.getElementsByClassName('search-bar-button');
-            for (let button of buttons) {
-                button.classList.remove('button-focus');
-            }
         }, 100);
     };
 
@@ -173,16 +189,16 @@ export default class NavBar extends React.Component {
             // Make basket visible
             mobileBasket.classList.remove('base-hide-class');
             mobileBasket.classList.add('top-change');
-            if (!keepDisplay){
+            if (!keepDisplay) {
                 timeoutHandle = window.setTimeout(function () {
                     const mobileBasket = document.getElementById('mobile-basket');
                     mobileBasket.classList.remove('top-change');
                     mobileBasket.classList.add('top-change-reverse');
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         mobileBasket.classList.remove('top-change-reverse');
                         mobileBasket.classList.add('base-hide-class');
                     }, 500)
-                }, 1000);
+                }, 2500);
             }
         }
     }
@@ -220,9 +236,11 @@ export default class NavBar extends React.Component {
                             {(this.state.searchResults.length !== 0) &&
                             <div className="search-results">
                                 {this.state.searchResults.map(result => {
-                                    return (<div onClick={this.closeSearchResults} key={result.id}
+                                    return (<div key={result.id}
                                                  className="result nav-search-link">
-                                            <Link to={`/products/${result.id}`}>
+                                            <Link onClick={this.closeSearchResults}
+                                                  style={{width: '100%', height: '100%', display: 'block'}}
+                                                  to={`/products/${result.id}`}>
                                                 {result.product_name}
                                             </Link>
                                         </div>
@@ -234,7 +252,9 @@ export default class NavBar extends React.Component {
                                 <i style={{margin: '0 25px 0 10px'}} className="fas fa-user desktop-show"></i>
                             </Link>
                             <Link to="/checkout/">
-                                <i onMouseOverCapture={()=>{this.showMobileBasket()}}
+                                <i onMouseOverCapture={() => {
+                                    this.showMobileBasket()
+                                }}
                                    className="fas fa-shopping-basket desktop-show"></i>
                             </Link>
                         </div>
@@ -258,9 +278,11 @@ export default class NavBar extends React.Component {
                         <div className="mobile-search-results"
                              style={{display: (this.state.searchResults.length === 0) ? 'none' : 'block'}}>
                             {this.state.searchResults.map(result => {
-                                return (<div onClick={this.closeSearchResults} key={result.id}
+                                return (<div key={result.id}
                                              className="result nav-search-link">
-                                        <Link to={`/products/${result.id}`}>
+                                        <Link onClick={this.closeSearchResults}
+                                              style={{width: '100%', height: '100%', display: 'block'}}
+                                              to={`/products/${result.id}`}>
                                             {result.product_name}
                                         </Link>
                                     </div>

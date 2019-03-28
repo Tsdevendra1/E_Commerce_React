@@ -39,11 +39,15 @@ class GenericPage extends React.Component {
             for (let clicker of clickers) {
                 let alsoClickOutsideElement = false;
                 for (let clicker of clickers) {
-                    if (event.target === document.querySelector(clicker.clickTargetInfo)) {
-                        alsoClickOutsideElement = true;
-                        break
+                    let clickTarget = document.querySelector(clicker.clickTargetInfo);
+                    if (clickTarget){
+                        if (event.target === clickTarget || clickTarget.parentElement.contains(event.target)) {
+                            alsoClickOutsideElement = true;
+                            break
+                        }
                     }
                 }
+                console.log(alsoClickOutsideElement);
                 clickAnywhereToClose(clicker.capsuleElementInfo, clicker.clickTargetInfo, clicker.activeStateIndicator, event, alsoClickOutsideElement);
             }
         })
