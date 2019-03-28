@@ -5,10 +5,11 @@ import {Link} from 'react-router-dom';
 import {routes} from './routers';
 import ProductsService from "./ProductService";
 import {MobileBasket} from "./BasketHoc";
+import {connect} from 'react-redux';
 
 export var timeoutHandle;
 
-export default class NavBar extends React.Component {
+class NavBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -30,7 +31,9 @@ export default class NavBar extends React.Component {
     }
 
     closeCurrentDesktopActive() {
-        document.getElementById(this.state.currentActiveDesktopNavButton).click();
+        if (this.state.desktopActive) {
+            document.getElementById(this.state.currentActiveDesktopNavButton).click();
+        }
     }
 
     toggleNavMenuWithClick() {
@@ -192,9 +195,9 @@ export default class NavBar extends React.Component {
     };
 
     static showMobileBasket(keepDisplay) {
-        console.log('triggered');
         const mobileBasket = document.getElementById('mobile-basket');
         const numBasketItems = parseInt(mobileBasket.getAttribute('data-numitems'));
+        const triangle = document.getElementsByClassName('little-triangle')[0];
         if (timeoutHandle) {
             window.clearTimeout(timeoutHandle);
             timeoutHandle = null;
@@ -202,33 +205,50 @@ export default class NavBar extends React.Component {
         if (numBasketItems > 0) {
             // Make basket visible
             mobileBasket.classList.remove('base-hide-class');
-            mobileBasket.classList.add('top-change');
+            triangle.classList.add('opacity-change');
+            if (numBasketItems === 1){
+                mobileBasket.classList.add('height-change');
+            } else {
+                mobileBasket.classList.add('height-change-higher');
+            }
             NavBar.closeMobileBasket(keepDisplay);
         }
     }
 
-    static closeMobileBasket(keepDisplay, forceClose){
-        if (!keepDisplay && forceClose) {
-
-            console.log('here');
+    static closeMobileBasket(keepDisplay, forceClose) {
+        function closeBasket() {
+            // NOTE THIS VALUE IS LINKED TO topChangeTime variable in scss
+            let timeToRemove = 1000;
             const mobileBasket = document.getElementById('mobile-basket');
-            mobileBasket.classList.remove('top-change');
-            mobileBasket.classList.add('top-change-reverse');
+            const triangle = document.getElementsByClassName('little-triangle')[0];
+            const numBasketItems = parseInt(mobileBasket.getAttribute('data-numitems'));
+            if (numBasketItems === 1){
+                mobileBasket.classList.remove('height-change');
+                mobileBasket.classList.add('height-change-reverse');
+            } else {
+                mobileBasket.classList.remove('height-change-higher');
+                mobileBasket.classList.add('height-change-higher-reverse');
+            }
+            triangle.classList.remove('opacity-change');
+            triangle.classList.add('opacity-change-reverse');
             setTimeout(() => {
-                mobileBasket.classList.remove('top-change-reverse');
+                mobileBasket.classList.remove('height-change-reverse');
+                if (numBasketItems === 1){
+                    mobileBasket.classList.remove('height-change-reverse');
+                } else {
+                    mobileBasket.classList.remove('height-change-higher-reverse');
+                }
+                triangle.classList.remove('opacity-change-reverse');
                 mobileBasket.classList.add('base-hide-class');
-            }, 500);
+            }, timeToRemove);
+        }
 
-        } else if (!keepDisplay){
+        if (!keepDisplay && forceClose) {
+            closeBasket();
+        } else if (!keepDisplay) {
             timeoutHandle = window.setTimeout(function () {
-                const mobileBasket = document.getElementById('mobile-basket');
-                mobileBasket.classList.remove('top-change');
-                mobileBasket.classList.add('top-change-reverse');
-                setTimeout(() => {
-                    mobileBasket.classList.remove('top-change-reverse');
-                    mobileBasket.classList.add('base-hide-class');
-                }, 500)
-            }, 2500);
+                closeBasket();
+            }, 1600);
         }
     }
 
@@ -250,10 +270,17 @@ export default class NavBar extends React.Component {
                         </div>
                     </div>
                     <div className="nav-right-content">
-                        <i onClick={this.toggleMobileSearchBar} style={{margin: '0 25px 0 0'}}
+                        <i onClick={this.toggleMobileSearchBar} style={{margin: '0 24px 0 0'}}
                            className="fas fa-search mobile-show"></i>
+                        <Link
+                            to="/checkout/"
+                        >
+                            <i
+                                style={{margin: '0 24px 0 0'}}
+                                className="fas fa-shopping-basket mobile-show"></i>
+                        </Link>
                         <Link to="/login/">
-                            <i style={{margin: '0 25px 0 0'}} className="fas fa-user mobile-show"></i>
+                            <i style={{margin: '0 24px 0 0', display: (this.props.accessToken)?'none':'inline'}} className="fas fa-user mobile-show"></i>
                         </Link>
                         <i id="show-mobile-button" onClick={this.handleClick} className="mobile-show fas fa-bars"></i>
                         <div className="center-vertical search-bar-wrapper desktop-show" style={{position: 'relative'}}>
@@ -280,17 +307,17 @@ export default class NavBar extends React.Component {
                             <Link to="/login/"
                                   onClick={() => this.closeCurrentDesktopActive()}
                             >
-                                <i style={{margin: '0 25px 0 10px'}} className="fas fa-user desktop-show"></i>
+                                <i style={{margin: '0 25px 0 10px', display: (this.props.accessToken)? 'none':'inline'}} className="fas fa-user desktop-show"></i>
                             </Link>
                             <Link
                                 onMouseOver={() => {
                                     NavBar.showMobileBasket()
                                 }}
                                 to="/checkout/"
-                                  onClick={() => this.closeCurrentDesktopActive()}
+                                onClick={() => this.closeCurrentDesktopActive()}
                             >
                                 <i
-                                   className="fas fa-shopping-basket desktop-show"></i>
+                                    className="fas fa-shopping-basket desktop-show"></i>
                             </Link>
                         </div>
                     </div>
@@ -333,6 +360,8 @@ export default class NavBar extends React.Component {
                         })}
                     </div>
                 </div>
+                <div className="little-triangle desktop-show">
+                </div>
                 <MobileBasket/>
             </div>
         )
@@ -340,3 +369,14 @@ export default class NavBar extends React.Component {
 
 }
 
+
+function mapStateToProps(state){
+    const {jwtToken} = state;
+    const {accessToken} = jwtToken;
+
+    return {
+        accessToken
+    }
+}
+
+export default connect(mapStateToProps)(NavBar);

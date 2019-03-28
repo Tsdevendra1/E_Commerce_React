@@ -114,7 +114,16 @@ $optionBoxMargin: 1rem;
   font-weight: bold;
 }
 
-@media screen and (min-width: 768px) {
+//@media screen and (min-width: 575px) {
+//  .product-selector {
+//    justify-content: flex-start;
+//  }
+//  .product-selector-content {
+//    flex-direction: row;
+//  }
+//}
+
+@media screen and (min-width: 597px) {
   .selector-group {
     margin-right: 2.5rem;
   }
@@ -126,7 +135,7 @@ $optionBoxMargin: 1rem;
     width: 356px;
     left: 0;
   }
-  .product-selector-content {
-    flex-direction: row;
-  }
+    .product-selector-content {
+      flex-direction: row;
+    }
 }

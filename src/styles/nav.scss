@@ -27,8 +27,17 @@ $navBorderColor: darkgrey;
 
 .nav-left-content {
   display: flex;
+  max-width: 152px;
   justify-content: space-evenly;
 }
+
+@media screen and (min-width: 500px) {
+  .nav-left-content {
+    max-width: none;
+  }
+}
+
+
 
 .nav-bar {
   position: fixed;
@@ -256,72 +265,144 @@ $searchResultWidth: 80%;
 $navBasketPadding: 10px;
 
 .nav-basket-wrapper {
-  height: auto;
   opacity: 0;
-  position: absolute;
-  //overflow: hidden;
+  height: 0;
+  position: fixed;
+  top: 3.85rem;
+  overflow: hidden;
   width: 220px;
-  //top: 100%;
   right: 4.5%;
   z-index: 999999;
 }
 
-$topChangeTime: 0.5s;
-.top-change {
-  -webkit-animation: topchange $topChangeTime forwards; /* Safari 4.0 - 8.0 */
-  animation: topchange $topChangeTime forwards;
-}
-
-
-.top-change-reverse {
-  -webkit-animation: topchangereverse $topChangeTime forwards; /* Safari 4.0 - 8.0 */
-  animation: topchangereverse $topChangeTime forwards;
-}
-
+$topChangeTime: 1.0s;
 .height-change {
   -webkit-animation: heightchange $topChangeTime forwards; /* Safari 4.0 - 8.0 */
   animation: heightchange $topChangeTime forwards;
 }
 
+.opacity-change {
+  -webkit-animation: opacitychange $topChangeTime forwards; /* Safari 4.0 - 8.0 */
+  animation: opacitychange $topChangeTime forwards;
+}
+
+.opacity-change-reverse {
+  -webkit-animation: opacitychangereverse $topChangeTime forwards; /* Safari 4.0 - 8.0 */
+  animation: opacitychangereverse $topChangeTime forwards;
+}
+
+/* standard syntax */
+@keyframes opacitychange {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes opacitychangereverse {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+
+
+.height-change-reverse {
+  -webkit-animation: heightchangereverse $topChangeTime forwards; /* Safari 4.0 - 8.0 */
+  animation: heightchangereverse $topChangeTime forwards;
+}
+//
+//.height-change {
+//  -webkit-animation: heightchange $topChangeTime forwards; /* Safari 4.0 - 8.0 */
+//  animation: heightchange $topChangeTime forwards;
+//}
+
+.height-change-higher {
+  -webkit-animation: heightchangehigher $topChangeTime forwards; /* Safari 4.0 - 8.0 */
+  animation: heightchangehigher $topChangeTime forwards;
+}
+
+.height-change-higher-reverse {
+  -webkit-animation: heightchangehigherreverse $topChangeTime forwards; /* Safari 4.0 - 8.0 */
+  animation: heightchangehigherreverse $topChangeTime forwards;
+}
+
+$heightChange: 257.67px;
+$heightChangeHigher: 297.67px;
+
 /* standard syntax */
 @keyframes heightchange {
   from {
-    height: 0;
+    height: 0px;
+    opacity: 0;
   }
   to {
-    height: 200px;
+    height: $heightChange;
+    opacity: 1;
   }
 }
 
 @keyframes heightchangereverse {
   from {
-    height: 0;
+    height: $heightChange;
+    opacity: 1;
   }
   to {
-    height: 200px;
+    height: 0;
+    opacity: 0;
+  }
+}
+
+/* standard syntax */
+@keyframes heightchangehigher {
+  from {
+    height: 0px;
+    opacity: 0;
+  }
+  to {
+    height: $heightChangeHigher;
+    opacity: 1;
+  }
+}
+
+@keyframes heightchangehigherreverse {
+  from {
+    height: $heightChangeHigher;
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
   }
 }
 
 
 
+$topPositionEnd: 3.85rem;
+
 @keyframes topchange {
   from {
-    top: -100%;
+    top: -$topPositionEnd;
     opacity: 0;
   }
   to {
-    top: 100%;
+    top: $topPositionEnd;
     opacity: 1;
   }
 }
 
 @keyframes topchangereverse {
   from {
-    top: 100%;
+    top: $topPositionEnd;
     opacity: 1;
   }
   to {
-    top: -100%;
+    top: -$topPositionEnd;
     opacity: 0;
   }
 }
@@ -357,6 +438,7 @@ $topChangeTime: 0.5s;
   border-right: 1px solid $navBorderColor;
   border-left: 1px solid $navBorderColor;
   border-bottom: 1px solid $navBorderColor;
+  border-top: 1px solid $navBorderColor;
 }
 
 .nav-basket-button {
@@ -368,15 +450,18 @@ $topChangeTime: 0.5s;
   padding: $navBasketPadding;
   border-right: 1px solid $navBorderColor;
   border-left: 1px solid $navBorderColor;
-  border-top: 1px solid transparent;
+  border-top: 1px solid $navBorderColor;
 }
 
 .little-triangle {
   float:right;
-  position:relative;
-  top: -14px;
+  position:fixed;
+  //background: red;
+  top: calc(3.85rem - 14px);
+  opacity: 0;
   width: 0;
   height: 0;
+  right: 4.5%;
   border-left: 14px solid transparent;
   border-right: 14px solid transparent;
   border-bottom: 14px solid $navBorderColor;

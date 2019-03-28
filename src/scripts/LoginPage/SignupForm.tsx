@@ -43,7 +43,7 @@ export default class SignupForm extends React.Component<SignupFormProps, {}> {
 
         // accessToken is considered as user being 'logged in'
         if (accessToken) {
-            return redirectFunction('Product');
+            return redirectFunction('New Items');
         }
         const disableSubmit = (!this.props.isSubmitEnabled() || !this.validateEmail(this.props.email));
         return (

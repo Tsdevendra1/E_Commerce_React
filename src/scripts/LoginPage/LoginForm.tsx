@@ -39,7 +39,7 @@ export default class LoginForm extends React.Component<Props, {}> {
 
         // accessToken is considered as user being 'logged in'
         if (accessToken) {
-            return redirectFunction('Product');
+            return redirectFunction('New Items');
         }
         return (
             <div className="form-content">

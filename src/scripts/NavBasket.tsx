@@ -46,12 +46,14 @@ export default class NavBasket extends React.Component<Props, State> {
     }
 
     mouseEntered() {
+        console.log('entered');
         this.setState({mouseInArea: true}, () => {
             NavBar.showMobileBasket(this.state.mouseInArea)
         });
     }
 
     mouseLeft() {
+        console.log('left');
         this.setState({mouseInArea: false}, () => {
             NavBar.showMobileBasket(this.state.mouseInArea)
         });
@@ -69,19 +71,30 @@ export default class NavBasket extends React.Component<Props, State> {
                  onMouseEnter={this.mouseEntered}
                  onMouseLeave={this.mouseLeft}
                  className="nav-basket-wrapper desktop-show base-hide-class">
-                <div className="little-triangle">
-                </div>
-                <div className="nav-basket-header">
+                <div className="nav-basket-header"
+                     onMouseEnter={this.mouseEntered}
+                     onMouseLeave={this.mouseLeft}
+                >
                     <strong>My Bag,</strong>
                     <span>{numBasketItems}</span> item{(numBasketItems > 1 || numBasketItems == 0) && <span>s</span>}
                 </div>
-                <div className="nav-basket-items">
+                <div className="nav-basket-items"
+                     onMouseEnter={this.mouseEntered}
+                     onMouseLeave={this.mouseLeft}
+                >
                     {Object.keys(this.props.shoppingBasket).map((item, index) => this.createMobileBasketItem(item, index, numBasketItems))}
                 </div>
-                <div className="nav-basket-total">
+                <div className="nav-basket-total"
+
+                     onMouseEnter={this.mouseEntered}
+                     onMouseLeave={this.mouseLeft}
+                >
                     Sub-total <span>£<span>{this.props.itemPrices}</span></span>
                 </div>
-                <div className="nav-basket-footer pt-2">
+                <div className="nav-basket-footer pt-2"
+                     onMouseEnter={this.mouseEntered}
+                     onMouseLeave={this.mouseLeft}
+                >
                     <Link to="/checkout/" onClick={()=> {
                         NavBar.closeMobileBasket(false, true)
                     }}>
