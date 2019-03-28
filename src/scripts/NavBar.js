@@ -152,33 +152,17 @@ export default class NavBar extends React.Component {
     }
 
     removeClass(event) {
-        event.target.value = '';
-        this.setState({searchResults: []});
-        let buttons = document.getElementsByClassName('search-bar-button');
-        for (let button of buttons) {
-            button.classList.remove('button-focus');
-        }
+        // TODO: Not a great way to do this, should fix later. Need timeout to let click fire first if a link is clicked on the search results
+        setTimeout(()=>{
+            this.setState({searchResults: []});
+            let buttons = document.getElementsByClassName('search-bar-button');
+            for (let button of buttons) {
+                button.classList.remove('button-focus');
+            }
+        }, 100);
     };
 
-    // static showMobileBasket() {
-    //     const mobileBasket = document.getElementById('mobile-basket');
-    //     const numBasketItems = parseInt(mobileBasket.getAttribute('data-numitems'));
-    //     if (timeoutHandle) {
-    //         window.clearTimeout(timeoutHandle);
-    //         timeoutHandle = null;
-    //     }
-    //     if (numBasketItems > 0) {
-    //         // Make basket visible
-    //         mobileBasket.classList.remove('base-hide-class');
-    //         timeoutHandle = window.setTimeout(function () {
-    //             const mobileBasket = document.getElementById('mobile-basket');
-    //             mobileBasket.classList.add('base-hide-class');
-    //         }, 1500);
-    //     }
-    // }
-
     static showMobileBasket(keepDisplay) {
-        console.log(keepDisplay);
         const mobileBasket = document.getElementById('mobile-basket');
         const numBasketItems = parseInt(mobileBasket.getAttribute('data-numitems'));
         if (timeoutHandle) {

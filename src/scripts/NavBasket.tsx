@@ -53,13 +53,11 @@ export default class NavBasket extends React.Component<Props, State> {
         this.setState({mouseInArea: true});
     }
     mouseLeft(){
-        console.log('mouse left');
         this.setState({mouseInArea: false},()=>{
             NavBar.showMobileBasket(this.state.mouseInArea)
         });
     }
     mouseMove(){
-        console.log('hi');
         NavBar.showMobileBasket(this.state.mouseInArea)
     }
     render() {
