@@ -4,8 +4,6 @@ import Logo from "./Logo";
 import {Link} from 'react-router-dom';
 import {routes} from './routers';
 import ProductsService from "./ProductService";
-import BasketItem from './CheckoutPage/BasketItem';
-import NavBasket from "./NavBasket";
 import {MobileBasket} from "./BasketHoc";
 
 export var timeoutHandle;
@@ -17,6 +15,7 @@ export default class NavBar extends React.Component {
             mobileActive: false,
             desktopActive: false,
             searchResults: [],
+            currentActiveDesktopNavButton: '',
         };
         this.handleClick = this.handleClick.bind(this);
         this.showDesktopLinks = this.showDesktopLinks.bind(this);
@@ -27,6 +26,11 @@ export default class NavBar extends React.Component {
         this.toggleNavMenuWithClick = this.toggleNavMenuWithClick.bind(this);
         this.closeSearchResults = this.closeSearchResults.bind(this);
         this.removeClass = this.removeClass.bind(this);
+        this.closeCurrentDesktopActive = this.closeCurrentDesktopActive.bind(this);
+    }
+
+    closeCurrentDesktopActive() {
+        document.getElementById(this.state.currentActiveDesktopNavButton).click();
     }
 
     toggleNavMenuWithClick() {
@@ -34,7 +38,8 @@ export default class NavBar extends React.Component {
         if (width >= 724 && this.state.mobileActive) {
             this.closeMobileTab();
         } else if (width < 724 && this.state.desktopActive) {
-            document.getElementById('home-main-nav').click();
+            // document.getElementById('home-main-nav').click();
+            this.closeCurrentDesktopActive();
         }
     }
 
@@ -84,7 +89,10 @@ export default class NavBar extends React.Component {
 
     showDesktopLinks(e) {
         // Toggle mobileActive
-        this.setState({desktopActive: ((!this.state.desktopActive))});
+        this.setState({
+            desktopActive: ((!this.state.desktopActive)),
+            currentActiveDesktopNavButton: e.currentTarget.id
+        });
 
         e.target.classList.toggle('desktop-nav-button-active');
         let navContentElement = document.getElementsByClassName('nav-content')[0];
@@ -180,10 +188,11 @@ export default class NavBar extends React.Component {
         // TODO: Not a great way to do this, should fix later. Need timeout to let click fire first if a link is clicked on the search results
         setTimeout(() => {
             this.setState({searchResults: []});
-        }, 100);
+        }, 300);
     };
 
     static showMobileBasket(keepDisplay) {
+        console.log('triggered');
         const mobileBasket = document.getElementById('mobile-basket');
         const numBasketItems = parseInt(mobileBasket.getAttribute('data-numitems'));
         if (timeoutHandle) {
@@ -194,17 +203,32 @@ export default class NavBar extends React.Component {
             // Make basket visible
             mobileBasket.classList.remove('base-hide-class');
             mobileBasket.classList.add('top-change');
-            if (!keepDisplay) {
-                timeoutHandle = window.setTimeout(function () {
-                    const mobileBasket = document.getElementById('mobile-basket');
-                    mobileBasket.classList.remove('top-change');
-                    mobileBasket.classList.add('top-change-reverse');
-                    setTimeout(() => {
-                        mobileBasket.classList.remove('top-change-reverse');
-                        mobileBasket.classList.add('base-hide-class');
-                    }, 500)
-                }, 2500);
-            }
+            NavBar.closeMobileBasket(keepDisplay);
+        }
+    }
+
+    static closeMobileBasket(keepDisplay, forceClose){
+        if (!keepDisplay && forceClose) {
+
+            console.log('here');
+            const mobileBasket = document.getElementById('mobile-basket');
+            mobileBasket.classList.remove('top-change');
+            mobileBasket.classList.add('top-change-reverse');
+            setTimeout(() => {
+                mobileBasket.classList.remove('top-change-reverse');
+                mobileBasket.classList.add('base-hide-class');
+            }, 500);
+
+        } else if (!keepDisplay){
+            timeoutHandle = window.setTimeout(function () {
+                const mobileBasket = document.getElementById('mobile-basket');
+                mobileBasket.classList.remove('top-change');
+                mobileBasket.classList.add('top-change-reverse');
+                setTimeout(() => {
+                    mobileBasket.classList.remove('top-change-reverse');
+                    mobileBasket.classList.add('base-hide-class');
+                }, 500)
+            }, 2500);
         }
     }
 
@@ -253,13 +277,19 @@ export default class NavBar extends React.Component {
                                 })}
                             </div>
                             }
-                            <Link to="/login/">
+                            <Link to="/login/"
+                                  onClick={() => this.closeCurrentDesktopActive()}
+                            >
                                 <i style={{margin: '0 25px 0 10px'}} className="fas fa-user desktop-show"></i>
                             </Link>
-                            <Link to="/checkout/">
-                                <i onMouseOverCapture={() => {
-                                    this.showMobileBasket()
+                            <Link
+                                onMouseOver={() => {
+                                    NavBar.showMobileBasket()
                                 }}
+                                to="/checkout/"
+                                  onClick={() => this.closeCurrentDesktopActive()}
+                            >
+                                <i
                                    className="fas fa-shopping-basket desktop-show"></i>
                             </Link>
                         </div>

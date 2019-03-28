@@ -2,6 +2,7 @@
 
 $searchBarBorderColor: #757575;
 $desktopButtonBackgroundColor: #525050;
+$navBorderColor: darkgrey;
 
 %position-vertical-center {
   position: relative;
@@ -258,19 +259,19 @@ $navBasketPadding: 10px;
   height: auto;
   opacity: 0;
   position: absolute;
-  overflow: hidden;
+  //overflow: hidden;
   width: 220px;
   //top: 100%;
   right: 4.5%;
   z-index: 999999;
 }
 
+$topChangeTime: 0.5s;
 .top-change {
-  -webkit-animation: topchange 1s forwards; /* Safari 4.0 - 8.0 */
-  animation: topchange 1s forwards;
+  -webkit-animation: topchange $topChangeTime forwards; /* Safari 4.0 - 8.0 */
+  animation: topchange $topChangeTime forwards;
 }
 
-$topChangeTime: 0.5s;
 
 .top-change-reverse {
   -webkit-animation: topchangereverse $topChangeTime forwards; /* Safari 4.0 - 8.0 */
@@ -291,6 +292,17 @@ $topChangeTime: 0.5s;
     height: 200px;
   }
 }
+
+@keyframes heightchangereverse {
+  from {
+    height: 0;
+  }
+  to {
+    height: 200px;
+  }
+}
+
+
 
 @keyframes topchange {
   from {
@@ -314,7 +326,6 @@ $topChangeTime: 0.5s;
   }
 }
 
-$navBorderColor: darkgrey;
 
 .nav-basket-items {
   max-height: 160px;
@@ -357,6 +368,18 @@ $navBorderColor: darkgrey;
   padding: $navBasketPadding;
   border-right: 1px solid $navBorderColor;
   border-left: 1px solid $navBorderColor;
+  border-top: 1px solid transparent;
+}
+
+.little-triangle {
+  float:right;
+  position:relative;
+  top: -14px;
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-bottom: 14px solid $navBorderColor;
 }
 
 @media screen and (min-width: 780px) {

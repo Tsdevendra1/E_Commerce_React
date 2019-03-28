@@ -3,6 +3,7 @@ import BasketItem from "./CheckoutPage/BasketItem";
 import {shoppingBasketInterface} from "./Redux/reducers";
 import NavBar from './NavBar';
 
+import {Link} from 'react-router-dom';
 
 interface Props {
     shoppingBasket: shoppingBasketInterface;
@@ -21,7 +22,7 @@ export default class NavBasket extends React.Component<Props, State> {
         super(props);
         this.mouseEntered = this.mouseEntered.bind(this);
         this.mouseLeft = this.mouseLeft.bind(this);
-        this.mouseMove  = this.mouseMove.bind(this);
+        this.mouseMove = this.mouseMove.bind(this);
         this.createMobileBasketItem = this.createMobileBasketItem.bind(this);
     }
 
@@ -44,31 +45,32 @@ export default class NavBasket extends React.Component<Props, State> {
         )
     }
 
-
-    extendBasketTime() {
-        NavBar.showMobileBasket();
-    }
-
-    mouseEntered(){
-        this.setState({mouseInArea: true});
-    }
-    mouseLeft(){
-        this.setState({mouseInArea: false},()=>{
+    mouseEntered() {
+        this.setState({mouseInArea: true}, () => {
             NavBar.showMobileBasket(this.state.mouseInArea)
         });
     }
-    mouseMove(){
+
+    mouseLeft() {
+        this.setState({mouseInArea: false}, () => {
+            NavBar.showMobileBasket(this.state.mouseInArea)
+        });
+    }
+
+    mouseMove() {
         NavBar.showMobileBasket(this.state.mouseInArea)
     }
+
     render() {
-        console.log('rendered');
         let numBasketItems = Object.keys(this.props.shoppingBasket).length;
         return (
             <div data-numitems={numBasketItems} id="mobile-basket"
-                 onMouseMove={this.mouseMove}
+                 // onMouseMove={this.mouseMove}
                  onMouseEnter={this.mouseEntered}
                  onMouseLeave={this.mouseLeft}
                  className="nav-basket-wrapper desktop-show base-hide-class">
+                <div className="little-triangle">
+                </div>
                 <div className="nav-basket-header">
                     <strong>My Bag,</strong>
                     <span>{numBasketItems}</span> item{(numBasketItems > 1 || numBasketItems == 0) && <span>s</span>}
@@ -80,9 +82,13 @@ export default class NavBasket extends React.Component<Props, State> {
                     Sub-total <span>£<span>{this.props.itemPrices}</span></span>
                 </div>
                 <div className="nav-basket-footer pt-2">
-                    <button type="button" className="nav-basket-button btn btn-success"
-                            style={{borderRadius: '0'}}>Checkout
-                    </button>
+                    <Link to="/checkout/" onClick={()=> {
+                        NavBar.closeMobileBasket(false, true)
+                    }}>
+                        <button type="button" className="nav-basket-button btn btn-success"
+                                style={{borderRadius: '0'}}>Checkout
+                        </button>
+                    </Link>
                 </div>
             </div>
         )
