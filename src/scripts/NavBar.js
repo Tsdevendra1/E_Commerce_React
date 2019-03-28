@@ -5,10 +5,11 @@ import {Link} from 'react-router-dom';
 import {routes} from './routers';
 import ProductsService from "./ProductService";
 import {MobileBasket} from "./BasketHoc";
+import {connect} from 'react-redux';
 
 export var timeoutHandle;
 
-export default class NavBar extends React.Component {
+class NavBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -269,10 +270,17 @@ export default class NavBar extends React.Component {
                         </div>
                     </div>
                     <div className="nav-right-content">
-                        <i onClick={this.toggleMobileSearchBar} style={{margin: '0 25px 0 0'}}
+                        <i onClick={this.toggleMobileSearchBar} style={{margin: '0 24px 0 0'}}
                            className="fas fa-search mobile-show"></i>
+                        <Link
+                            to="/checkout/"
+                        >
+                            <i
+                                style={{margin: '0 24px 0 0'}}
+                                className="fas fa-shopping-basket mobile-show"></i>
+                        </Link>
                         <Link to="/login/">
-                            <i style={{margin: '0 25px 0 0'}} className="fas fa-user mobile-show"></i>
+                            <i style={{margin: '0 24px 0 0', display: (this.props.accessToken)?'none':'inline'}} className="fas fa-user mobile-show"></i>
                         </Link>
                         <i id="show-mobile-button" onClick={this.handleClick} className="mobile-show fas fa-bars"></i>
                         <div className="center-vertical search-bar-wrapper desktop-show" style={{position: 'relative'}}>
@@ -299,7 +307,7 @@ export default class NavBar extends React.Component {
                             <Link to="/login/"
                                   onClick={() => this.closeCurrentDesktopActive()}
                             >
-                                <i style={{margin: '0 25px 0 10px'}} className="fas fa-user desktop-show"></i>
+                                <i style={{margin: '0 25px 0 10px', display: (this.props.accessToken)? 'none':'inline'}} className="fas fa-user desktop-show"></i>
                             </Link>
                             <Link
                                 onMouseOver={() => {
@@ -352,7 +360,7 @@ export default class NavBar extends React.Component {
                         })}
                     </div>
                 </div>
-                <div className="little-triangle">
+                <div className="little-triangle desktop-show">
                 </div>
                 <MobileBasket/>
             </div>
@@ -361,3 +369,14 @@ export default class NavBar extends React.Component {
 
 }
 
+
+function mapStateToProps(state){
+    const {jwtToken} = state;
+    const {accessToken} = jwtToken;
+
+    return {
+        accessToken
+    }
+}
+
+export default connect(mapStateToProps)(NavBar);

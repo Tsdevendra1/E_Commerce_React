@@ -27,8 +27,11 @@ $navBorderColor: darkgrey;
 
 .nav-left-content {
   display: flex;
+  max-width: 152px;
   justify-content: space-evenly;
 }
+
+
 
 .nav-bar {
   position: fixed;
