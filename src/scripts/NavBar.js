@@ -30,7 +30,9 @@ export default class NavBar extends React.Component {
     }
 
     closeCurrentDesktopActive() {
-        document.getElementById(this.state.currentActiveDesktopNavButton).click();
+        if (this.state.desktopActive) {
+            document.getElementById(this.state.currentActiveDesktopNavButton).click();
+        }
     }
 
     toggleNavMenuWithClick() {
@@ -192,9 +194,10 @@ export default class NavBar extends React.Component {
     };
 
     static showMobileBasket(keepDisplay) {
-        console.log('triggered');
+        console.log('inside');
         const mobileBasket = document.getElementById('mobile-basket');
         const numBasketItems = parseInt(mobileBasket.getAttribute('data-numitems'));
+        const triangle = document.getElementsByClassName('little-triangle')[0];
         if (timeoutHandle) {
             window.clearTimeout(timeoutHandle);
             timeoutHandle = null;
@@ -202,33 +205,35 @@ export default class NavBar extends React.Component {
         if (numBasketItems > 0) {
             // Make basket visible
             mobileBasket.classList.remove('base-hide-class');
+            triangle.classList.add('opacity-change');
             mobileBasket.classList.add('top-change');
             NavBar.closeMobileBasket(keepDisplay);
         }
     }
 
-    static closeMobileBasket(keepDisplay, forceClose){
-        if (!keepDisplay && forceClose) {
-
-            console.log('here');
+    static closeMobileBasket(keepDisplay, forceClose) {
+        function closeBasket() {
+            // NOTE THIS VALUE IS LINKED TO topChangeTime variable in scss
+            let timeToRemove = 1000;
             const mobileBasket = document.getElementById('mobile-basket');
+            const triangle = document.getElementsByClassName('little-triangle')[0];
             mobileBasket.classList.remove('top-change');
             mobileBasket.classList.add('top-change-reverse');
+            triangle.classList.remove('opacity-change');
+            triangle.classList.add('opacity-change-reverse');
             setTimeout(() => {
                 mobileBasket.classList.remove('top-change-reverse');
+                triangle.classList.remove('opacity-change-reverse');
                 mobileBasket.classList.add('base-hide-class');
-            }, 500);
+            }, timeToRemove);
+        }
 
-        } else if (!keepDisplay){
+        if (!keepDisplay && forceClose) {
+            closeBasket();
+        } else if (!keepDisplay) {
             timeoutHandle = window.setTimeout(function () {
-                const mobileBasket = document.getElementById('mobile-basket');
-                mobileBasket.classList.remove('top-change');
-                mobileBasket.classList.add('top-change-reverse');
-                setTimeout(() => {
-                    mobileBasket.classList.remove('top-change-reverse');
-                    mobileBasket.classList.add('base-hide-class');
-                }, 500)
-            }, 2500);
+                closeBasket();
+            }, 1200);
         }
     }
 
@@ -287,10 +292,10 @@ export default class NavBar extends React.Component {
                                     NavBar.showMobileBasket()
                                 }}
                                 to="/checkout/"
-                                  onClick={() => this.closeCurrentDesktopActive()}
+                                onClick={() => this.closeCurrentDesktopActive()}
                             >
                                 <i
-                                   className="fas fa-shopping-basket desktop-show"></i>
+                                    className="fas fa-shopping-basket desktop-show"></i>
                             </Link>
                         </div>
                     </div>
@@ -332,6 +337,8 @@ export default class NavBar extends React.Component {
                             return this.createDesktopNavItem(navItem, 'home-main-nav')
                         })}
                     </div>
+                </div>
+                <div className="little-triangle">
                 </div>
                 <MobileBasket/>
             </div>

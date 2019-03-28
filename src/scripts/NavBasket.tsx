@@ -69,8 +69,6 @@ export default class NavBasket extends React.Component<Props, State> {
                  onMouseEnter={this.mouseEntered}
                  onMouseLeave={this.mouseLeft}
                  className="nav-basket-wrapper desktop-show base-hide-class">
-                <div className="little-triangle">
-                </div>
                 <div className="nav-basket-header">
                     <strong>My Bag,</strong>
                     <span>{numBasketItems}</span> item{(numBasketItems > 1 || numBasketItems == 0) && <span>s</span>}
