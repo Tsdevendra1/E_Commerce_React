@@ -25,7 +25,7 @@ class BasketShowcase extends React.Component<Props, State> {
         super(props);
         this.handleClick = this.handleClick.bind(this);
         this.showBasketItems = this.showBasketItems.bind(this);
-        this.addPriceToTotal= this.addPriceToTotal.bind(this);
+        this.addPriceToTotal = this.addPriceToTotal.bind(this);
     }
 
     handleClick() {
@@ -42,17 +42,19 @@ class BasketShowcase extends React.Component<Props, State> {
         const {shoppingBasket} = this.props;
         const itemInfo = shoppingBasket[productId];
         return (
-            <BasketItem addPriceToTotal={this.addPriceToTotal} key={productId} thumbnail={itemInfo.productThumbnailPath} quantity={itemInfo.quantity}
+            <BasketItem addPriceToTotal={this.addPriceToTotal} key={productId} thumbnail={itemInfo.productThumbnailPath}
+                        quantity={itemInfo.quantity}
                         productId={productId}/>
         )
     }
 
-    addPriceToTotal(price:number){
+    addPriceToTotal(price: number) {
         this.setState({itemPrices: (this.state.itemPrices + price)})
     }
 
     render() {
         let classes = (this.props.type === 'mobile') ? 'basket-container-mobile basket-left' : 'basket-container-desktop';
+        let shoppingBasketKeys = Object.keys(this.props.shoppingBasket);
         return (
             <div className={classes}>
                 <div className="basket-showcase">
@@ -63,7 +65,7 @@ class BasketShowcase extends React.Component<Props, State> {
                         </div>
                     </div>
                     <div className="basket-content">
-                        {Object.keys(this.props.shoppingBasket).map(this.showBasketItems)}
+                        {shoppingBasketKeys.map(this.showBasketItems)}
                     </div>
                     <div className="basket-footer basket-content">
                         <div className="basket-total">

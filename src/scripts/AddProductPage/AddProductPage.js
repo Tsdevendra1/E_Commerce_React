@@ -13,7 +13,7 @@ class AddProductPage extends React.Component {
         return (
             <div className="add-product-page">
                 <div className="add-form-container">
-                    <h1 style={{textDecoration:'underline'}}>Add Product</h1>
+                    <h1 style={{textDecoration: 'underline', textAlign: 'center'}}>Add Product</h1>
                     <AddProductForm/>
                 </div>
             </div>

@@ -7,6 +7,7 @@ import BaseUploadField from "../Forms/BaseUploadField";
 import * as ReactDOM from "react-dom";
 import {redirectFunction} from "../routers";
 import {fetchProductsIfNeeded} from "../Redux/actions/productActions";
+import InputWithIcon from "../Forms/InputWithIcon";
 
 interface IaddProductFormProps {
     accessToken: string;
@@ -232,6 +233,12 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
             beginningId++;
         }
         console.log(this.state.addModalValue);
+        let addExtraImagesButtonClasses = 'btn mt-3';
+        if (this.state.numExtraImages === 3){
+            addExtraImagesButtonClasses += ' btn-danger'
+        } else {
+            addExtraImagesButtonClasses += ' btn-success'
+        }
         return (
             <form method="post" className="custom-form">
                 <div className="overlay"></div>
@@ -247,11 +254,8 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
                     <div className="add-category-content">
                         <label className="base-field">
                         Category name:
-                        <input type="text" id="add-category-input" name="addModalValue" onChange={this.handleInputChange} value={this.state.addModalValue} placeholder="Enter category name..."/>
+                        <input className="base-input-class" type="text" id="add-category-input" name="addModalValue" onChange={this.handleInputChange} value={this.state.addModalValue} placeholder="Enter category name..."/>
                         </label>
-                        {/*<BaseInputField type="text" label="Category name" name="addModalValue"*/}
-                                        {/*inputValue={this.state.addModalValue}*/}
-                                        {/*onChangeFunction={this.handleInputChange}/>*/}
                         <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
                             <button disabled={!(this.state.addModalValue !== '')} onClick={this.addCategory}
                                     type="button" className="btn btn-primary">Submit
@@ -259,18 +263,21 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
                         </div>
                     </div>
                 </div>
-                <BaseInputField type="text" label="Product Name" name="product_name"
+                <BaseInputField type="text" label="Product Name" name="product_name"  inputClasses="base-input-class"
                                 inputValue={this.state.product_name}
+                                placeholder="Enter product name..."
                                 onChangeFunction={this.handleInputChange}/>
-                <BaseInputField type="number" label="Product Price (£)" name="price" inputValue={this.state.price}
+                <BaseInputField type="number" label="Product Price (£)" name="price" inputValue={this.state.price} inputClasses="base-input-class"
+                                placeholder="Enter product price..."
                                 onChangeFunction={this.handleInputChange}/>
-                <BaseInputField type="text" label="Product Description" name="description"
+                <BaseInputField type="text" label="Product Description" name="description" inputClasses="base-input-class"
                                 inputValue={this.state.description}
+                                placeholder="Enter product description..."
                                 onChangeFunction={this.handleInputChange}/>
                 <BaseUploadField onChangeFunction={this.handleInputChange} innerRef={this.imageUploadRef}
                                  name="thumbnail" label="Product Thumbnail"/>
                 {(this.state.productCategories && this.state.product_type) &&
-                <BaseSelectField showModalFunc={this.showAddModal} options={this.state.productCategories}
+                <BaseSelectField selectClasses="base-input-class" showModalFunc={this.showAddModal} options={this.state.productCategories}
                                  label="Product Type" name="product_type"
                                  inputValue={this.state.product_type}
                                  onChangeFunction={this.handleInputChange}/>
@@ -283,8 +290,9 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
                     {
                         inputIds.map(this.addNewShowcaseImageInput)
                     }
-                    <button disabled={this.state.numExtraImages === 3} type="button" onClick={this.addImageInput}>Add
-                        Image
+                    <button className={addExtraImagesButtonClasses} style={{maxWidth: '207px'}} disabled={this.state.numExtraImages === 3} type="button" onClick={this.addImageInput}>
+                        {/*Add Extra Image*/}
+                        {this.state.numExtraImages === 3 ? <span>No More Images</span>: <span>Add Extra Image</span>}
                     </button>
                 </label>
                 <button disabled={!this.validateDataFilled()} onClick={this.handleFormSubmit} type="button"

@@ -129,7 +129,9 @@ class NavBar extends React.Component {
     };
 
     closeMobileTab() {
-        document.getElementById('show-mobile-button').click();
+        if (this.state.mobileActive){
+            document.getElementById('show-mobile-button').click();
+        }
     }
 
     createMobileNavItem(navItem) {
@@ -300,6 +302,7 @@ class NavBar extends React.Component {
                             to="/checkout/"
                         >
                             <i
+                                onClick={this.closeMobileTab}
                                 style={{margin: '0 24px 0 0'}}
                                 className="fas fa-shopping-basket mobile-show"></i>
                         </Link>
@@ -345,6 +348,7 @@ class NavBar extends React.Component {
                                 onClick={() => this.closeCurrentDesktopActive()}
                             >
                                 <i
+
                                     className="fas fa-shopping-basket desktop-show"></i>
                             </Link>
                         </div>

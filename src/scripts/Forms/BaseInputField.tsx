@@ -6,6 +6,8 @@ interface IbaseInputFieldProps {
     inputValue: string;
     label: string;
     type: string;
+    placeholder: string;
+    inputClasses?: string;
 }
 
 export default class BaseInputField extends React.Component<IbaseInputFieldProps> {
@@ -13,7 +15,7 @@ export default class BaseInputField extends React.Component<IbaseInputFieldProps
         return (
             <label className="base-field form-item label-class">
                 {this.props.label}:
-                <input onChange={this.props.onChangeFunction} value={this.props.inputValue} type={this.props.type}
+                <input className={this.props.inputClasses} placeholder={this.props.placeholder}  onChange={this.props.onChangeFunction} value={this.props.inputValue} type={this.props.type}
                        name={this.props.name}/>
             </label>
         );

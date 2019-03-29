@@ -3,6 +3,15 @@
   flex-direction: column;
 }
 
+.base-input-class {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  border: 1px solid darkgrey;
+  height: 30px !important;
+  padding-left: 10px;
+}
+
 .custom-form {
   display: flex;
   flex-direction: column;
