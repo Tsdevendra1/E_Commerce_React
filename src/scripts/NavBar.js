@@ -194,57 +194,81 @@ class NavBar extends React.Component {
         }, 300);
     };
 
-    static showMobileBasket(keepDisplay) {
-        const mobileBasket = document.getElementById('mobile-basket');
-        const numBasketItems = parseInt(mobileBasket.getAttribute('data-numitems'));
-        const triangle = document.getElementsByClassName('little-triangle')[0];
-        if (timeoutHandle) {
-            window.clearTimeout(timeoutHandle);
-            timeoutHandle = null;
-        }
-        if (numBasketItems > 0) {
-            // Make basket visible
-            mobileBasket.classList.remove('base-hide-class');
-            triangle.classList.add('opacity-change');
-            if (numBasketItems === 1){
-                mobileBasket.classList.add('height-change');
-            } else {
-                mobileBasket.classList.add('height-change-higher');
+    static showMobileBasket(keepDisplay, quickClose) {
+        console.log(quickClose, 'VALUE');
+        if (!quickClose){
+            const mobileBasket = document.getElementById('mobile-basket');
+            const numBasketItems = parseInt(mobileBasket.getAttribute('data-numitems'));
+            const triangle = document.getElementsByClassName('little-triangle')[0];
+            if (timeoutHandle) {
+                window.clearTimeout(timeoutHandle);
+                timeoutHandle = null;
             }
-            NavBar.closeMobileBasket(keepDisplay);
+            if (numBasketItems > 0) {
+                // Make basket visible
+                mobileBasket.classList.remove('base-hide-class');
+                triangle.classList.add('opacity-change');
+                if (numBasketItems === 1) {
+                    mobileBasket.classList.add('height-change');
+                } else {
+                    mobileBasket.classList.add('height-change-higher');
+                }
+                NavBar.closeMobileBasket(keepDisplay);
+            }
         }
     }
 
     static closeMobileBasket(keepDisplay, forceClose) {
-        function closeBasket() {
+        function closeBasket(quickClose) {
             // NOTE THIS VALUE IS LINKED TO topChangeTime variable in scss
             let timeToRemove = 1000;
             const mobileBasket = document.getElementById('mobile-basket');
             const triangle = document.getElementsByClassName('little-triangle')[0];
             const numBasketItems = parseInt(mobileBasket.getAttribute('data-numitems'));
-            if (numBasketItems === 1){
-                mobileBasket.classList.remove('height-change');
-                mobileBasket.classList.add('height-change-reverse');
+            if (!quickClose) {
+                if (numBasketItems === 1) {
+                    mobileBasket.classList.remove('height-change');
+                    mobileBasket.classList.add('height-change-reverse');
+                } else {
+                    mobileBasket.classList.remove('height-change-higher');
+                    mobileBasket.classList.add('height-change-higher-reverse');
+                }
+                triangle.classList.remove('opacity-change');
+                triangle.classList.add('opacity-change-reverse');
+                setTimeout(() => {
+                    mobileBasket.classList.remove('height-change-reverse');
+                    if (numBasketItems === 1) {
+                        mobileBasket.classList.remove('height-change-reverse');
+                    } else {
+                        mobileBasket.classList.remove('height-change-higher-reverse');
+                    }
+                    triangle.classList.remove('opacity-change-reverse');
+                    mobileBasket.classList.add('base-hide-class');
+                }, timeToRemove);
             } else {
-                mobileBasket.classList.remove('height-change-higher');
-                mobileBasket.classList.add('height-change-higher-reverse');
-            }
-            triangle.classList.remove('opacity-change');
-            triangle.classList.add('opacity-change-reverse');
-            setTimeout(() => {
+                if (numBasketItems === 1) {
+                    mobileBasket.classList.remove('height-change');
+                } else {
+                    mobileBasket.classList.remove('height-change-higher');
+                }
+                triangle.classList.remove('opacity-change');
                 mobileBasket.classList.remove('height-change-reverse');
-                if (numBasketItems === 1){
+                if (numBasketItems === 1) {
                     mobileBasket.classList.remove('height-change-reverse');
                 } else {
                     mobileBasket.classList.remove('height-change-higher-reverse');
                 }
                 triangle.classList.remove('opacity-change-reverse');
                 mobileBasket.classList.add('base-hide-class');
-            }, timeToRemove);
+                if (timeoutHandle) {
+                    window.clearTimeout(timeoutHandle);
+                    timeoutHandle = null;
+                }
+            }
         }
 
         if (!keepDisplay && forceClose) {
-            closeBasket();
+            closeBasket(forceClose);
         } else if (!keepDisplay) {
             timeoutHandle = window.setTimeout(function () {
                 closeBasket();
@@ -280,7 +304,8 @@ class NavBar extends React.Component {
                                 className="fas fa-shopping-basket mobile-show"></i>
                         </Link>
                         <Link to="/login/">
-                            <i style={{margin: '0 24px 0 0', display: (this.props.accessToken)?'none':'inline'}} className="fas fa-user mobile-show"></i>
+                            <i style={{margin: '0 24px 0 0', display: (this.props.accessToken) ? 'none' : 'inline'}}
+                               className="fas fa-user mobile-show"></i>
                         </Link>
                         <i id="show-mobile-button" onClick={this.handleClick} className="mobile-show fas fa-bars"></i>
                         <div className="center-vertical search-bar-wrapper desktop-show" style={{position: 'relative'}}>
@@ -307,7 +332,10 @@ class NavBar extends React.Component {
                             <Link to="/login/"
                                   onClick={() => this.closeCurrentDesktopActive()}
                             >
-                                <i style={{margin: '0 25px 0 10px', display: (this.props.accessToken)? 'none':'inline'}} className="fas fa-user desktop-show"></i>
+                                <i style={{
+                                    margin: '0 25px 0 10px',
+                                    display: (this.props.accessToken) ? 'none' : 'inline'
+                                }} className="fas fa-user desktop-show"></i>
                             </Link>
                             <Link
                                 onMouseOver={() => {
@@ -370,7 +398,7 @@ class NavBar extends React.Component {
 }
 
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     const {jwtToken} = state;
     const {accessToken} = jwtToken;
 

@@ -15,6 +15,7 @@ interface Props {
 
 interface State {
     mouseInArea: boolean | undefined
+    quickClose: boolean;
 }
 
 export default class NavBasket extends React.Component<Props, State> {
@@ -24,10 +25,12 @@ export default class NavBasket extends React.Component<Props, State> {
         this.mouseLeft = this.mouseLeft.bind(this);
         this.mouseMove = this.mouseMove.bind(this);
         this.createMobileBasketItem = this.createMobileBasketItem.bind(this);
+        this.quickClose = this.quickClose.bind(this);
     }
 
     state: Readonly<State> = {
-        mouseInArea: false
+        mouseInArea: false,
+        quickClose: false,
     };
 
     createMobileBasketItem(itemId, index, numItemsInBasket) {
@@ -47,15 +50,26 @@ export default class NavBasket extends React.Component<Props, State> {
 
     mouseEntered() {
         console.log('entered');
-        this.setState({mouseInArea: true}, () => {
-            NavBar.showMobileBasket(this.state.mouseInArea)
-        });
+        if (!this.state.quickClose) {
+            this.setState({mouseInArea: true}, () => {
+                NavBar.showMobileBasket(this.state.mouseInArea, this.state.quickClose)
+            });
+        }
     }
 
-    mouseLeft() {
-        console.log('left');
-        this.setState({mouseInArea: false}, () => {
-            NavBar.showMobileBasket(this.state.mouseInArea)
+    mouseLeft(e) {
+        console.log(e.target);
+        console.log('left', this.state.quickClose);
+        if (!this.state.quickClose) {
+            this.setState({mouseInArea: false}, () => {
+                NavBar.showMobileBasket(this.state.mouseInArea, this.state.quickClose)
+            });
+        }
+    }
+
+    quickClose() {
+        this.setState({quickClose: true}, () => {
+            NavBar.closeMobileBasket(false, true)
         });
     }
 
@@ -67,7 +81,7 @@ export default class NavBasket extends React.Component<Props, State> {
         let numBasketItems = Object.keys(this.props.shoppingBasket).length;
         return (
             <div data-numitems={numBasketItems} id="mobile-basket"
-                 // onMouseMove={this.mouseMove}
+                // onMouseMove={this.mouseMove}
                  onMouseEnter={this.mouseEntered}
                  onMouseLeave={this.mouseLeft}
                  className="nav-basket-wrapper desktop-show base-hide-class">
@@ -76,6 +90,7 @@ export default class NavBasket extends React.Component<Props, State> {
                      onMouseLeave={this.mouseLeft}
                 >
                     <strong>My Bag,</strong>
+                    &nbsp;
                     <span>{numBasketItems}</span> item{(numBasketItems > 1 || numBasketItems == 0) && <span>s</span>}
                 </div>
                 <div className="nav-basket-items"
@@ -95,9 +110,7 @@ export default class NavBasket extends React.Component<Props, State> {
                      onMouseEnter={this.mouseEntered}
                      onMouseLeave={this.mouseLeft}
                 >
-                    <Link to="/checkout/" onClick={()=> {
-                        NavBar.closeMobileBasket(false, true)
-                    }}>
+                    <Link to="/checkout/" onClick={this.quickClose}>
                         <button type="button" className="nav-basket-button btn btn-success"
                                 style={{borderRadius: '0'}}>Checkout
                         </button>
