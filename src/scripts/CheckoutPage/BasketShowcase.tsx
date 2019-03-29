@@ -55,29 +55,45 @@ class BasketShowcase extends React.Component<Props, State> {
     render() {
         let classes = (this.props.type === 'mobile') ? 'basket-container-mobile basket-left' : 'basket-container-desktop';
         let shoppingBasketKeys = Object.keys(this.props.shoppingBasket);
-        return (
-            <div className={classes}>
-                <div className="basket-showcase">
-                    <div className="basket-header">
-                        <h4 style={{margin: '0'}}>Order Summary</h4>
-                        <div className="flex-align-vertical">
-                            <i onClick={this.handleClick} className="close-basket-button fas fa-times"></i>
+        if (shoppingBasketKeys.length !== 0) {
+            return (
+                <div className={classes}>
+                    <div className="basket-showcase">
+                        <div className="basket-header">
+                            <h4 style={{margin: '0'}}>Order Summary</h4>
+                            <div className="flex-align-vertical">
+                                <i onClick={this.handleClick} className="close-basket-button fas fa-times"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div className="basket-content">
-                        {shoppingBasketKeys.map(this.showBasketItems)}
-                    </div>
-                    <div className="basket-footer basket-content">
-                        <div className="basket-total">
-                            Total today
+                        <div className="basket-content">
+                            {shoppingBasketKeys.map(this.showBasketItems)}
                         </div>
-                        <span>
+                        <div className="basket-footer basket-content">
+                            <div className="basket-total">
+                                Total today
+                            </div>
+                            <span>
             £{this.state.itemPrices}
             </span>
+                        </div>
                     </div>
                 </div>
-            </div>
-        )
+            )
+        } else {
+            return (
+                <div className={classes}>
+                    <div className="basket-showcase">
+                        {/*<h1>hi</h1>*/}
+                        <div className="basket-header">
+                            <h4 style={{margin: '0'}}>No items added</h4>
+                            <div className="flex-align-vertical">
+                                <i onClick={this.handleClick} className="close-basket-button fas fa-times"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
     }
 
 

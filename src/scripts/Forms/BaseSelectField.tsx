@@ -8,7 +8,7 @@ interface IbaseSelectFieldProps {
     inputValue: number;
     label: string;
     options: Array<optionInterface>;
-    showModalFunc: ()=>void;
+    showModalFunc: () => void;
     selectClasses?: string;
 }
 
@@ -26,14 +26,15 @@ export default class BaseSelectField extends React.Component<IbaseSelectFieldPro
         return (
             <label className="form-item base-field label-class">
                 <div className="form-select-field">
-                    <span>
-                    {this.props.label}:
-                    </span>
+                <span className="base-label-class">
+                {this.props.label}:
+                </span>
                     <span onClick={this.props.showModalFunc} className="add-category-button">
                         Add Category +
                     </span>
                 </div>
-                <select className={this.props.selectClasses} name={this.props.name} value={this.props.inputValue} onChange={this.props.onChangeFunction}>
+                <select className={this.props.selectClasses} name={this.props.name} value={this.props.inputValue}
+                        onChange={this.props.onChangeFunction}>
                     {this.props.options.map(renderOptions)}
                 </select>
             </label>
