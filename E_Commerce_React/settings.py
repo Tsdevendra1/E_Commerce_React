@@ -24,7 +24,7 @@ SECRET_KEY = '-$j&nr^3(b0u7895_@cd!2738w)j%q)+$(!yc$dcq5k0b52ld_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['e-commerce-env.pkmxpkmheu.us-west-2.elasticbeanstalk.com', '127.0.0.1']
+ALLOWED_HOSTS = ['e-commerce-env.pkmxpkmheu.us-west-2.elasticbeanstalk.com', '127.0.0.1', 'www.parrotclothing.live']
 
 # # CORS
 # CORS_ORIGIN_ALLOW_ALL = False

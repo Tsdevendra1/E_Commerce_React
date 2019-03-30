@@ -37,11 +37,22 @@ export default class ProductDisplay extends React.Component {
     }
 
 
+    deleteItemFromDatabase(){
+
+    }
+
     render() {
 
         return (
             <div className="product">
-                <div>
+                <div style={{position:'relative'}}>
+                    <div onClick={this.deleteItemFromDatabase} className="delete-product center-vertical">
+                        <i className="fas fa-times"></i>
+                    </div>
+                    {/*This should be a link tag when you make the page */}
+                    <div className="update-product center-vertical">
+                        <i className="fas fa-pen"></i>
+                    </div>
                     <div className="aspect-ratio-box">
                         <div className="aspect-ratio-box-inside">
                             <img className="product-img" src={this.props.thumbnail}/>
