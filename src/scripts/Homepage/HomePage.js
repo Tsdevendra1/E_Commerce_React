@@ -12,7 +12,7 @@ class HomePage extends React.Component {
     render() {
         return (
             <div className="typewriter-container">
-                <img className="homepage-image" src="/static/main/images/animal-avian-beak-1200857.jpg"/>
+                <img className="homepage-image" src="/static/main/static/images/animal-avian-beak-1200857.jpg"/>
                 <div className="text-block typewriter">
                     <h1>Welcome</h1>
                     <p className="typewriter">To Parrot Clothing</p>
