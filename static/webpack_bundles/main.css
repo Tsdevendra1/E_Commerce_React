@@ -1088,6 +1088,20 @@ li:hover:after {
   overflow: hidden;
   background: lightgrey; }
 
+.delete-product {
+  position: absolute;
+  right: 5%;
+  top: 7%;
+  color: red !important;
+  z-index: 99999999; }
+
+.update-product {
+  position: absolute;
+  right: 17%;
+  top: 7%;
+  color: green !important;
+  z-index: 99999999; }
+
 .product-description-wrapper {
   max-height: 42px;
   word-wrap: break-word;
