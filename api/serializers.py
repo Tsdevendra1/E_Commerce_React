@@ -1,4 +1,4 @@
-from django_common.auth_backends import User
+from django.contrib.auth.models import User
 from rest_framework import serializers
 from main.models import Product, Image, ProductCategories
 

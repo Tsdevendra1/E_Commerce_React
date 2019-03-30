@@ -1,8 +1,9 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 # Create your models here.
 from django.template.defaultfilters import slugify
-from django_common.auth_backends import User
+# from django_common.auth_backends import User
 
 
 class ProductCategories(models.Model):

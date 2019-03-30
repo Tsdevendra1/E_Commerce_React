@@ -1,4 +1,3 @@
-from django_common.auth_backends import User
 from django_filters import rest_framework as filters
 
 from main.models import Product, Image, ProductCategories
