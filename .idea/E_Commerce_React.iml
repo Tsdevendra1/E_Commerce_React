@@ -6,7 +6,7 @@
         <option name="rootFolder" value="$MODULE_DIR$" />
         <option name="settingsModule" value="E_Commerce_React/settings.py" />
         <option name="manageScript" value="$MODULE_DIR$/manage.py" />
-        <option name="environment" value="&lt;map&gt;&#10;  &lt;entry&gt;&#10;    &lt;string&gt;AWS_ACCESS_KEY_ID&lt;/string&gt;&#10;    &lt;string&gt;AKIAT5CLRSHHIPYMWUF4&lt;/string&gt;&#10;  &lt;/entry&gt;&#10;  &lt;entry&gt;&#10;    &lt;string&gt;AWS_SECRET_ACCESS_KEY&lt;/string&gt;&#10;    &lt;string&gt;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&lt;/string&gt;&#10;  &lt;/entry&gt;&#10;  &lt;entry&gt;&#10;    &lt;string&gt;AWS_STORAGE_BUCKET_NAME&lt;/string&gt;&#10;    &lt;string&gt;e-commerce-media&lt;/string&gt;&#10;  &lt;/entry&gt;&#10;&lt;/map&gt;" />
+        <option name="environment" value="&lt;map/&gt;" />
         <option name="doNotUseTestRunner" value="false" />
         <option name="trackFilePattern" value="migrations" />
       </configuration>
