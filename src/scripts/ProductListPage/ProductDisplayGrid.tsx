@@ -15,6 +15,7 @@ interface Props {
     handleLoadingFinished: (value: boolean) => void;
     loadingHasFinished: boolean;
     currentParams: string;
+    showExtraProductFunctions: boolean;
 }
 
 class ProductDisplayGrid extends React.Component<Props, {}> {
@@ -42,9 +43,8 @@ class ProductDisplayGrid extends React.Component<Props, {}> {
             <div key={productItem.description + productItem.product_name + productItem.price + productItem.thumbnail}
                  className="grid-col">
                 <div className="grid-col-content">
-
                     <Link to={`/products/${productItem.id}`}>
-                        <ProductDisplay getProductDataFunction={this.getProductData} thumbnail={productItem.thumbnail} productName={productItem.product_name}
+                        <ProductDisplay showExtraProductFunctions={this.props.showExtraProductFunctions}  getProductDataFunction={this.getProductData} thumbnail={productItem.thumbnail} productName={productItem.product_name}
                                         productPrice={productItem.price} productId={productItem.id}/>
                     </Link>
                 </div>

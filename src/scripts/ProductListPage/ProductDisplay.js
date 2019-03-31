@@ -52,13 +52,16 @@ class ProductDisplay extends React.Component {
         return (
             <div className="product">
                 <div style={{position: 'relative'}}>
-                    <div onClick={this.deleteItemFromDatabase} className="delete-product center-vertical">
-                        <i className="fas fa-times"></i>
-                    </div>
-                    {/*This should be a link tag when you make the page */}
-                    <div className="update-product center-vertical">
-                        <i className="fas fa-pen"></i>
-                    </div>
+                    {this.props.showExtraProductFunctions &&
+                    <React.Fragment>
+                        <div onClick={this.deleteItemFromDatabase} className="delete-product center-vertical">
+                            <i className="fas fa-times"></i>
+                        </div>
+                        <div className="update-product center-vertical">
+                            <i className="fas fa-pen"></i>
+                        </div>
+                    </React.Fragment>
+                    }
                     <div className="aspect-ratio-box">
                         <div className="aspect-ratio-box-inside">
                             <img className="product-img" src={this.props.thumbnail}/>
@@ -77,11 +80,13 @@ class ProductDisplay extends React.Component {
         )
     }
 }
+
 ProductDisplay.propTypes = {
     productName: PropTypes.string.isRequired,
     productPrice: PropTypes.number.isRequired,
     thumbnail: PropTypes.string.isRequired,
     productId: PropTypes.number.isRequired,
+    showExtraProductFunctions: PropTypes.bool.isRequired,
     getProductDataFunction: PropTypes.func.isRequired,
 };
 

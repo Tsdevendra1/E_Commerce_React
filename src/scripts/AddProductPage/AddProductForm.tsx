@@ -157,6 +157,7 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
         ProductsService.createProduct(data, this.props.accessToken).then(data => {
             console.log(data);
             this.resetForm();
+            this.showSuccessModal();
         }).catch(e => {
             if (e.response) {
                 console.log(e.response.data);
@@ -167,7 +168,6 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
                 isSending: false,
             });
         });
-        this.showSuccessModal();
     }
 
     validateDataFilled() {
@@ -333,7 +333,6 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
                     }
                     <button className={addExtraImagesButtonClasses} style={{maxWidth: '207px'}}
                             disabled={this.state.numExtraImages === 3} type="button" onClick={this.addImageInput}>
-                        {/*Add Extra Image*/}
                         {this.state.numExtraImages === 3 ? <span>No More Images</span> : <span>Add Extra Image</span>}
                     </button>
                 </label>
