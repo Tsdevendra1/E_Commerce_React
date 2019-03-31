@@ -41,7 +41,9 @@ class ProductDisplayGrid extends React.Component<Props, {}> {
         let extraParams = this.props.extraParams;
         if (extraParams) {
             for (let param in extraParams) {
-                currentUrlParams.append(param, extraParams[param]);
+                if (!currentUrlParams.has(param)){
+                    currentUrlParams.append(param, extraParams[param]);
+                }
             }
         }
         this.props.dispatch(fetchProductsIfNeeded(currentUrlParams.toString()));

@@ -1,13 +1,14 @@
 import {Route, Switch} from "react-router-dom";
 import ProductListPage from "./ProductListPage/ProductListPage";
 import HomePage from "./Homepage/HomePage";
-import AddProductPage from "./AddProductPage/AddProductPage";
+import AddProductPage from "./AddProductPage/AddProductPage.tsx";
 import ProductPage from "./ProductPage/ProductPage";
 import LoginPage from "./LoginPage/LoginPage";
 import {Redirect} from 'react-router-dom';
 import React from 'react';
 import CheckoutPage from './CheckoutPage/CheckoutPage';
 import OwnProductListPage from './OwnProductListPage/OwnProductListPage';
+import UpdateProductPage from "./UpdateProductPage/UpdateProductPage";
 
 
 export const routes = {
@@ -16,6 +17,7 @@ export const routes = {
         {path: '/products/', component: ProductListPage, name: 'New Items', exact: true, show: true},
         {path: '/add/products/', component: AddProductPage, name: 'Add Product', exact: false, show: true},
         {path: '/login/', component: LoginPage, name: 'Login', exact: false, show: false},
+        {path: '/products/update/:id', component: UpdateProductPage, name: 'Update Product', exact: false, show: false},
         {path: '/checkout/', component: CheckoutPage, name: 'Checkout', exact: false, show: false},
         {path: '/products/self/', component: OwnProductListPage, name: 'Your Products', exact: false, show: true},
         {path: '/products/:id', component: ProductPage, name: 'Product Page', exact: false, show: false},

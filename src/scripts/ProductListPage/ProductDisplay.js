@@ -3,6 +3,11 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types'
 import ProductService from '../ProductService';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
+import {withRouter } from 'react-router-dom';
+
+
+
 
 class ProductDisplay extends React.Component {
     constructor(props) {
@@ -11,6 +16,7 @@ class ProductDisplay extends React.Component {
         this.enableFadeText = this.enableFadeText.bind(this);
         this.fadeTextRef = React.createRef();
         this.deleteItemFromDatabase = this.deleteItemFromDatabase.bind(this);
+        this.redirectToUpdatePage = this.redirectToUpdatePage.bind(this);
     }
 
 
@@ -47,6 +53,14 @@ class ProductDisplay extends React.Component {
         }).catch(e => console.log(e.response));
     }
 
+    redirectToUpdatePage(e) {
+        e.preventDefault();
+        let path = `/products/update/${this.props.productId}`;
+        console.log(path);
+        console.log(this.props.history);
+        this.props.history.push(path);
+    }
+
     render() {
 
         return (
@@ -57,7 +71,7 @@ class ProductDisplay extends React.Component {
                         <div onClick={this.deleteItemFromDatabase} className="delete-product center-vertical">
                             <i className="fas fa-times"></i>
                         </div>
-                        <div className="update-product center-vertical">
+                        <div onClick={this.redirectToUpdatePage} className="update-product center-vertical">
                             <i className="fas fa-pen"></i>
                         </div>
                     </React.Fragment>
@@ -98,5 +112,5 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(ProductDisplay)
+export default withRouter(connect(mapStateToProps)(ProductDisplay));
 

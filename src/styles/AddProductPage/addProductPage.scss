@@ -90,6 +90,7 @@ $modalBorder: 1px solid lightgrey;
 
 }
 
+
 @keyframes slideIn {
   from {
     top: 0px;
@@ -129,4 +130,9 @@ $modalBorder: 1px solid lightgrey;
   border-left: $modalBorder;
 }
 
-
+.help-label {
+  font-size: 0.75rem;
+  display: block;
+  color: #CDCDCD;
+  text-transform: none !important;
+}

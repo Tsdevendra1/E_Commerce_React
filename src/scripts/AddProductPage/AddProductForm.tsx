@@ -6,12 +6,13 @@ import ProductsService from "../ProductService";
 import BaseUploadField from "../Forms/BaseUploadField";
 import * as ReactDOM from "react-dom";
 import {redirectFunction} from "../routers";
-import {fetchProductsIfNeeded} from "../Redux/actions/productActions";
-import InputWithIcon from "../Forms/InputWithIcon";
+import {PageType} from "../UpdateProductPage/UpdateProductPage";
 
-interface IaddProductFormProps {
+interface Props {
     accessToken: string;
     dispatch: any;
+    type: PageType;
+    productUpdateId?: number;
 }
 
 interface showCaseImages {
@@ -34,7 +35,7 @@ export interface optionInterface {
     name: string;
 }
 
-interface IaddProductFormState extends productFormFields, showCaseImages {
+interface State extends productFormFields, showCaseImages {
     isSending: boolean;
     numExtraImages: number;
     productCategories: Array<optionInterface>;
@@ -42,7 +43,7 @@ interface IaddProductFormState extends productFormFields, showCaseImages {
 }
 
 
-class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFormState> {
+class AddProductForm extends React.Component<Props, State> {
 
     imageUploadRef: React.RefObject<HTMLInputElement>;
     addModalRef: React.RefObject<HTMLInputElement>;
@@ -65,7 +66,7 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
         this.hideSuccessModal = this.hideSuccessModal.bind(this);
     }
 
-    state: Readonly<IaddProductFormState> = {
+    state: Readonly<State> = {
         product_name: '',
         product_type: null,
         price: '',
@@ -81,11 +82,17 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
 
     componentDidMount() {
         this.setProductCategories();
+        let productUpdateId = this.props.productUpdateId;
+        if (this.props.type === PageType.Update && productUpdateId) {
+            ProductsService.getProduct(productUpdateId).then(data => {
+                const {product_name, description, price, product_type} = data;
+                this.setState({product_name, description, product_type, price: `${price}`})
+            }).catch(e => console.log(e));
+        }
     }
 
     setProductCategories() {
         ProductsService.getProductCategories().then(data => {
-            console.log(data);
             // For product_type we set whatever is first as default value
             if (this.props.accessToken) {
                 this.setState({productCategories: data, product_type: data[0].id})
@@ -98,7 +105,6 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
     handleInputChange(event) {
         const target = event.currentTarget;
         let value;
-        console.log(target.type);
         if (target.type === 'checkbox') {
             value = target.checked
         } else if (target.type === 'file') {
@@ -155,7 +161,6 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
             isSending: true,
         });
         ProductsService.createProduct(data, this.props.accessToken).then(data => {
-            console.log(data);
             this.resetForm();
             this.showSuccessModal();
         }).catch(e => {
@@ -183,6 +188,7 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
             this.state.description.length > 0 &&
             this.state.price.length > 0 &&
             this.state.thumbnail !== '' && atLeastOneShowImageCompleted);
+
     }
 
     addImageInput() {
@@ -232,7 +238,6 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
     addCategory() {
         let input = (document.getElementById('add-category-input') as HTMLInputElement);
         ProductsService.createProductCategory(input.value, this.props.accessToken).then(data => {
-            console.log(data);
             this.setProductCategories();
             this.hideAddModal();
         }).catch(e => {
@@ -251,12 +256,19 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
             inputIds.push(beginningId);
             beginningId++;
         }
-        console.log(this.state.addModalValue);
         let addExtraImagesButtonClasses = 'btn mt-3';
         if (this.state.numExtraImages === 3) {
             addExtraImagesButtonClasses += ' btn-danger'
         } else {
             addExtraImagesButtonClasses += ' btn-success'
+        }
+        let selectFieldRenderProp = <span></span>;
+        if (this.props.type === PageType.Add) {
+            selectFieldRenderProp = (
+                <span onClick={this.showAddModal} className="add-category-button">
+                        Add Category +
+                </span>
+            )
         }
         return (
             <form method="post" className="custom-form">
@@ -313,9 +325,18 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
                                 placeholder="Enter product description..."
                                 onChangeFunction={this.handleInputChange}/>
                 <BaseUploadField onChangeFunction={this.handleInputChange} innerRef={this.imageUploadRef}
-                                 name="thumbnail" label="Product Thumbnail"/>
+                                 name="thumbnail" label="Product Thumbnail"
+                                 render=
+                                     {this.props.type === PageType.Update ?
+                                     <span className="text-muted help-label">
+                        Leaving this image blank will ensure that you use the image already set
+                                     </span> : <span></span>
+                                     }
+
+                />
                 {(this.state.productCategories && this.state.product_type) &&
-                <BaseSelectField selectClasses="base-input-class" showModalFunc={this.showAddModal}
+                <BaseSelectField selectClasses="base-input-class"
+                                 render={selectFieldRenderProp}
                                  options={this.state.productCategories}
                                  label="Product Type" name="product_type"
                                  inputValue={this.state.product_type}
@@ -324,6 +345,11 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
                 <label className="thumbnails label-class" style={{marginTop: '10px'}}>
                     <span className="base-label-class">
                     Images to Showcase:
+                        {this.props.type === PageType.Update &&
+                        <span className="text-muted help-label">
+                        Leaving these images blank will ensure that you use the images already set
+                    </span>
+                        }
                     </span>
                     <input onChange={this.handleInputChange}
                            className="showimage thumbnail-image-field mb-1"
@@ -339,7 +365,8 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
                 <button disabled={!this.validateDataFilled()} onClick={this.handleFormSubmit} type="button"
                         className="form-item btn btn-primary">
                     {this.state.isSending ?
-                        <i id="spinner" className="fas fa-spinner fa-spin"></i> : <span>Submit</span>
+                        <i id="spinner" className="fas fa-spinner fa-spin"></i> :
+                        <span>{this.props.type === PageType.Add ? <span>Submit</span> : <span>Update</span>}</span>
                     }
                 </button>
             </form>

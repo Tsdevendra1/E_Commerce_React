@@ -926,6 +926,12 @@ li:hover:after {
   border-right: 1px solid lightgrey;
   border-left: 1px solid lightgrey; }
 
+.help-label {
+  font-size: 0.75rem;
+  display: block;
+  color: #CDCDCD;
+  text-transform: none !important; }
+
 .base-field {
   display: flex;
   flex-direction: column; }
