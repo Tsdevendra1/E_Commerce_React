@@ -39,7 +39,6 @@ class ProductDisplay extends React.Component {
         }
     }
 
-
     deleteItemFromDatabase(e) {
         e.preventDefault();
         ProductService.deleteProduct(this.props.productId, this.props.accessToken).then(response => {

@@ -46,6 +46,7 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
 
     imageUploadRef: React.RefObject<HTMLInputElement>;
     addModalRef: React.RefObject<HTMLInputElement>;
+    successModalRef: React.RefObject<HTMLDivElement>;
 
 
     constructor(props) {
@@ -56,9 +57,12 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
         this.addImageInput = this.addImageInput.bind(this);
         this.addNewShowcaseImageInput = this.addNewShowcaseImageInput.bind(this);
         this.addModalRef = React.createRef();
+        this.successModalRef = React.createRef();
         this.hideAddModal = this.hideAddModal.bind(this);
         this.showAddModal = this.showAddModal.bind(this);
         this.addCategory = this.addCategory.bind(this);
+        this.showSuccessModal = this.showSuccessModal.bind(this);
+        this.hideSuccessModal = this.hideSuccessModal.bind(this);
     }
 
     state: Readonly<IaddProductFormState> = {
@@ -163,6 +167,7 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
                 isSending: false,
             });
         });
+        this.showSuccessModal();
     }
 
     validateDataFilled() {
@@ -203,9 +208,23 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
         }
     }
 
+    hideSuccessModal() {
+        if (this.successModalRef.current) {
+            this.successModalRef.current.style.display = 'none';
+            (document.getElementsByClassName('overlay')[0] as HTMLDivElement).style.display = 'none';
+        }
+    }
+
     showAddModal() {
         if (this.addModalRef.current) {
             this.addModalRef.current.style.display = 'block';
+            (document.getElementsByClassName('overlay')[0] as HTMLDivElement).style.display = 'block';
+        }
+    }
+
+    showSuccessModal() {
+        if (this.successModalRef.current) {
+            this.successModalRef.current.style.display = 'block';
             (document.getElementsByClassName('overlay')[0] as HTMLDivElement).style.display = 'block';
         }
     }
@@ -265,6 +284,19 @@ class AddProductForm extends React.Component<IaddProductFormProps, IaddProductFo
                                     type="button" className="btn btn-primary">Submit
                             </button>
                         </div>
+                    </div>
+                </div>
+                <div ref={this.successModalRef} className="add-category-modal" style={{background: 'green !important'}}>
+                    <div className="success-header">
+                        <span>
+                            Success!
+                        </span>
+                        <span>
+                            <i onClick={this.hideSuccessModal} className="fas fa-times"></i>
+                        </span>
+                    </div>
+                    <div className="add-category-content">
+                        <h5>Your product has been added.</h5>
                     </div>
                 </div>
                 <BaseInputField type="text" label="Product Name" name="product_name" inputClasses="base-input-class"

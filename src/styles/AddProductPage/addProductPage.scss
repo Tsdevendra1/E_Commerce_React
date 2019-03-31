@@ -53,51 +53,42 @@ $modalBorder: 1px solid lightgrey;
   border-top-left-radius: $modalRadius;
   border-top-right-radius: $modalRadius;
 }
+
+.success-header {
+  font-weight: bold;
+  padding: 4%;
+  background: green;
+  color: white;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  border-top-left-radius: $modalRadius;
+  border-top-right-radius: $modalRadius;
+}
+
 .overlay {
   height: 100vh;
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
   position: fixed;
   top: 0;
-  left:0;
+  left: 0;
   display: none;
 }
+
 .add-category-modal {
   background: transparent;
   display: none; /* Hidden by default */
-  //box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   position: fixed; /* Stay in place */
   z-index: 9999999999999999999; /* Sit on top */
   left: 50%;
   transform: translate(-50%, 0);
-  //top: 300px;
   width: 90%; /* Full width */
   max-width: 400px;
-  //margin: 0 auto;
-  //height: auto;
-  //overflow: auto; /* Enable scroll if needed */
-  //background-color: rgb(0, 0, 0); /* Fallback color */
-  //background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-  //-webkit-animation-name: fadeIn; /* Fade in the background */
-  //-webkit-animation-duration: 0.4s;
-  //animation-name: fadeIn;
-  //animation-duration: 0.4s
-  animation-name: slideIn;
-  animation-duration: 0.4s;
-  animation-fill-mode: forwards;
+  animation: slideIn .7s forwards, fadeIn .7s forwards;
+
 
 }
-
-//@-webkit-keyframes slideIn {
-//  from {
-//    bottom: -300px;
-//    opacity: 0
-//  }
-//  to {
-//    bottom: 600px;
-//    opacity: 1
-//  }
-//}
 
 @keyframes slideIn {
   from {
@@ -110,23 +101,23 @@ $modalBorder: 1px solid lightgrey;
   }
 }
 
-//@-webkit-keyframes fadeIn {
-//  from {
-//    opacity: 0
-//  }
-//  to {
-//    opacity: 1
-//  }
-//}
-//
-//@keyframes fadeIn {
-//  from {
-//    opacity: 0
-//  }
-//  to {
-//    opacity: 1
-//  }
-//}
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 1
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 1
+  }
+}
 
 .add-category-content {
   background: white;
@@ -137,3 +128,5 @@ $modalBorder: 1px solid lightgrey;
   border-right: $modalBorder;
   border-left: $modalBorder;
 }
+
+
