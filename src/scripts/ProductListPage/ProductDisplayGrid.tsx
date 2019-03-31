@@ -14,12 +14,17 @@ interface Props {
     dispatch: any;
     handleLoadingFinished: (value: boolean) => void;
     loadingHasFinished: boolean;
+    currentParams: string;
 }
 
 class ProductDisplayGrid extends React.Component<Props, {}> {
+    constructor(props){
+        super(props);
+        this.getProductData = this.getProductData.bind(this);
+        this.createGrid = this.createGrid.bind(this);
+    }
     componentDidMount() {
-        const {dispatch} = this.props;
-        dispatch(fetchProductsIfNeeded(''));
+        this.getProductData();
     }
 
     componentDidUpdate(prevProps) {
@@ -28,6 +33,9 @@ class ProductDisplayGrid extends React.Component<Props, {}> {
         }
     }
 
+    getProductData() {
+        this.props.dispatch(fetchProductsIfNeeded(this.props.currentParams));
+    }
 
     createGrid(productItem) {
         return (
@@ -36,8 +44,8 @@ class ProductDisplayGrid extends React.Component<Props, {}> {
                 <div className="grid-col-content">
 
                     <Link to={`/products/${productItem.id}`}>
-                        <ProductDisplay thumbnail={productItem.thumbnail} productName={productItem.product_name}
-                                        productPrice={productItem.price}/>
+                        <ProductDisplay getProductDataFunction={this.getProductData} thumbnail={productItem.thumbnail} productName={productItem.product_name}
+                                        productPrice={productItem.price} productId={productItem.id}/>
                     </Link>
                 </div>
             </div>
@@ -63,10 +71,11 @@ class ProductDisplayGrid extends React.Component<Props, {}> {
 
 function mapStateToProps(state) {
     const {productList} = state;
-    const {isFetching, products} = productList;
+    const {isFetching, products, currentParams} = productList;
     return {
         products,
         isFetching,
+        currentParams
     }
 }
 

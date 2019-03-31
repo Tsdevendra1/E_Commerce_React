@@ -21,6 +21,7 @@ class NavBar extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.showDesktopLinks = this.showDesktopLinks.bind(this);
         this.closeMainTab = this.closeMainTab.bind(this);
+        this.closeMobileTab = this.closeMobileTab.bind(this);
         this.createDesktopNavItem = this.createDesktopNavItem.bind(this);
         this.createMobileNavItem = this.createMobileNavItem.bind(this);
         this.getSearchResults = this.getSearchResults.bind(this);
@@ -198,7 +199,7 @@ class NavBar extends React.Component {
 
     static showMobileBasket(keepDisplay, quickClose) {
         console.log(quickClose, 'VALUE');
-        if (!quickClose){
+        if (!quickClose) {
             const mobileBasket = document.getElementById('mobile-basket');
             const numBasketItems = parseInt(mobileBasket.getAttribute('data-numitems'));
             const triangle = document.getElementsByClassName('little-triangle')[0];

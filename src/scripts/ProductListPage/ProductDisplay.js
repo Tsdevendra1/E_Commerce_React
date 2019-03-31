@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types'
+import ProductService from '../ProductService';
+import {connect} from 'react-redux';
 
-export default class ProductDisplay extends React.Component {
+class ProductDisplay extends React.Component {
     constructor(props) {
         super(props);
         this.descriptionRef = React.createRef();
         this.enableFadeText = this.enableFadeText.bind(this);
         this.fadeTextRef = React.createRef();
+        this.deleteItemFromDatabase = this.deleteItemFromDatabase.bind(this);
     }
 
 
@@ -37,15 +40,19 @@ export default class ProductDisplay extends React.Component {
     }
 
 
-    deleteItemFromDatabase(){
-
+    deleteItemFromDatabase(e) {
+        e.preventDefault();
+        ProductService.deleteProduct(this.props.productId, this.props.accessToken).then(response => {
+            console.log(response.data);
+            this.props.getProductDataFunction();
+        }).catch(e => console.log(e.response));
     }
 
     render() {
 
         return (
             <div className="product">
-                <div style={{position:'relative'}}>
+                <div style={{position: 'relative'}}>
                     <div onClick={this.deleteItemFromDatabase} className="delete-product center-vertical">
                         <i className="fas fa-times"></i>
                     </div>
@@ -75,4 +82,17 @@ ProductDisplay.propTypes = {
     productName: PropTypes.string.isRequired,
     productPrice: PropTypes.number.isRequired,
     thumbnail: PropTypes.string.isRequired,
+    productId: PropTypes.number.isRequired,
+    getProductDataFunction: PropTypes.func.isRequired,
 };
+
+function mapStateToProps(state) {
+    const {jwtToken} = state;
+    const {accessToken} = jwtToken;
+    return {
+        accessToken
+    }
+}
+
+export default connect(mapStateToProps)(ProductDisplay)
+

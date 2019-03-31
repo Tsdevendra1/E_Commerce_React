@@ -24,11 +24,17 @@ class LoginPage extends React.Component<{}, State> {
         if (type==='login'){
             this.setState({showLoginForm: true});
             e.currentTarget.classList.add('login-tab-active');
-            document.getElementsByClassName('signup-tab-active')[0].classList.remove('signup-tab-active');
+            let signUpTab = document.getElementsByClassName('signup-tab-active')[0];
+            if (signUpTab){
+                signUpTab.classList.remove('signup-tab-active');
+            }
         } else {
             this.setState({showLoginForm: false});
             e.currentTarget.classList.add('signup-tab-active');
-            document.getElementsByClassName('login-tab-active')[0].classList.remove('login-tab-active');
+            let loginUpTab = document.getElementsByClassName('login-tab-active')[0];
+            if (loginUpTab){
+                loginUpTab.classList.remove('login-tab-active');
+            }
         }
     }
 
