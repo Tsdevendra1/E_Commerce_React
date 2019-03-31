@@ -35,12 +35,8 @@ export default class LoginForm extends React.Component<Props, {}> {
     }
 
     render() {
-        const {isFetching, accessToken} = this.props;
+        const {isFetching} = this.props;
 
-        // accessToken is considered as user being 'logged in'
-        if (accessToken) {
-            return redirectFunction('New Items');
-        }
         return (
             <div className="form-content">
                 <div className="login-form-content">

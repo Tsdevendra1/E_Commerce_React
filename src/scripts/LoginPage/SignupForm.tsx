@@ -11,6 +11,7 @@ interface SignupFormProps {
     username: string;
     email: string;
     password: string;
+    userId: number;
     isSubmitEnabled: () => boolean;
 }
 

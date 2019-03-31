@@ -1,6 +1,7 @@
-from rest_framework import viewsets, mixins
+from rest_framework import viewsets, mixins, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
 
 from api.permissions import IsOwnerOrReadOnly
 from api.filter_backends import ProductFilter, ImageFilter, ProductCategoriesFilter
@@ -10,6 +11,7 @@ from django_filters import rest_framework as filters
 from rest_framework.filters import SearchFilter, OrderingFilter
 from main.models import ProductCategories
 from rest_framework import generics
+from rest_framework_simplejwt import views as jwt_views
 
 
 # Create your views here.
@@ -97,3 +99,17 @@ class UserViewset(mixins.CreateModelMixin, viewsets.GenericViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
+
+class CustomJwtHandler(jwt_views.TokenObtainPairView):
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+
+        try:
+            serializer.is_valid(raise_exception=True)
+        except TokenError as e:
+            raise InvalidToken(e.args[0])
+
+        context = serializer.validated_data
+        context['user_pk'] = User.objects.get(username=serializer.initial_data['username']).id
+        return Response(context, status=status.HTTP_200_OK)

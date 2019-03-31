@@ -16,14 +16,16 @@ interface Props {
     loadingHasFinished: boolean;
     currentParams: string;
     showExtraProductFunctions: boolean;
+    extraParams?: { [key: string]: string };
 }
 
 class ProductDisplayGrid extends React.Component<Props, {}> {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.getProductData = this.getProductData.bind(this);
         this.createGrid = this.createGrid.bind(this);
     }
+
     componentDidMount() {
         this.getProductData();
     }
@@ -35,7 +37,14 @@ class ProductDisplayGrid extends React.Component<Props, {}> {
     }
 
     getProductData() {
-        this.props.dispatch(fetchProductsIfNeeded(this.props.currentParams));
+        let currentUrlParams = new URLSearchParams(this.props.currentParams);
+        let extraParams = this.props.extraParams;
+        if (extraParams) {
+            for (let param in extraParams) {
+                currentUrlParams.append(param, extraParams[param]);
+            }
+        }
+        this.props.dispatch(fetchProductsIfNeeded(currentUrlParams.toString()));
     }
 
     createGrid(productItem) {
@@ -44,7 +53,9 @@ class ProductDisplayGrid extends React.Component<Props, {}> {
                  className="grid-col">
                 <div className="grid-col-content">
                     <Link to={`/products/${productItem.id}`}>
-                        <ProductDisplay showExtraProductFunctions={this.props.showExtraProductFunctions}  getProductDataFunction={this.getProductData} thumbnail={productItem.thumbnail} productName={productItem.product_name}
+                        <ProductDisplay showExtraProductFunctions={this.props.showExtraProductFunctions}
+                                        getProductDataFunction={this.getProductData} thumbnail={productItem.thumbnail}
+                                        productName={productItem.product_name}
                                         productPrice={productItem.price} productId={productItem.id}/>
                     </Link>
                 </div>

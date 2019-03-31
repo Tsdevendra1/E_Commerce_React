@@ -3,26 +3,29 @@ import axios from 'axios';
 export const REQUEST_TOKEN = 'REQUEST_TOKEN';
 export const RECIEVE_TOKEN = 'RECIEVE_TOKEN';
 export const RECIEVE_ACCESS_TOKEN = 'RECIEVE_ACCESS_TOKEN';
-export const SET_REFRESH_TOKEN = 'SET_REFRESH_TOKEN';
+export const SET_REFRESH_TOKEN_AND_ID = 'SET_REFRESH_TOKEN_AND_ID';
 export const RESET_REFRESH_TOKEN = 'RESET_REFRESH_TOKEN';
 
 import {API_URL, headers, default as ProductsService} from '../../ProductService';
 
-export function setRefreshToken(refreshToken) {
+export function setRefreshTokenAndId(refreshToken, userId) {
     return {
-        type: SET_REFRESH_TOKEN,
+        type: SET_REFRESH_TOKEN_AND_ID,
         refreshToken,
+        userId
     }
 }
 
+
 export function resetRefreshToken() {
     localStorage.removeItem('refreshToken');
+    localStorage.removeItem('userId');
     return {
         type: RESET_REFRESH_TOKEN,
     }
 }
 
-export function getAccessToken(refreshToken: string) {
+export function getAccessToken(refreshToken: string, userId: string) {
     // This function is called on first page load;
     let data = {
         refresh: `${refreshToken}`,
@@ -37,7 +40,7 @@ export function getAccessToken(refreshToken: string) {
         } else {
             return axios.post(`${API_URL}/api/token/refresh/`, data, {headers}).then(function (response) {
                 // If successful save the refresh token
-                dispatch(setRefreshToken(refreshToken));
+                dispatch(setRefreshTokenAndId(refreshToken, userId));
                 dispatch(receieveAccessToken(response.data));
             }).catch(function (error) {
                 console.log(error.response.data);
@@ -63,11 +66,13 @@ function requestToken(): object {
 function receieveToken(data: any): object {
     // Save refresh token in localStorage
     localStorage.setItem("refreshToken", data.refresh);
+    localStorage.setItem("userId", data.user_pk);
     localStorage.setItem("refreshTokenExpire", `${(new Date()).getTime() + (60 * 60 * 24 * 1000)}`);
     return {
         type: RECIEVE_TOKEN,
         refreshToken: data.refresh,
         accessToken: data.access,
+        userId: data.user_pk,
         receivedAt: Date.now()
     }
 }
@@ -81,7 +86,7 @@ export function fetchToken(username: string, password: string, dispatchRequestTo
         let data = {username: username, password: password};
         return axios.post(`${API_URL}/api/token/`, data, {headers}).then(function (response) {
             console.log(response.data);
-            dispatch(receieveToken(response.data))
+            dispatch(receieveToken(response.data));
         }).catch(function (e) {
             console.log(e.response.data)
         });

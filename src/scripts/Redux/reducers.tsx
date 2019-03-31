@@ -9,7 +9,7 @@ import {
     RECIEVE_TOKEN,
     REQUEST_TOKEN,
     RECIEVE_ACCESS_TOKEN,
-    SET_REFRESH_TOKEN,
+    SET_REFRESH_TOKEN_AND_ID,
     RESET_REFRESH_TOKEN
 } from "./actions/tokenActions";
 
@@ -47,15 +47,22 @@ function shoppingBasket(state: shoppingBasketInterface = {}, action) {
 }
 
 
-function jwtToken(state = {isFetching: false, accessToken: null, refreshToken: null, expiresAt: null}, action) {
+function jwtToken(state = {
+    isFetching: false,
+    accessToken: null,
+    refreshToken: null,
+    expiresAt: null,
+    userId: null
+}, action) {
     switch (action.type) {
         case RESET_REFRESH_TOKEN:
             return Object.assign({}, state, {
                 refreshToken: null,
             });
-        case SET_REFRESH_TOKEN:
+        case SET_REFRESH_TOKEN_AND_ID:
             return Object.assign({}, state, {
                 refreshToken: action.refreshToken,
+                userId: action.userId,
             });
         case RECIEVE_ACCESS_TOKEN:
             return Object.assign({}, state, {
@@ -71,6 +78,7 @@ function jwtToken(state = {isFetching: false, accessToken: null, refreshToken: n
                 isFetching: false,
                 accessToken: action.accessToken,
                 refreshToken: action.refreshToken,
+                userId: action.userId,
                 expiresAt: (new Date).getTime() + 300000,
             });
         default:

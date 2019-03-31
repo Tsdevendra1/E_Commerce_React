@@ -78,12 +78,13 @@ const mapDispatchToProps = dispatch => {
         // On first load see if previous refresh token exists
         loadUserFromToken: () => {
             let refreshToken = localStorage.getItem('refreshToken');
+            let userId = localStorage.getItem('userId');
             if (!refreshToken || refreshToken === '') {//if there is no token, dont bother
                 return;
             }
 
             //fetch user from token (if server deems it's valid token)
-            dispatch(getAccessToken(refreshToken));
+            dispatch(getAccessToken(refreshToken, userId));
         },
     }
 };

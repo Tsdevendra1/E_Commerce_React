@@ -1,16 +1,17 @@
 import * as React from 'react';
 import ProductDisplayGrid from "../ProductListPage/ProductDisplayGrid";
 import LoadingOverlay from "../LoadingOverlay";
+import {connect} from "react-redux";
 
 interface Props {
-
+    userId: number;
 }
 
 interface State {
     productListLoadingFinished: boolean;
 }
 
-export default class OwnProductListPage extends React.Component<Props, State> {
+class OwnProductListPage extends React.Component<Props, State> {
     constructor(props) {
         super(props);
         this.handleLoadingFinished = this.handleLoadingFinished.bind(this);
@@ -35,9 +36,19 @@ export default class OwnProductListPage extends React.Component<Props, State> {
                 <ProductDisplayGrid showExtraProductFunctions={true} handleLoadingFinished={value => {
                     this.setState({productListLoadingFinished: value})
                 }}
+                                    extraParams={{product_owner: `${this.props.userId}`}}
                                     loadingHasFinished={this.state.productListLoadingFinished}/>
             </div>
         )
     }
 }
 
+function mapStateToProps(state) {
+    const {jwtToken} = state;
+    const {userId} = jwtToken;
+    return {
+        userId,
+    }
+}
+
+export default connect(mapStateToProps)(OwnProductListPage);
