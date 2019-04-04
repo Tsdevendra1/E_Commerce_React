@@ -151,28 +151,51 @@ class AddProductForm extends React.Component<Props, State> {
             showcaseImage1, showcaseImage2, showcaseImage3, showcaseImage4
         };
 
+
         const data = new FormData();
+        let pageType = this.props.type;
         for (let field in productFieldValues) {
-            data.append(field, productFieldValues[field]);
+            let fieldValue = productFieldValues[field];
+            if (pageType === PageType.Add || (pageType === PageType.Update && fieldValue !== '' && fieldValue !== undefined)) {
+                data.append(field, fieldValue);
+            }
         }
+
+        let updateProductId = this.props.productUpdateId;
+        let accessToken = this.props.accessToken;
 
         // We are about to send the data
         this.setState({
             isSending: true,
         });
-        ProductsService.createProduct(data, this.props.accessToken).then(data => {
-            this.resetForm();
-            this.showSuccessModal();
-        }).catch(e => {
-            if (e.response) {
-                console.log(e.response.data);
-            }
-        }).then(() => {
-            // After everything set not sending
-            this.setState({
-                isSending: false,
+        if (this.props.type === PageType.Add) {
+            ProductsService.createProduct(data, accessToken).then(data => {
+                this.resetForm();
+                this.showSuccessModal();
+            }).catch(e => {
+                if (e.response) {
+                    console.log(e.response.data);
+                }
+            }).then(() => {
+                // After everything set not sending
+                this.setState({
+                    isSending: false,
+                });
             });
-        });
+        } else if (this.props.type === PageType.Update && updateProductId) {
+            ProductsService.updateProduct(data, updateProductId, accessToken).then(data => {
+                this.showSuccessModal();
+            }).catch(e => {
+                if (e.response) {
+                    console.log(e.response.data);
+                }
+            }).then(() => {
+                // After everything set not sending
+                this.setState({
+                    isSending: false,
+                });
+            });
+        }
     }
 
     validateDataFilled() {
@@ -184,10 +207,17 @@ class AddProductForm extends React.Component<Props, State> {
                 break
             }
         }
-        return (this.state.product_name.length > 0 &&
-            this.state.description.length > 0 &&
-            this.state.price.length > 0 &&
-            this.state.thumbnail !== '' && atLeastOneShowImageCompleted);
+        if (this.props.type === PageType.Add) {
+            return (this.state.product_name.length > 0 &&
+                this.state.description.length > 0 &&
+                this.state.price.length > 0 &&
+                this.state.thumbnail !== '' && atLeastOneShowImageCompleted);
+        } else {
+            return (this.state.product_name.length > 0 ||
+                this.state.description.length > 0 ||
+                this.state.price.length > 0 ||
+                this.state.thumbnail !== '' || atLeastOneShowImageCompleted);
+        }
 
     }
 
@@ -308,7 +338,10 @@ class AddProductForm extends React.Component<Props, State> {
                         </span>
                     </div>
                     <div className="add-category-content">
-                        <h5>Your product has been added.</h5>
+                        {this.props.type===PageType.Add ?
+                            <h5>Your product has been added.</h5> :
+                             <h5>Your product has been updated.</h5>
+                        }
                     </div>
                 </div>
                 <BaseInputField type="text" label="Product Name" name="product_name" inputClasses="base-input-class"
@@ -328,7 +361,7 @@ class AddProductForm extends React.Component<Props, State> {
                                  name="thumbnail" label="Product Thumbnail"
                                  render=
                                      {this.props.type === PageType.Update ?
-                                     <span className="text-muted help-label">
+                                         <span className="text-muted help-label">
                         Leaving this image blank will ensure that you use the image already set
                                      </span> : <span></span>
                                      }
