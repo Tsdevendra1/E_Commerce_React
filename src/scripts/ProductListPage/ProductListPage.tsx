@@ -21,7 +21,6 @@ export default class ProductListPage extends React.Component<{}, State> {
     };
 
     handleLoadingFinished(stateKey: string, stateValue: boolean) {
-        // console.log(stateKey, stateValue);
         this.setState({[stateKey]: stateValue} as any);
     }
 
@@ -38,7 +37,7 @@ export default class ProductListPage extends React.Component<{}, State> {
                     handleLoadingFinished={(value: boolean) => {
                         this.setState({productSelectorLoadingFinished: value})
                     }}/>
-                <ProductDisplayGrid handleLoadingFinished={value => {
+                <ProductDisplayGrid showExtraProductFunctions={false} handleLoadingFinished={value => {
                     this.setState({productListLoadingFinished: value})
                 }}
                                     loadingHasFinished={this.state.productListLoadingFinished && this.state.productSelectorLoadingFinished}/>

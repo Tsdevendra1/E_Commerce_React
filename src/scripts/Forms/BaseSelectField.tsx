@@ -8,8 +8,8 @@ interface IbaseSelectFieldProps {
     inputValue: number;
     label: string;
     options: Array<optionInterface>;
-    showModalFunc: () => void;
     selectClasses?: string;
+    render?: any;
 }
 
 export default class BaseSelectField extends React.Component<IbaseSelectFieldProps> {
@@ -29,9 +29,7 @@ export default class BaseSelectField extends React.Component<IbaseSelectFieldPro
                 <span className="base-label-class">
                 {this.props.label}:
                 </span>
-                    <span onClick={this.props.showModalFunc} className="add-category-button">
-                        Add Category +
-                    </span>
+                    {this.props.render}
                 </div>
                 <select className={this.props.selectClasses} name={this.props.name} value={this.props.inputValue}
                         onChange={this.props.onChangeFunction}>

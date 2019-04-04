@@ -10,6 +10,7 @@ export interface ExternalProps {
     isFetching: boolean;
     accessToken: string;
     enabledForm: boolean;
+    userId: number;
 }
 
 // Props the HOC adds to the wrapped component
@@ -67,10 +68,11 @@ function formHoc(WrappedComponent: React.ComponentType<any>) {
 
 function mapStateToProps(state) {
     const {jwtToken} = state;
-    const {isFetching, accessToken} = jwtToken;
+    const {isFetching, accessToken, userId} = jwtToken;
     return {
         isFetching,
         accessToken,
+        userId,
     }
 }
 

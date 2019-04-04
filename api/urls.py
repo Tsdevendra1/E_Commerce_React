@@ -8,6 +8,8 @@ from rest_framework_simplejwt import views as jwt_views
 
 from rest_framework.authtoken import views
 
+from api.views import CustomJwtHandler
+
 schema_view = get_schema_view(title='Pastebin API')
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
@@ -24,6 +26,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
     path('docs/', include_docs_urls(title='My API service')),
-    path('token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # path('token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/', CustomJwtHandler.as_view(), name='token_obtain_pair'),
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
 ]

@@ -861,6 +861,17 @@ li:hover:after {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px; }
 
+.success-header {
+  font-weight: bold;
+  padding: 4%;
+  background: green;
+  color: white;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px; }
+
 .overlay {
   height: 100vh;
   width: 100vw;
@@ -884,9 +895,7 @@ li:hover:after {
   width: 90%;
   /* Full width */
   max-width: 400px;
-  animation-name: slideIn;
-  animation-duration: 0.4s;
-  animation-fill-mode: forwards; }
+  animation: slideIn .7s forwards, fadeIn .7s forwards; }
 
 @keyframes slideIn {
   from {
@@ -894,6 +903,18 @@ li:hover:after {
     opacity: 0; }
   to {
     top: 300px;
+    opacity: 1; } }
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
     opacity: 1; } }
 
 .add-category-content {
@@ -904,6 +925,12 @@ li:hover:after {
   border-bottom: 1px solid lightgrey;
   border-right: 1px solid lightgrey;
   border-left: 1px solid lightgrey; }
+
+.help-label {
+  font-size: 0.75rem;
+  display: block;
+  color: #CDCDCD;
+  text-transform: none !important; }
 
 .base-field {
   display: flex;

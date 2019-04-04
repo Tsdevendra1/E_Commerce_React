@@ -127,8 +127,9 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'main/media')
 
 ##########################################
-# Static file locations
+# Static file locations                  #
 ##########################################
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 

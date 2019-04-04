@@ -14,12 +14,20 @@ interface Props {
     dispatch: any;
     handleLoadingFinished: (value: boolean) => void;
     loadingHasFinished: boolean;
+    currentParams: string;
+    showExtraProductFunctions: boolean;
+    extraParams?: { [key: string]: string };
 }
 
 class ProductDisplayGrid extends React.Component<Props, {}> {
+    constructor(props) {
+        super(props);
+        this.getProductData = this.getProductData.bind(this);
+        this.createGrid = this.createGrid.bind(this);
+    }
+
     componentDidMount() {
-        const {dispatch} = this.props;
-        dispatch(fetchProductsIfNeeded(''));
+        this.getProductData();
     }
 
     componentDidUpdate(prevProps) {
@@ -28,16 +36,29 @@ class ProductDisplayGrid extends React.Component<Props, {}> {
         }
     }
 
+    getProductData() {
+        let currentUrlParams = new URLSearchParams(this.props.currentParams);
+        let extraParams = this.props.extraParams;
+        if (extraParams) {
+            for (let param in extraParams) {
+                if (!currentUrlParams.has(param)){
+                    currentUrlParams.append(param, extraParams[param]);
+                }
+            }
+        }
+        this.props.dispatch(fetchProductsIfNeeded(currentUrlParams.toString()));
+    }
 
     createGrid(productItem) {
         return (
             <div key={productItem.description + productItem.product_name + productItem.price + productItem.thumbnail}
                  className="grid-col">
                 <div className="grid-col-content">
-
                     <Link to={`/products/${productItem.id}`}>
-                        <ProductDisplay thumbnail={productItem.thumbnail} productName={productItem.product_name}
-                                        productPrice={productItem.price}/>
+                        <ProductDisplay showExtraProductFunctions={this.props.showExtraProductFunctions}
+                                        getProductDataFunction={this.getProductData} thumbnail={productItem.thumbnail}
+                                        productName={productItem.product_name}
+                                        productPrice={productItem.price} productId={productItem.id}/>
                     </Link>
                 </div>
             </div>
@@ -63,10 +84,11 @@ class ProductDisplayGrid extends React.Component<Props, {}> {
 
 function mapStateToProps(state) {
     const {productList} = state;
-    const {isFetching, products} = productList;
+    const {isFetching, products, currentParams} = productList;
     return {
         products,
         isFetching,
+        currentParams
     }
 }
 

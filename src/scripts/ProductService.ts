@@ -82,7 +82,8 @@ export default class ProductsService {
         return axios.get(url).then(response => response.data);
     }
 
-    static deleteProduct(pk: number) {
+    static deleteProduct(pk: number, accessToken: string) {
+        headers['Authorization'] = 'Bearer ' + accessToken;
         const url = `${API_URL}/api/product/${pk}/`;
         return axios({
             method: 'delete', //you can set what request you want to be
@@ -102,7 +103,8 @@ export default class ProductsService {
         });
     }
 
-    static updateProduct(productData: object, pk: number) {
+    static updateProduct(productData: object, pk: number, accessToken: string) {
+        headers['Authorization'] = 'Bearer ' + accessToken;
         const url = `${API_URL}/api/product/${pk}/`;
         return axios({
             method: 'patch', //you can set what request you want to be
