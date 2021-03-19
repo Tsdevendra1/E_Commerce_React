@@ -12,7 +12,7 @@ django-storages==1.7.1
 django-url-filter==0.3.12
 django-webpack-loader==0.6.0
 django-widget-tweaks==1.4.3
-djangorestframework==3.9.2
+djangorestframework==3.11.2
 djangorestframework-simplejwt==4.1.1
 docutils==0.14
 enum-compat==0.0.2
