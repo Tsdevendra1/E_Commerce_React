@@ -1,7 +1,7 @@
 boto3==1.9.120
 botocore==1.12.120
 cached-property==1.5.1
-certifi==2019.3.9
+certifi==2022.12.7
 chardet==3.0.4
 coreapi==2.3.3
 coreschema==0.0.4
